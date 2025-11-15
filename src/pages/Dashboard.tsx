@@ -66,6 +66,13 @@ export default function Dashboard() {
     setCurrentStep(3);
   };
 
+  const handleStepClick = (stepNumber: number) => {
+    // Allow navigation to completed steps or current step
+    if (completedSteps.includes(stepNumber) || stepNumber === currentStep) {
+      setCurrentStep(stepNumber);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
@@ -127,7 +134,8 @@ export default function Dashboard() {
           <StepIndicator 
             steps={steps} 
             currentStep={currentStep} 
-            completedSteps={completedSteps} 
+            completedSteps={completedSteps}
+            onStepClick={handleStepClick}
           />
 
           {currentStep === 1 && user && (

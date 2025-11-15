@@ -10,9 +10,10 @@ interface StepIndicatorProps {
   steps: Step[];
   currentStep: number;
   completedSteps: number[];
+  onStepClick: (stepNumber: number) => void;
 }
 
-export function StepIndicator({ steps, currentStep, completedSteps }: StepIndicatorProps) {
+export function StepIndicator({ steps, currentStep, completedSteps, onStepClick }: StepIndicatorProps) {
   return (
     <div className="flex items-center justify-between max-w-3xl mx-auto mb-12">
       {steps.map((step, index) => {
@@ -20,17 +21,20 @@ export function StepIndicator({ steps, currentStep, completedSteps }: StepIndica
         const isCurrent = currentStep === step.number;
         const isLocked = step.number > currentStep && !isCompleted;
 
+        const canClick = isCompleted || isCurrent;
+        
         return (
           <div key={step.number} className="flex items-center flex-1">
             <div className="flex flex-col items-center flex-1">
               <div
+                onClick={() => canClick && onStepClick(step.number)}
                 className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all ${
                   isCompleted
                     ? "bg-primary border-primary text-primary-foreground"
                     : isCurrent
                     ? "bg-background border-primary text-primary"
                     : "bg-muted border-muted-foreground/20 text-muted-foreground"
-                }`}
+                } ${canClick ? "cursor-pointer hover:scale-110" : "cursor-not-allowed"}`}
               >
                 {isCompleted ? (
                   <CheckCircle2 className="h-6 w-6" />
