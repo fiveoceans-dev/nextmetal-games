@@ -5,10 +5,12 @@ import { User, Session } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Shield, LogOut, CheckCircle2, Info } from "lucide-react";
+import { Shield, LogOut, CheckCircle2, Info, Gamepad2, Wallet } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { LinkAccountWorkflow } from "@/components/LinkAccountWorkflow";
 import { WalletConnect } from "@/components/WalletConnect";
+import { NetworkStatus } from "@/components/NetworkStatus";
+import { useAccount } from 'wagmi';
 
 interface LinkedAccount {
   id: string;
@@ -26,6 +28,10 @@ export default function Dashboard() {
   const [linkedAccounts, setLinkedAccounts] = useState<LinkedAccount[]>([]);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { isConnected } = useAccount();
+  
+  const hasVerifiedAccount = linkedAccounts.some(acc => acc.verified);
+  const canSaveToBlockchain = hasVerifiedAccount && isConnected;
 
   useEffect(() => {
     // Set up auth state listener FIRST
@@ -111,6 +117,7 @@ export default function Dashboard() {
           </div>
 
           <div className="flex items-center gap-4">
+            <NetworkStatus />
             <span className="text-sm text-muted-foreground hidden sm:inline">
               {user.email}
             </span>
@@ -122,130 +129,175 @@ export default function Dashboard() {
         </div>
       </nav>
 
-      <div className="pt-24 pb-12">
+      <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto space-y-8">
+            {/* Header */}
             <div className="text-center animate-fade-in-up">
               <h1 className="text-4xl font-bold mb-4 glow-text">Dashboard</h1>
               <p className="text-muted-foreground text-lg">
-                Connect your accounts and manage your gaming credentials
+                Complete these steps to save your gaming credentials on-chain
               </p>
             </div>
 
-            {/* Two-column layout */}
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Left Column - Link League Account */}
-              <div className="space-y-6">
-                <LinkAccountWorkflow userId={user.id} />
-              </div>
-
-              {/* Right Column - Connect Wallet */}
-              <div className="space-y-6">
-                <Card className="glass-card border-primary/30">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Shield className="h-5 w-5 text-primary" />
-                      Connect Wallet
-                    </CardTitle>
-                    <CardDescription>
-                      Connect your Web3 wallet to store credentials on-chain
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <WalletConnect />
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-
-            {/* Account Link Status */}
-            {linkedAccounts.length > 0 && (
-              <Card className="glass-card border-accent/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-accent" />
-                    Account Link Status
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {linkedAccounts.map((account) => (
-                      <div key={account.id} className="p-4 rounded-lg bg-muted/50 border border-border">
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <p className="font-semibold">{account.summoner_name}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {account.region.toUpperCase()}
-                            </p>
-                          </div>
-                          {account.verified && (
-                            <CheckCircle2 className="h-5 w-5 text-primary" />
-                          )}
-                        </div>
-                        {account.rank_tier && (
-                          <div className="mt-2 flex items-center gap-2">
-                            <span className="text-xs font-medium text-primary">
-                              {account.rank_tier} {account.rank_division}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    ))}
+            {/* Progress Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className={`glass-card ${hasVerifiedAccount ? 'border-primary/50' : 'border-border'}`}>
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-3">
+                    <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                      hasVerifiedAccount ? 'bg-primary/20 text-primary' : 'bg-muted text-muted-foreground'
+                    }`}>
+                      {hasVerifiedAccount ? <CheckCircle2 className="h-5 w-5" /> : <span className="font-bold">1</span>}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm">Link Game Account</p>
+                      <p className="text-xs text-muted-foreground">
+                        {hasVerifiedAccount ? 'Complete' : 'Required'}
+                      </p>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
-            )}
 
-            {/* Player Data Section */}
-            <Card className="glass-card border-primary/30">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-primary" />
-                  Player Data Storage
-                </CardTitle>
-                <CardDescription>
-                  Save your gaming credentials to Monad testnet (Coming Soon)
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Alert className="bg-muted/50 border-accent/30">
-                  <Info className="h-4 w-4 text-accent" />
-                  <AlertDescription>
-                    <strong>Blockchain Storage:</strong> Your verified rank and achievements will be stored as verifiable credentials on Monad blockchain
-                  </AlertDescription>
-                </Alert>
+              <Card className={`glass-card ${isConnected ? 'border-primary/50' : 'border-border'}`}>
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-3">
+                    <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                      isConnected ? 'bg-primary/20 text-primary' : 'bg-muted text-muted-foreground'
+                    }`}>
+                      {isConnected ? <CheckCircle2 className="h-5 w-5" /> : <span className="font-bold">2</span>}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm">Connect Wallet</p>
+                      <p className="text-xs text-muted-foreground">
+                        {isConnected ? 'Complete' : 'Required'}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-muted/30">
-                    <span className="text-sm font-medium">Linked Accounts</span>
-                    <span className="text-sm text-muted-foreground">{linkedAccounts.length}</span>
+              <Card className={`glass-card ${canSaveToBlockchain ? 'border-primary/50' : 'border-border'}`}>
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-3">
+                    <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                      canSaveToBlockchain ? 'bg-primary/20 text-primary' : 'bg-muted text-muted-foreground'
+                    }`}>
+                      <span className="font-bold">3</span>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm">Save to Blockchain</p>
+                      <p className="text-xs text-muted-foreground">
+                        {canSaveToBlockchain ? 'Ready' : 'Complete steps 1 & 2'}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-muted/30">
-                    <span className="text-sm font-medium">Verified Accounts</span>
-                    <span className="text-sm text-muted-foreground">
-                      {linkedAccounts.filter(a => a.verified).length}
-                    </span>
-                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Step 1: Link Game Account */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                  hasVerifiedAccount ? 'bg-primary/20 text-primary' : 'bg-primary text-primary-foreground'
+                }`}>
+                  {hasVerifiedAccount ? <CheckCircle2 className="h-4 w-4" /> : <Gamepad2 className="h-4 w-4" />}
                 </div>
+                <h2 className="text-2xl font-bold">Step 1: Link Your Game Account</h2>
+              </div>
+              <LinkAccountWorkflow userId={user.id} />
+            </div>
 
-                <Button 
-                  className="w-full" 
-                  disabled={linkedAccounts.filter(a => a.verified).length === 0}
-                  onClick={() => {
-                    toast({
-                      title: "Coming Soon",
-                      description: "Smart contract integration will be available soon on Monad testnet",
-                    });
-                  }}
-                >
-                  <Shield className="h-4 w-4 mr-2" />
-                  Save to Blockchain
-                </Button>
-              </CardContent>
-            </Card>
+            {/* Step 2: Connect Wallet */}
+            <div className={`space-y-4 ${!hasVerifiedAccount ? 'opacity-50 pointer-events-none' : ''}`}>
+              <div className="flex items-center gap-3">
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                  isConnected ? 'bg-primary/20 text-primary' : 'bg-primary text-primary-foreground'
+                }`}>
+                  {isConnected ? <CheckCircle2 className="h-4 w-4" /> : <Wallet className="h-4 w-4" />}
+                </div>
+                <h2 className="text-2xl font-bold">Step 2: Connect Your Wallet</h2>
+              </div>
+              <Card className="glass-card border-primary/30">
+                <CardHeader>
+                  <CardDescription>
+                    Connect your Web3 wallet to Monad Testnet
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <WalletConnect />
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Step 3: Save to Blockchain */}
+            <div className={`space-y-4 ${!canSaveToBlockchain ? 'opacity-50 pointer-events-none' : ''}`}>
+              <div className="flex items-center gap-3">
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                  canSaveToBlockchain ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
+                }`}>
+                  <Shield className="h-4 w-4" />
+                </div>
+                <h2 className="text-2xl font-bold">Step 3: Save to Blockchain</h2>
+              </div>
+              
+              <Card className="glass-card border-primary/30">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Shield className="h-5 w-5 text-primary" />
+                    Player Data Storage
+                  </CardTitle>
+                  <CardDescription>
+                    Mint your verified gaming credentials as NFTs on Monad Testnet
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {!canSaveToBlockchain && (
+                    <Alert className="bg-muted/50 border-accent/30">
+                      <Info className="h-4 w-4 text-accent" />
+                      <AlertDescription>
+                        Complete steps 1 and 2 to unlock blockchain storage
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                  
+                  {canSaveToBlockchain && linkedAccounts.length > 0 && (
+                    <div className="space-y-3">
+                      <p className="text-sm text-muted-foreground">Accounts ready to save:</p>
+                      {linkedAccounts.filter(acc => acc.verified).map((account) => (
+                        <div key={account.id} className="p-3 rounded-lg bg-muted/50 border border-border flex items-center justify-between">
+                          <div>
+                            <p className="font-medium">{account.summoner_name}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {account.region.toUpperCase()} • {account.rank_tier} {account.rank_division}
+                            </p>
+                          </div>
+                          <CheckCircle2 className="h-5 w-5 text-primary" />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  <Button 
+                    className="w-full"
+                    disabled={!canSaveToBlockchain}
+                    onClick={() => {
+                      toast({
+                        title: "Coming Soon",
+                        description: "Smart contract deployment is in progress. This feature will be available soon!",
+                      });
+                    }}
+                  >
+                    Save to Blockchain
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
