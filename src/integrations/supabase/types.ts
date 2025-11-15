@@ -128,6 +128,42 @@ export type Database = {
         }
         Relationships: []
       }
+      transactions: {
+        Row: {
+          created_at: string
+          credentials_data: Json | null
+          game_name: string | null
+          id: string
+          rank_division: string | null
+          rank_tier: string | null
+          tag_line: string | null
+          transaction_hash: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          credentials_data?: Json | null
+          game_name?: string | null
+          id?: string
+          rank_division?: string | null
+          rank_tier?: string | null
+          tag_line?: string | null
+          transaction_hash: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          credentials_data?: Json | null
+          game_name?: string | null
+          id?: string
+          rank_division?: string | null
+          rank_tier?: string | null
+          tag_line?: string | null
+          transaction_hash?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

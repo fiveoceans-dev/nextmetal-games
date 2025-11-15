@@ -13,14 +13,16 @@ import { monadTestnet } from "@/lib/wagmi-config";
 
 interface Step3Props {
   canProceed: boolean;
+  userId: string;
 }
 
-export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
+export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
   const [storeAchievements, setStoreAchievements] = useState(true);
   const [mintNFT, setMintNFT] = useState(true);
   const [generateZK, setGenerateZK] = useState(false);
   const [success, setSuccess] = useState(false);
   const [transactionHash, setTransactionHash] = useState<string>("");
+  const [accountInfo, setAccountInfo] = useState<{ gameName: string; tagLine: string; rank: string } | null>(null);
   const [attempted, setAttempted] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const { toast } = useToast();
@@ -34,8 +36,37 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
 
   // Update transaction hash and success state when transaction is confirmed
   useEffect(() => {
-    if (isConfirmed && hash) {
+    if (isConfirmed && hash && accountInfo) {
       console.log('✅ Transaction confirmed on Monad testnet:', hash);
+      
+      // Save transaction to database
+      const saveTransaction = async () => {
+        try {
+          const { error } = await supabase.from("transactions").insert({
+            user_id: userId,
+            transaction_hash: hash,
+            game_name: accountInfo.gameName,
+            tag_line: accountInfo.tagLine,
+            rank_tier: accountInfo.rank.split(' ')[0],
+            rank_division: accountInfo.rank.split(' ')[1] || '',
+            credentials_data: {
+              gameName: accountInfo.gameName,
+              tagLine: accountInfo.tagLine,
+              rank: accountInfo.rank,
+            }
+          });
+
+          if (error) {
+            console.error('Failed to save transaction:', error);
+          } else {
+            console.log('✅ Transaction saved to database');
+          }
+        } catch (err) {
+          console.error('Error saving transaction:', err);
+        }
+      };
+
+      saveTransaction();
       setTransactionHash(hash);
       setSuccess(true);
       toast({
@@ -43,7 +74,7 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
         description: "Your credentials are now stored on Monad Testnet.",
       });
     }
-  }, [isConfirmed, hash, toast]);
+  }, [isConfirmed, hash, toast, userId, accountInfo]);
 
   // Log transaction status changes
   useEffect(() => {
@@ -58,6 +89,39 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
       console.log('⏳ Transaction is being confirmed...');
     }
   }, [isConfirming]);
+
+  // Fetch account info on mount
+  useEffect(() => {
+    if (!userId || !canProceed) return;
+
+    const fetchAccountInfo = async () => {
+      try {
+        const { data: linkedAccounts, error } = await supabase
+          .from("linked_accounts")
+          .select("*")
+          .eq("user_id", userId)
+          .eq("verified", true);
+
+        if (error) {
+          console.error('Error fetching account info:', error);
+          return;
+        }
+
+        if (linkedAccounts && linkedAccounts.length > 0) {
+          const firstAccount = linkedAccounts[0];
+          setAccountInfo({
+            gameName: firstAccount.game_name || '',
+            tagLine: firstAccount.tag_line || '',
+            rank: `${firstAccount.rank_tier} ${firstAccount.rank_division}`,
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching account info:', err);
+      }
+    };
+
+    fetchAccountInfo();
+  }, [userId, canProceed]);
 
   const handleSaveToBlockchain = async () => {
     if (!address) {
@@ -95,19 +159,26 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
 
     try {
       // Fetch user's verified linked accounts
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("User not authenticated");
-
       const { data: linkedAccounts, error } = await supabase
         .from("linked_accounts")
         .select("*")
-        .eq("user_id", user.id)
+        .eq("user_id", userId)
         .eq("verified", true);
 
       if (error) throw error;
       if (!linkedAccounts || linkedAccounts.length === 0) {
         throw new Error("No verified accounts found");
       }
+
+      const firstAccount = linkedAccounts[0];
+      const accountRank = `${firstAccount.rank_tier} ${firstAccount.rank_division}`;
+      
+      // Store account info for display and database save
+      setAccountInfo({
+        gameName: firstAccount.game_name || '',
+        tagLine: firstAccount.tag_line || '',
+        rank: accountRank,
+      });
 
       // Create a hash of the credentials data
       const credentialsData = {
@@ -130,7 +201,8 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
         chainName: monadTestnet.name,
         to: address,
         credentialsHash: dataHash,
-        accounts: linkedAccounts.length
+        accounts: linkedAccounts.length,
+        accountInfo: accountRank
       });
 
       console.log('📤 Calling sendTransaction - this should open your wallet...');
@@ -263,6 +335,18 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
               We only store achievement proofs and analytics, never raw match data or personal information.
             </AlertDescription>
           </Alert>
+
+          {accountInfo && (
+            <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+              <p className="text-sm font-medium mb-1">Saving credentials for:</p>
+              <p className="text-lg font-bold text-primary">
+                {accountInfo.gameName}#{accountInfo.tagLine}
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                You are rank: <span className="font-semibold text-foreground">{accountInfo.rank}</span>
+              </p>
+            </div>
+          )}
 
           <Alert className="bg-muted/50 border-muted">
             <Info className="h-4 w-4" />

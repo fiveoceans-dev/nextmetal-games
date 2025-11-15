@@ -12,6 +12,8 @@ import { StepIndicator } from "@/components/StepIndicator";
 import { Step1LinkAccount } from "@/components/Step1LinkAccount";
 import { Step2ConnectWallet } from "@/components/Step2ConnectWallet";
 import { Step3SaveToBlockchain } from "@/components/Step3SaveToBlockchain";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
 
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
@@ -131,59 +133,67 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
-            <Shield className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold glow-text">monad.passport</span>
-          </div>
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-background">
+        <AppSidebar />
+        <div className="flex-1 flex flex-col">
+          <header className="h-16 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10">
+            <div className="container h-full flex items-center justify-between px-4">
+              <div className="flex items-center gap-4">
+                <SidebarTrigger />
+                <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
+                  <Shield className="h-6 w-6 text-primary" />
+                  <span className="text-lg font-bold glow-text">monad.passport</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <NetworkStatus />
+                <WalletConnect />
+                <Button variant="ghost" size="sm" onClick={handleLogout}>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
+              </div>
+            </div>
+          </header>
 
-          <div className="flex items-center gap-4">
-            <NetworkStatus />
-            <WalletConnect />
-            <Button variant="ghost" size="sm" onClick={handleLogout}>
-              <LogOut className="h-4 w-4 mr-2" />
-              Logout
-            </Button>
-          </div>
+          <main className="flex-1 container py-8 px-4">
+            <div className="max-w-5xl mx-auto space-y-8">
+              <div className="text-center mb-8 animate-fade-in">
+                <h1 className="text-4xl font-bold mb-2 glow-text">Dashboard</h1>
+                <p className="text-muted-foreground">
+                  Complete these steps to save your verified League credentials on-chain
+                </p>
+              </div>
+
+              <StepIndicator 
+                steps={steps} 
+                currentStep={currentStep} 
+                completedSteps={completedSteps}
+                onStepClick={handleStepClick}
+              />
+
+              {currentStep === 1 && user && (
+                <Step1LinkAccount 
+                  userId={user.id} 
+                  onComplete={handleStep1Complete}
+                />
+              )}
+
+              {currentStep === 2 && (
+                <Step2ConnectWallet onComplete={handleStep2Complete} />
+              )}
+
+              {currentStep === 3 && (
+                <Step3SaveToBlockchain 
+                  canProceed={completedSteps.includes(1) && completedSteps.includes(2)}
+                  userId={user.id}
+                />
+              )}
+            </div>
+          </main>
         </div>
-      </nav>
-
-      <main className="container mx-auto px-4 pt-24 pb-12">
-        <div className="max-w-5xl mx-auto space-y-8">
-          <div className="text-center mb-8 animate-fade-in">
-            <h1 className="text-4xl font-bold mb-2 glow-text">Dashboard</h1>
-            <p className="text-muted-foreground">
-              Complete these steps to save your verified League credentials on-chain
-            </p>
-          </div>
-
-          <StepIndicator 
-            steps={steps} 
-            currentStep={currentStep} 
-            completedSteps={completedSteps}
-            onStepClick={handleStepClick}
-          />
-
-          {currentStep === 1 && user && (
-            <Step1LinkAccount 
-              userId={user.id} 
-              onComplete={handleStep1Complete}
-            />
-          )}
-
-          {currentStep === 2 && (
-            <Step2ConnectWallet onComplete={handleStep2Complete} />
-          )}
-
-          {currentStep === 3 && (
-            <Step3SaveToBlockchain 
-              canProceed={completedSteps.includes(1) && completedSteps.includes(2)}
-            />
-          )}
-        </div>
-      </main>
-    </div>
+      </div>
+    </SidebarProvider>
   );
 }
