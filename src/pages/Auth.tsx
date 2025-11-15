@@ -28,10 +28,18 @@ export default function Auth() {
     });
   }, [navigate]);
 
-  const handleDemoLogin = () => {
+  const handleDemoLogin = async () => {
     setEmail("demo@monad.passport");
     setPassword("demo123456");
     setIsLogin(true);
+    
+    // Try to initialize demo user if it doesn't exist
+    try {
+      await supabase.functions.invoke('init-demo-user');
+    } catch (error) {
+      console.log('Demo user initialization:', error);
+    }
+    
     toast({
       title: "Demo Credentials Loaded",
       description: "Click 'Login' to sign in with demo account",
