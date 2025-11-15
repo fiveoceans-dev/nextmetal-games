@@ -19,10 +19,14 @@ export function WalletConnect() {
     }
   }, [isConnected, address]);
 
-  const handleConnect = () => {
-    const connector = connectors[0]; // WalletConnect
-    if (connector) {
-      connect({ connector });
+  const handleConnect = async () => {
+    // Try injected wallets first (MetaMask, etc.)
+    const injectedConnector = connectors.find(c => c.type === 'injected');
+    if (injectedConnector) {
+      connect({ connector: injectedConnector });
+    } else if (connectors[0]) {
+      // Fallback to first available connector
+      connect({ connector: connectors[0] });
     }
   };
 

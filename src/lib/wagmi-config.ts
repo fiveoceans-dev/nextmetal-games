@@ -1,5 +1,5 @@
 import { createConfig, http } from 'wagmi';
-import { walletConnect } from 'wagmi/connectors';
+import { walletConnect, injected } from 'wagmi/connectors';
 import { defineChain } from 'viem';
 
 // Monad Testnet configuration from environment variables
@@ -38,6 +38,12 @@ const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || '';
 export const config = createConfig({
   chains: [monadTestnet],
   connectors: [
+    injected({
+      target: 'metaMask',
+    }),
+    injected({
+      target: 'coinbaseWallet',
+    }),
     walletConnect({
       projectId,
       metadata: {
