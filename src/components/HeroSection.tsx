@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Shield, Coins, Award, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/lol-hero-bg.png";
 
 export const HeroSection = () => {
   const navigate = useNavigate();
