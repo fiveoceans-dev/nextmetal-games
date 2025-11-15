@@ -39,8 +39,8 @@ export const badgeNFTAbi = [
   },
 ] as const;
 
-// Replace with your deployed contract address
-export const BADGE_CONTRACT_ADDRESS = '0x0000000000000000000000000000000000000000' as Address;
+// Contract address from environment variable
+export const BADGE_CONTRACT_ADDRESS = (import.meta.env.VITE_CONTRACT_ADDRESS || '0x0000000000000000000000000000000000000000') as Address;
 
 // Helper function to format contract addresses
 export function shortenAddress(address: string): string {

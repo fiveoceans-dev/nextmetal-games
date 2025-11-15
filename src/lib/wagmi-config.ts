@@ -2,10 +2,14 @@ import { createConfig, http } from 'wagmi';
 import { walletConnect } from 'wagmi/connectors';
 import { defineChain } from 'viem';
 
-// Monad Testnet configuration
+// Monad Testnet configuration from environment variables
+const chainId = parseInt(import.meta.env.VITE_CHAIN_ID_MONAD || '41454');
+const rpcUrl = import.meta.env.VITE_MONAD_RPC_URL || 'https://testnet-rpc.monad.xyz';
+const networkName = import.meta.env.VITE_NETWORK_NAME || 'Monad Testnet';
+
 export const monadTestnet = defineChain({
-  id: 41454,
-  name: 'Monad Testnet',
+  id: chainId,
+  name: networkName,
   nativeCurrency: {
     decimals: 18,
     name: 'Monad',
@@ -13,10 +17,10 @@ export const monadTestnet = defineChain({
   },
   rpcUrls: {
     default: {
-      http: ['https://testnet-rpc.monad.xyz'],
+      http: [rpcUrl],
     },
     public: {
-      http: ['https://testnet-rpc.monad.xyz'],
+      http: [rpcUrl],
     },
   },
   blockExplorers: {
