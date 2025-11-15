@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.verify-lol-account]
 verify_jwt = false
+
+[functions.init-demo-user]
+verify_jwt = false
