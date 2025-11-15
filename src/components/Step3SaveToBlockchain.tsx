@@ -82,14 +82,22 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
       const dataString = JSON.stringify(credentialsData);
       const dataHash = keccak256(toHex(dataString));
 
-      // Send transaction with credentials hash in data field
+      console.log('Sending transaction to Monad testnet with credentials hash:', dataHash);
+      
+      // Send real transaction to Monad testnet with credentials hash in data field
       sendTransaction({
-        to: address, // Send to self to store data
-        value: parseEther("0"), // No value transfer
-        data: dataHash, // Store hash in transaction data
+        to: address, // Send to self to store data on-chain
+        value: parseEther("0"), // No value transfer, just data storage
+        data: dataHash, // Store credentials hash in transaction data
+      });
+
+      toast({
+        title: "Transaction initiated",
+        description: "Please confirm the transaction in your wallet",
       });
 
     } catch (error: any) {
+      console.error('Error saving to blockchain:', error);
       toast({
         variant: "destructive",
         title: "Error",
@@ -183,6 +191,13 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
             <Info className="h-4 w-4 text-primary" />
             <AlertDescription>
               We only store achievement proofs and analytics, never raw match data or personal information.
+            </AlertDescription>
+          </Alert>
+
+          <Alert className="bg-muted/50 border-muted">
+            <Info className="h-4 w-4" />
+            <AlertDescription className="text-sm">
+              This will send a real transaction to Monad testnet. You'll need to confirm it in your wallet and pay a small gas fee.
             </AlertDescription>
           </Alert>
 
