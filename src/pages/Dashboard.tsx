@@ -26,7 +26,7 @@ export default function Dashboard() {
   const steps = [
     { number: 1, title: "Link Game Account", description: "Connect your League account" },
     { number: 2, title: "Connect Wallet", description: "Link your Web3 wallet" },
-    { number: 3, title: "Save to Blockchain", description: "Store credentials on-chain" },
+    { number: 3, title: "Save to Monad", description: "Store credentials on-chain" },
   ];
 
   useEffect(() => {

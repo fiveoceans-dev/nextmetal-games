@@ -17,6 +17,7 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
   const [generateZK, setGenerateZK] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [transactionHash, setTransactionHash] = useState<string>("");
   const { toast } = useToast();
 
   const handleSaveToBlockchain = async () => {
@@ -24,6 +25,12 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
     
     // Simulate blockchain transaction
     setTimeout(() => {
+      // Generate mock transaction hash
+      const mockTxHash = `0x${Array.from({ length: 64 }, () => 
+        Math.floor(Math.random() * 16).toString(16)
+      ).join('')}`;
+      
+      setTransactionHash(mockTxHash);
       setLoading(false);
       setSuccess(true);
       toast({
@@ -61,13 +68,31 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
             </div>
             <div>
               <p className="text-2xl font-bold text-primary mb-2">Credentials Saved!</p>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground mb-4">
                 Your verified League credentials are now stored on Monad Testnet
               </p>
+              <div className="bg-muted/50 rounded-lg p-4 mt-4">
+                <p className="text-xs text-muted-foreground mb-1">Transaction Hash</p>
+                <p className="text-sm font-mono break-all">{transactionHash}</p>
+              </div>
             </div>
-            <Button variant="outline" onClick={() => setSuccess(false)}>
-              View Transaction
-            </Button>
+            <div className="flex gap-2 justify-center">
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  navigator.clipboard.writeText(transactionHash);
+                  toast({
+                    title: "Copied!",
+                    description: "Transaction hash copied to clipboard",
+                  });
+                }}
+              >
+                Copy Transaction Hash
+              </Button>
+              <Button variant="outline" onClick={() => setSuccess(false)}>
+                Save Another
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -80,7 +105,7 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-primary" />
-            Save Your Verified Credentials
+            Save to Monad
           </CardTitle>
           <CardDescription>
             Store privacy-preserving analytics on the Monad blockchain
@@ -164,10 +189,10 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
             {loading ? (
               <>
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Saving to Blockchain...
+                Saving to Monad...
               </>
             ) : (
-              "Save to Blockchain"
+              "Save to Monad"
             )}
           </Button>
         </CardContent>
