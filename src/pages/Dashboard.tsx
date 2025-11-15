@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Shield, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { LinkAccountWorkflow } from "@/components/LinkAccountWorkflow";
+import { WalletConnect } from "@/components/WalletConnect";
 
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
@@ -80,6 +81,7 @@ export default function Dashboard() {
           </div>
 
           <div className="flex items-center gap-4">
+            <WalletConnect />
             <span className="text-sm text-muted-foreground hidden sm:inline">
               {user.email}
             </span>
