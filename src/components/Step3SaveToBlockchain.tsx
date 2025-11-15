@@ -31,6 +31,7 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
   // Update transaction hash and success state when transaction is confirmed
   useEffect(() => {
     if (isConfirmed && hash) {
+      console.log('✅ Transaction confirmed on Monad testnet:', hash);
       setTransactionHash(hash);
       setSuccess(true);
       toast({
@@ -39,6 +40,20 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
       });
     }
   }, [isConfirmed, hash, toast]);
+
+  // Log transaction status changes
+  useEffect(() => {
+    if (hash) {
+      console.log('📝 Transaction hash received:', hash);
+      console.log('⏳ Waiting for confirmation...');
+    }
+  }, [hash]);
+
+  useEffect(() => {
+    if (isConfirming) {
+      console.log('⏳ Transaction is being confirmed...');
+    }
+  }, [isConfirming]);
 
   const handleSaveToBlockchain = async () => {
     if (!address) {
@@ -82,10 +97,17 @@ export function Step3SaveToBlockchain({ canProceed }: Step3Props) {
       const dataString = JSON.stringify(credentialsData);
       const dataHash = keccak256(toHex(dataString));
 
-      console.log('Sending transaction to Monad testnet with credentials hash:', dataHash);
+      console.log('🚀 Sending transaction to Monad testnet:', {
+        chainId: monadTestnet.id,
+        chainName: monadTestnet.name,
+        to: address,
+        credentialsHash: dataHash,
+        accounts: linkedAccounts.length
+      });
       
       // Send real transaction to Monad testnet with credentials hash in data field
       sendTransaction({
+        chainId: monadTestnet.id,
         to: address, // Send to self to store data on-chain
         value: parseEther("0"), // No value transfer, just data storage
         data: dataHash, // Store credentials hash in transaction data
