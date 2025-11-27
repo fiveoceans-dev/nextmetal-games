@@ -1,8 +1,10 @@
 import { Navigation } from "@/components/Navigation";
 import { HeroSection } from "@/components/HeroSection";
-import { DiscoverSection } from "@/components/DiscoverSection";
-import { BadgeShowcase } from "@/components/BadgeShowcase";
-import { LegalSection } from "@/components/LegalSection";
+import { VennDiagramSection } from "@/components/VennDiagramSection";
+import { RewardsSection } from "@/components/RewardsSection";
+import { ProjectInfoSection } from "@/components/ProjectInfoSection";
+import { LeaderboardSection } from "@/components/LeaderboardSection";
+import { ComplianceSection } from "@/components/ComplianceSection";
 import { Footer } from "@/components/Footer";
 
 const Index = () => {
@@ -10,9 +12,11 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <HeroSection />
-      <DiscoverSection />
-      <BadgeShowcase />
-      <LegalSection />
+      <VennDiagramSection />
+      <RewardsSection />
+      <ProjectInfoSection />
+      <LeaderboardSection />
+      <ComplianceSection />
       <Footer />
     </div>
   );

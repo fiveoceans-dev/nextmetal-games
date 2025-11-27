@@ -25,52 +25,15 @@ export const HeroSection = () => {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold leading-tight animate-fade-in-up">
-            Prove Your LoL <span className="text-primary glow-text">Rank</span>
+            Prove Your League of Legends Rank
             <br />
-            Own Your <span className="text-accent">Legacy</span>
+            Get Airdrop <span className="text-primary glow-text">$POKER</span> Token
           </h1>
-
-          <p
-            className="text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up"
-            style={{ animationDelay: "0.2s" }}
-          >
-            Verifiable on-chain credentials. Privacy-first ZK proofs. Your skill, immortalized.
-          </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
             <Button variant="outline" size="xl" onClick={() => navigate("/dashboard")}>
-              Join
+              Join Now
             </Button>
-          </div>
-
-          {/* Feature highlights */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-            <div
-              className="glass-card p-6 rounded-xl space-y-3 hover:border-primary/50 transition-all animate-fade-in-up animate-float"
-              style={{ animationDelay: "0.4s" }}
-            >
-              <Award className="h-8 w-8 text-primary mx-auto" />
-              <h3 className="font-semibold text-lg">Badge NFTs</h3>
-              <p className="text-sm text-muted-foreground">Mint verifiable achievements</p>
-            </div>
-
-            <div
-              className="glass-card p-6 rounded-xl space-y-3 hover:border-accent/50 transition-all animate-fade-in-up animate-float"
-              style={{ animationDelay: "0.6s", animationDuration: "7s" }}
-            >
-              <Zap className="h-8 w-8 text-accent mx-auto" />
-              <h3 className="font-semibold text-lg">ZK Privacy</h3>
-              <p className="text-sm text-muted-foreground">Prove rank privately</p>
-            </div>
-
-            <div
-              className="glass-card p-6 rounded-xl space-y-3 hover:border-primary/50 transition-all animate-fade-in-up animate-float"
-              style={{ animationDelay: "0.8s", animationDuration: "8s" }}
-            >
-              <Coins className="h-8 w-8 text-primary mx-auto" />
-              <h3 className="font-semibold text-lg">Tokenized Points</h3>
-              <p className="text-sm text-muted-foreground">Earn reputation on-chain</p>
-            </div>
           </div>
         </div>
       </div>
