@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Shield, Coins, Award, Zap } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroBg from "@/assets/lol-hero-bg.png";
 
@@ -7,32 +7,31 @@ export const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with overlay */}
       <div className="absolute inset-0 z-0">
-        <img src={heroBg} alt="" className="w-full h-full object-cover opacity-30" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/80 to-background" />
+        <img src={heroBg} alt="" className="w-full h-full object-cover opacity-5" />
+        <div className="absolute inset-0 bg-background" />
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 z-10 text-center">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <div className="inline-block mb-4">
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-primary/30">
-              <Shield className="h-4 w-4 text-primary" />
-              <span className="text-sm text-muted-foreground">Powered by PokerNFTs</span>
-            </div>
+      <div className="container mx-auto px-4 z-10">
+        <div className="max-w-5xl mx-auto text-center space-y-12">
+          <div className="space-y-6 animate-fade-in-up">
+            <h1 className="text-6xl md:text-8xl font-bold leading-[1.1] tracking-tighter">
+              Prove Your League of Legends Rank
+              <br />
+              Get Airdrop $POKER Token
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
+              Verify your rank. Mint your achievement. Join the future of gaming.
+            </p>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold leading-tight animate-fade-in-up">
-            Prove Your League of Legends Rank
-            <br />
-            Get Airdrop <span className="text-primary glow-text">$POKER</span> Token
-          </h1>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
-            <Button variant="outline" size="xl" onClick={() => navigate("/dashboard")}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <Button size="xl" onClick={() => navigate("/dashboard")} className="group">
               Join Now
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Button>
           </div>
         </div>

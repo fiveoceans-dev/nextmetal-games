@@ -106,7 +106,7 @@ export const AccountLinkSection = () => {
                   </AlertDescription>
                 </Alert>
 
-                <Button variant="hero" className="w-full" size="lg">
+                <Button variant="default" className="w-full" size="lg">
                   Link Account & Verify
                 </Button>
               </div>
