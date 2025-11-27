@@ -20,8 +20,7 @@ export const HeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background with overlay */}
       <div className="absolute inset-0 z-0">
-        <img src={heroBg} alt="" className="w-full h-full object-cover opacity-5" />
-        <div className="absolute inset-0 bg-background" />
+        <img src={heroBg} alt="" className="w-full h-full object-cover opacity-[0.02]" />
       </div>
 
       {/* Content */}
