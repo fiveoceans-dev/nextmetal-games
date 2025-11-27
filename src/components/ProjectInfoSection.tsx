@@ -4,8 +4,10 @@ import { Coins, Zap } from "lucide-react";
 export const ProjectInfoSection = () => {
   return (
     <section className="py-16 relative overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
           <Card className="glass-card p-8 animate-fade-in-up">
             <div className="flex items-start gap-4">
               <div className="p-3 rounded-lg bg-primary/20">

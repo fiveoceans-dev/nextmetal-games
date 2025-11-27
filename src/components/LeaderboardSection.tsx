@@ -17,18 +17,18 @@ export const LeaderboardSection = () => {
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-accent/5 to-background" />
+    <section className="py-16 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-4">
               <Trophy className="h-4 w-4" />
               <span className="text-sm font-semibold">Top Players</span>
             </div>
-            <h2 className="text-5xl font-bold mb-4">$POKER Token Leaderboard</h2>
-            <p className="text-muted-foreground text-xl">
+            <h2 className="text-4xl font-bold mb-4">$POKER Token Leaderboard</h2>
+            <p className="text-muted-foreground text-lg">
               Preview of token allocations based on verified ranks
             </p>
           </div>
@@ -54,9 +54,9 @@ export const LeaderboardSection = () => {
                         {player.rank <= 3 ? (
                           <span className="inline-flex items-center gap-1">
                             <Trophy className={`h-4 w-4 ${
-                              player.rank === 1 ? 'text-yellow-500' : 
-                              player.rank === 2 ? 'text-gray-400' : 
-                              'text-orange-600'
+                              player.rank === 1 ? 'text-primary' : 
+                              player.rank === 2 ? 'text-muted-foreground' : 
+                              'text-accent'
                             }`} />
                             {player.rank}
                           </span>

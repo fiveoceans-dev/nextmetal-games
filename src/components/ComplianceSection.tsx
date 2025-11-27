@@ -1,8 +1,10 @@
 export const ComplianceSection = () => {
   return (
-    <section className="py-16 relative overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center">
+    <section className="py-16 relative overflow-hidden" id="legal">
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-6xl mx-auto text-center">
           <div className="p-8 rounded-lg bg-muted/20 border border-border/30 animate-fade-in-up">
             <h3 className="text-xl font-semibold mb-4">Riot Games API Compliance</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">

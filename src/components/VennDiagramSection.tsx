@@ -2,12 +2,12 @@ import { Card } from "@/components/ui/card";
 
 export const VennDiagramSection = () => {
   return (
-    <section className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
+    <section className="py-16 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16 animate-fade-in-up">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12 animate-fade-in-up">
             <h2 className="text-4xl font-bold mb-4">Mutual Interest</h2>
             <p className="text-muted-foreground text-lg">
               Where competitive gaming meets onchain innovation
