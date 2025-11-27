@@ -1,5 +1,3 @@
-import { Card } from "@/components/ui/card";
-
 export const VennDiagramSection = () => {
   return (
     <section id="discover" className="py-32 relative overflow-hidden border-b border-border">
@@ -12,35 +10,35 @@ export const VennDiagramSection = () => {
             </p>
           </div>
 
-          <div className="relative h-[500px] flex items-center justify-center">
-            {/* Left Circle - LoL Players */}
-            <div className="absolute left-0 md:left-1/4 transform -translate-x-1/2">
-              <div className="w-80 h-80 rounded-full border-2 border-foreground/10 flex items-center justify-center">
-                <Card className="minimal-card p-8 text-center max-w-[220px]">
-                  <h3 className="text-xl font-semibold mb-3">LoL Players</h3>
-                  <p className="text-sm text-muted-foreground">Skilled gamers seeking rewards</p>
-                </Card>
+          <div className="relative h-[600px] flex items-center justify-center">
+            {/* Top Circle - LoL Players */}
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 animate-fade-in-up">
+              <div className="w-64 h-64 rounded-full border border-foreground/20 flex items-center justify-center hover:border-foreground/40 transition-all">
+                <div className="text-center">
+                  <h3 className="text-2xl font-semibold mb-2">LoL Players</h3>
+                  <p className="text-sm text-muted-foreground px-6">Skilled gamers seeking rewards</p>
+                </div>
               </div>
             </div>
 
-            {/* Right Circle - Poker Players */}
-            <div className="absolute right-0 md:right-1/4 transform translate-x-1/2">
-              <div className="w-80 h-80 rounded-full border-2 border-foreground/10 flex items-center justify-center">
-                <Card className="minimal-card p-8 text-center max-w-[220px]">
-                  <h3 className="text-xl font-semibold mb-3">Poker Players</h3>
-                  <p className="text-sm text-muted-foreground">Onchain gaming community</p>
-                </Card>
+            {/* Bottom Left Circle - Poker Players */}
+            <div className="absolute bottom-0 left-1/4 transform -translate-x-1/2 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+              <div className="w-64 h-64 rounded-full border border-foreground/20 flex items-center justify-center hover:border-foreground/40 transition-all">
+                <div className="text-center">
+                  <h3 className="text-2xl font-semibold mb-2">Poker Players</h3>
+                  <p className="text-sm text-muted-foreground px-6">Onchain gaming community</p>
+                </div>
               </div>
             </div>
 
-            {/* Center Overlap */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-              <Card className="minimal-card p-10 text-center max-w-[280px] border-2 border-foreground bg-card">
-                <h3 className="text-3xl font-bold mb-4 tracking-tight">$POKER Airdrop</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Verified LoL players receive tokens for permissionless poker
-                </p>
-              </Card>
+            {/* Bottom Right Circle - $POKER */}
+            <div className="absolute bottom-0 right-1/4 transform translate-x-1/2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+              <div className="w-64 h-64 rounded-full border-2 border-foreground flex items-center justify-center hover:scale-105 transition-all">
+                <div className="text-center">
+                  <h3 className="text-3xl font-bold mb-2 tracking-tight">$POKER</h3>
+                  <p className="text-sm text-muted-foreground px-6">Airdrop for verified players</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
