@@ -52,12 +52,20 @@ export const HeroSection = () => {
             <Button size="lg" className="text-lg px-8 h-14 rounded-full shadow-sm hover:shadow-md">
               For Gamers
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
+            <Button
+              size="lg"
+              variant="outline"
               className="text-lg px-8 h-14 border-border rounded-full hover:border-foreground/30 hover:bg-foreground/5 hover:text-foreground"
             >
               For Developers
+            </Button>
+            <Button
+              size="lg"
+              variant="secondary"
+              className="text-lg px-8 h-14 rounded-full glow-text hover:glow-text-strong"
+              onClick={() => window.location.href = '/mvp-demo'}
+            >
+              🎮 Try MVP Demo
             </Button>
           </div>
         </div>
