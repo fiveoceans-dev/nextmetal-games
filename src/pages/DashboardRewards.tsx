@@ -28,8 +28,7 @@ export default function DashboardRewards() {
         </TabsList>
 
         <TabsContent value="league">
-          <Card>
-            <CardContent className="p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
               {user && (
                 <Step1LinkAccount
                   userId={user.id}
@@ -38,60 +37,49 @@ export default function DashboardRewards() {
                   }}
                 />
               )}
-            </CardContent>
-          </Card>
+          </div>
         </TabsContent>
 
         <TabsContent value="earnings">
           <div className="grid grid-cols-3 gap-4">
-            <Card>
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold">0</div>
-                <div className="text-sm text-muted-foreground">$METAL</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold">0</div>
-                <div className="text-sm text-muted-foreground">This Month</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold">0</div>
-                <div className="text-sm text-muted-foreground">Sessions</div>
-              </CardContent>
-            </Card>
+            <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">0</div>
+              <div className="text-sm text-green-700 dark:text-green-300">$METAL</div>
+            </div>
+            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">0</div>
+              <div className="text-sm text-blue-700 dark:text-blue-300">This Month</div>
+            </div>
+            <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">0</div>
+              <div className="text-sm text-purple-700 dark:text-purple-300">Sessions</div>
+            </div>
           </div>
         </TabsContent>
 
         <TabsContent value="achievements">
           <div className="grid grid-cols-2 gap-4">
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <Gamepad2 className="h-6 w-6" />
-                  <div>
-                    <div className="font-medium">First Recording</div>
-                    <div className="text-sm text-muted-foreground">Record your first game</div>
-                  </div>
-                  <Badge variant="outline" className="ml-auto">Locked</Badge>
+            <div className="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-4">
+              <div className="flex items-center gap-3">
+                <Gamepad2 className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+                <div>
+                  <div className="font-medium text-orange-900 dark:text-orange-100">First Recording</div>
+                  <div className="text-sm text-orange-700 dark:text-orange-300">Record your first game</div>
                 </div>
-              </CardContent>
-            </Card>
+                <Badge variant="outline" className="ml-auto border-orange-300 text-orange-700 dark:border-orange-600 dark:text-orange-300">Locked</Badge>
+              </div>
+            </div>
 
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <Trophy className="h-6 w-6" />
-                  <div>
-                    <div className="font-medium">Champion</div>
-                    <div className="text-sm text-muted-foreground">Earn 100 $METAL</div>
-                  </div>
-                  <Badge variant="outline" className="ml-auto">Locked</Badge>
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-4">
+              <div className="flex items-center gap-3">
+                <Trophy className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
+                <div>
+                  <div className="font-medium text-yellow-900 dark:text-yellow-100">Champion</div>
+                  <div className="text-sm text-yellow-700 dark:text-yellow-300">Earn 100 $METAL</div>
                 </div>
-              </CardContent>
-            </Card>
+                <Badge variant="outline" className="ml-auto border-yellow-300 text-yellow-700 dark:border-yellow-600 dark:text-yellow-300">Locked</Badge>
+              </div>
+            </div>
           </div>
         </TabsContent>
       </Tabs>

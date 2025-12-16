@@ -106,9 +106,8 @@ export default function DashboardSettings() {
       <h1 className="text-2xl font-bold">Settings</h1>
 
       <div className="space-y-6">
-        <Card>
-          <CardContent className="p-4 space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 space-y-4">
+          <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label>Username</Label>
                 <Input
@@ -129,33 +128,28 @@ export default function DashboardSettings() {
             <Button onClick={handleSaveProfile} disabled={isLoading} className="w-32">
               {isLoading ? "Saving..." : "Save"}
             </Button>
-          </CardContent>
-        </Card>
+        </div>
 
-        <Card>
-          <CardContent className="p-4 space-y-4">
-            <div className="flex justify-between items-center">
-              <span>Two-Factor Auth</span>
-              <Button variant="outline" size="sm" className="w-24">Enable</Button>
-            </div>
+        <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 space-y-4">
+          <div className="flex justify-between items-center">
+            <span className="text-green-900 dark:text-green-100">Two-Factor Auth</span>
+            <Button variant="outline" size="sm" className="w-24 border-green-300 text-green-700 dark:border-green-600 dark:text-green-300">Enable</Button>
+          </div>
 
             <div className="flex justify-between items-center">
-              <span>Change Password</span>
-              <Button variant="outline" size="sm" className="w-24">Change</Button>
+              <span className="text-green-900 dark:text-green-100">Change Password</span>
+              <Button variant="outline" size="sm" className="w-24 border-green-300 text-green-700 dark:border-green-600 dark:text-green-300">Change</Button>
             </div>
-          </CardContent>
-        </Card>
+        </div>
 
-        <Card className="border-red-200">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-center">
-              <span className="text-red-600">Delete Account</span>
-              <Button variant="destructive" size="sm" className="w-24" onClick={handleDeleteAccount}>
-                Delete
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4">
+          <div className="flex justify-between items-center">
+            <span className="text-red-900 dark:text-red-100">Delete Account</span>
+            <Button variant="destructive" size="sm" className="w-24" onClick={handleDeleteAccount}>
+              Delete
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -57,9 +57,8 @@ export default function DashboardStudio({
         <h1 className="text-2xl font-bold">Studio</h1>
       </div>
 
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex items-center gap-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
+        <div className="flex items-center gap-4">
             <Select value={selectedScreen} onValueChange={onSelectedScreenChange}>
               <SelectTrigger className="w-48">
                 <SelectValue />
@@ -122,12 +121,10 @@ export default function DashboardStudio({
               <span>{inputEventCount} events</span>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
 
-      <Card>
-        <CardContent className="p-4">
-          <div className="relative bg-black rounded-lg aspect-[4/1] overflow-hidden">
+      <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
+        <div className="relative bg-black rounded-lg aspect-[4/1] overflow-hidden">
             <canvas
               ref={canvasRef}
               className="w-full h-full object-contain"
@@ -150,19 +147,15 @@ export default function DashboardStudio({
               </div>
             )}
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
 
       {isRecording && recordingSession && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Download className="h-5 w-5" />
-              Session Info & Downloads
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-4">
+            <Download className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+            <h3 className="font-semibold text-blue-900 dark:text-blue-100">Session Info & Downloads</h3>
+          </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <div className="text-sm">
@@ -187,14 +180,13 @@ export default function DashboardStudio({
                 </div>
               </div>
             </div>
-            <div className="mt-4 p-3 bg-muted rounded-lg">
-              <p className="text-sm text-muted-foreground">
+            <div className="mt-4 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+              <p className="text-sm text-blue-800 dark:text-blue-200">
                 <strong>AI Training Ready:</strong> Files will auto-download when recording stops.
                 Video (.webm) contains synchronized screen + webcam. Input data (.json) contains timestamped keyboard/mouse events.
               </p>
             </div>
-          </CardContent>
-        </Card>
+        </div>
       )}
     </div>
   );

@@ -45,8 +45,8 @@ export function DashboardSidebar({ className, activeSection, onSectionChange }: 
   };
 
   return (
-    <div className={cn("flex flex-col h-full bg-card border-r", className)}>
-      <div className="p-6 border-b">
+    <div className={cn("flex flex-col h-full bg-slate-50 dark:bg-slate-900", className)}>
+      <div className="p-6 bg-slate-100 dark:bg-slate-800">
         <div className="flex items-center gap-3">
           <img src="/logo.svg" alt="NextMetal logo" className="h-8 w-8" />
           <div>
