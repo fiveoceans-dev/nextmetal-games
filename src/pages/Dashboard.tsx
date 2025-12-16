@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { User, Session } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
-import { Shield, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { WalletConnect } from "@/components/WalletConnect";
 import { NetworkStatus } from "@/components/NetworkStatus";
@@ -142,7 +142,6 @@ export default function Dashboard() {
               <div className="flex items-center gap-4">
                 <SidebarTrigger />
                 <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
-                  <Shield className="h-6 w-6 text-primary" />
                   <span className="text-lg font-bold glow-text">Next Metal</span>
                 </div>
               </div>
