@@ -119,4 +119,46 @@ All colors MUST be HSL.
   .marquee-track {
     animation: marquee-slide 16s linear infinite;
   }
+
+  @keyframes lava-drift {
+    0% {
+      transform: translate3d(-8%, -6%, 0) scale(0.95) rotate(-2deg);
+    }
+    25% {
+      transform: translate3d(6%, -2%, 0) scale(1.05) rotate(3deg);
+    }
+    50% {
+      transform: translate3d(10%, 6%, 0) scale(1.12) rotate(-1deg);
+    }
+    75% {
+      transform: translate3d(-4%, 10%, 0) scale(1.02) rotate(2deg);
+    }
+    100% {
+      transform: translate3d(-10%, 2%, 0) scale(0.92) rotate(-3deg);
+    }
+  }
+
+  .lava-lamp {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 43% 57% 60% 40%;
+    filter: blur(80px);
+    opacity: 0.55;
+    mix-blend-mode: screen;
+    animation: lava-drift 26s ease-in-out infinite;
+  }
+
+  .lava-lamp--pink {
+    background: #F31895;
+    top: 15%;
+    left: 5%;
+  }
+
+  .lava-lamp--indigo {
+    background: #3414E6;
+    bottom: 8%;
+    right: 6%;
+    animation-duration: 22s;
+  }
 }

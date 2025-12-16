@@ -104,12 +104,10 @@ export default function Auth() {
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Shield className="h-10 w-10 text-primary" />
+            
             <span className="text-2xl font-bold glow-text">Next Metal</span>
           </div>
-          <p className="text-muted-foreground">
-            {isLogin ? "Welcome back" : "Create your account"}
-          </p>
+
         </div>
 
         <Card className="glass-card border-primary/30">
@@ -120,14 +118,6 @@ export default function Auth() {
                 ? "Enter your credentials to access your dashboard"
                 : "Create an account to start linking your League account"}
             </CardDescription>
-            {isLogin && (
-              <Alert className="mt-4 bg-primary/10 border-primary/30">
-                <AlertCircle className="h-4 w-4 text-primary" />
-                <AlertDescription className="text-sm">
-                  <strong>Try it out:</strong> Click "Try Demo Account" below to test with pre-filled credentials
-                </AlertDescription>
-              </Alert>
-            )}
           </CardHeader>
           <CardContent>
             <form onSubmit={handleAuth} className="space-y-4">
@@ -188,25 +178,6 @@ export default function Auth() {
                 {loading ? "Loading..." : isLogin ? "Login" : "Sign Up"}
               </Button>
 
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-border" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-card px-2 text-muted-foreground">Or</span>
-                </div>
-              </div>
-
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full"
-                onClick={handleDemoLogin}
-                disabled={loading}
-              >
-                Try Demo Account
-              </Button>
-
               <div className="text-center text-sm">
                 <button
                   type="button"
@@ -221,6 +192,33 @@ export default function Auth() {
                     : "Already have an account? Login"}
                 </button>
               </div>
+
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-border" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-card px-2 text-muted-foreground">Or</span>
+                </div>
+              </div>
+            {isLogin && (
+              <Alert className="mt-4 bg-primary/10 border-primary/30">
+                <AlertCircle className="h-4 w-4 text-primary" />
+                <AlertDescription className="text-sm">
+                  Click "Try Demo Account" below to test with demo credentials
+                </AlertDescription>
+              </Alert>
+            )}
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={handleDemoLogin}
+                disabled={loading}
+              >
+                Try Demo Account
+              </Button>
+              
             </form>
           </CardContent>
         </Card>

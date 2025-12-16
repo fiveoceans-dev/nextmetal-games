@@ -15,8 +15,8 @@ export const HeroSection = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 bg-gradient-to-br from-background via-card to-background">
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-10 left-[-10%] w-[420px] h-[420px] bg-primary/15 rounded-full blur-3xl rotate-6" />
-        <div className="absolute bottom-10 right-[-10%] w-[420px] h-[420px] bg-accent/15 rounded-full blur-3xl -rotate-6" />
+        <div className="lava-lamp lava-lamp--pink" />
+        <div className="lava-lamp lava-lamp--indigo" />
         <div className="absolute inset-0 opacity-30 mix-blend-soft-light bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.04)_0,_rgba(255,255,255,0)_45%)]" />
       </div>
 

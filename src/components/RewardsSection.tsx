@@ -1,4 +1,3 @@
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState, useEffect } from "react";
@@ -22,14 +21,11 @@ export const RewardsSection = () => {
             </div>
             <div className="grid md:grid-cols-3 gap-10">
               {[1, 2, 3].map((i) => (
-                <Card key={i} className="minimal-card p-12">
-                  <div className="mb-10">
-                    <Skeleton className="h-24 w-32 mx-auto mb-3" />
-                    <Skeleton className="h-6 w-24 mx-auto" />
-                  </div>
+                <div key={i} className="rounded-3xl border border-border/70 bg-background/60 backdrop-blur-sm p-12 shadow-sm">
+                  <Skeleton className="h-24 w-32 mx-auto mb-4" />
                   <Skeleton className="h-8 w-40 mx-auto mb-3" />
                   <Skeleton className="h-6 w-full" />
-                </Card>
+                </div>
               ))}
             </div>
           </div>
@@ -52,22 +48,33 @@ export const RewardsSection = () => {
           </p>
         </div>
 
-          <div className="grid md:grid-cols-2 gap-4 justify-items-center max-w-4xl mx-auto">
-            <Card
-              className="p-6 text-left animate-fade-in-up rounded-3xl border border-border/70 bg-background/60 backdrop-blur-sm shadow-sm w-full md:w-[280px] flex flex-col justify-between"
+          <div className="grid md:grid-cols-3 gap-4 justify-items-center max-w-5xl mx-auto">
+            <div
+              className="p-6 text-left animate-fade-in-up rounded-3xl border border-slate-300/50 bg-slate-200/15 w-full md:w-[280px] flex flex-col justify-between shadow-sm"
+              style={{ animationDelay: '0.05s', aspectRatio: "2.5 / 3.5" }}
+            >
+              <div className="text-sm uppercase tracking-[0.35em] text-slate-900/70 mb-4">Silver</div>
+              <h3 className="text-4xl font-bold tracking-tight mb-2 text-slate-900">10 METAL / H</h3>
+              <p className="text-sm text-slate-900/70">Anyone can join and start earning rewards.</p>
+            </div>
+
+            <div
+              className="p-6 text-left animate-fade-in-up rounded-3xl border border-amber-300/50 bg-amber-200/15 w-full md:w-[280px] flex flex-col justify-between shadow-sm"
               style={{ aspectRatio: "2.5 / 3.5" }}
             >
-              <h3 className="text-4xl font-bold tracking-tight">Gold</h3>
-              <p className="text-lg text-muted-foreground">Base $METAL rate + swag.</p>
-            </Card>
+              <div className="text-sm uppercase tracking-[0.35em] text-amber-900/70 mb-4">Gold</div>
+              <h3 className="text-4xl font-bold tracking-tight mb-2 text-amber-900">25 METAL / H</h3>
+              <p className="text-sm text-amber-900/80">For long term members and supporters.</p>
+            </div>
 
-            <Card
-              className="p-6 text-left animate-fade-in-up rounded-3xl border border-border/70 bg-background/60 backdrop-blur-sm shadow-sm w-full md:w-[280px] flex flex-col justify-between"
+            <div
+              className="p-6 text-left animate-fade-in-up rounded-3xl border border-zinc-300/60 bg-zinc-100/40 w-full md:w-[280px] flex flex-col justify-between shadow-sm"
               style={{ animationDelay: '0.1s', aspectRatio: "2.5 / 3.5" }}
             >
-              <h3 className="text-4xl font-bold tracking-tight">Platinum</h3>
-              <p className="text-lg text-muted-foreground">2× $METAL rate + Swag+.</p>
-            </Card>
+              <div className="text-sm uppercase tracking-[0.35em] text-zinc-900/70 mb-4">Platinum</div>
+              <h3 className="text-4xl font-bold tracking-tight mb-2 text-zinc-900">50 METAL / H</h3>
+              <p className="text-sm text-zinc-900/70">For high skilled and professional players.</p>
+            </div>
           </div>
 
           <div className="text-center mt-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
@@ -76,7 +83,7 @@ export const RewardsSection = () => {
               variant="outline"
               className="text-lg px-8 h-14 border-border rounded-full hover:border-foreground/30 hover:bg-foreground/5 hover:text-foreground"
             >
-              Join as a Player
+              Play & Earn
             </Button>
           </div>
         </div>

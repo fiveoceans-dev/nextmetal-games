@@ -44,9 +44,10 @@ export const Navigation = () => {
         <button
           type="button"
           onClick={() => navigate("/")}
-          className="inline-flex items-center h-10 px-4 rounded-full hover:bg-foreground/5 transition-colors"
+          className="inline-flex items-center h-10 px-4 gap-3 rounded-full hover:bg-foreground/5 transition-colors"
         >
-          <span className="text-sm md:text-base font-semibold tracking-tight">Next Metal Skills</span>
+          <img src="/logo.svg" alt="NextMetal logo" className="h-16 w-16" />
+          <span className="text-sm md:text-base font-semibold tracking-tight">Next Metal</span>
         </button>
 
         <div className="hidden md:flex items-center h-10 rounded-full border border-border/80 bg-background/60 backdrop-blur-sm">
