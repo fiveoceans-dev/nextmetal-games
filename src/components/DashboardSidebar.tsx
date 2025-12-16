@@ -5,7 +5,6 @@ import {
   Trophy,
   Settings,
   LogOut,
-  User,
   Images
 } from "lucide-react";
 
@@ -48,11 +47,11 @@ export function DashboardSidebar({ className, activeSection, onSectionChange }: 
   return (
     <div className={cn("flex flex-col h-full bg-card border-r", className)}>
       <div className="p-6 border-b">
-        <div className="flex items-center gap-2">
-          <User className="h-8 w-8 text-primary" />
+        <div className="flex items-center gap-3">
+          <img src="/logo.svg" alt="NextMetal logo" className="h-8 w-8" />
           <div>
-            <h3 className="font-semibold">Dashboard</h3>
-            <p className="text-xs text-muted-foreground">Game Recording Studio</p>
+            <h3 className="font-semibold text-sm">Next Metal</h3>
+            <p className="text-xs text-muted-foreground">Dashboard</p>
           </div>
         </div>
       </div>

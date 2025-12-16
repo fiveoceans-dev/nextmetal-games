@@ -103,147 +103,56 @@ export default function DashboardSettings() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold flex items-center gap-2">
-          <User className="h-6 w-6" />
-          Settings
-        </h1>
-        <p className="text-muted-foreground">Manage your account settings and preferences</p>
-      </div>
+      <h1 className="text-2xl font-bold">Settings</h1>
 
       <div className="space-y-6">
         <Card>
-          <CardHeader>
-            <CardTitle>Profile Information</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+          <CardContent className="p-4 space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Username</Label>
                 <Input
-                  id="username"
                   value={formData.username}
                   onChange={(e) => handleInputChange("username", e.target.value)}
-                  placeholder="Enter your username"
                 />
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+              <div>
+                <Label>Email</Label>
                 <Input
-                  id="email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  placeholder="Enter your email"
                 />
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <Badge variant={user.verified ? "default" : "secondary"}>
-                {user.verified ? "Verified" : "Unverified"}
-              </Badge>
-              <span className="text-sm text-muted-foreground">
-                Member since {new Date(user.createdAt).toLocaleDateString()}
-              </span>
-            </div>
-
-            <Button
-              onClick={handleSaveProfile}
-              disabled={isLoading}
-              className="w-full md:w-auto"
-            >
-              <Save className="h-4 w-4 mr-2" />
-              {isLoading ? "Saving..." : "Save Changes"}
+            <Button onClick={handleSaveProfile} disabled={isLoading} className="w-32">
+              {isLoading ? "Saving..." : "Save"}
             </Button>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Shield className="h-5 w-5" />
-              Account Security
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between p-4 border rounded-lg">
-              <div>
-                <h4 className="font-medium">Two-Factor Authentication</h4>
-                <p className="text-sm text-muted-foreground">
-                  Add an extra layer of security to your account
-                </p>
-              </div>
-              <Button variant="outline" className="w-32">
-                Enable 2FA
-              </Button>
+          <CardContent className="p-4 space-y-4">
+            <div className="flex justify-between items-center">
+              <span>Two-Factor Auth</span>
+              <Button variant="outline" size="sm" className="w-24">Enable</Button>
             </div>
 
-            <div className="flex items-center justify-between p-4 border rounded-lg">
-              <div>
-                <h4 className="font-medium">Password</h4>
-                <p className="text-sm text-muted-foreground">
-                  Last changed 30 days ago
-                </p>
-              </div>
-              <Button variant="outline" className="w-32">
-                Change Password
-              </Button>
+            <div className="flex justify-between items-center">
+              <span>Change Password</span>
+              <Button variant="outline" size="sm" className="w-24">Change</Button>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-destructive/50">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-destructive">
-              <AlertTriangle className="h-5 w-5" />
-              Danger Zone
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between p-4 border border-destructive/20 rounded-lg bg-destructive/5">
-              <div>
-                <h4 className="font-medium">Delete Account</h4>
-                <p className="text-sm text-muted-foreground">
-                  Permanently delete your account and all associated data
-                </p>
-              </div>
-
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="destructive" size="sm">
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete Account
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete your account
-                      and remove all your data from our servers, including:
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <div className="py-4">
-                    <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                      <li>Your profile and account information</li>
-                      <li>All recorded game sessions and data</li>
-                      <li>Earned rewards and achievements</li>
-                      <li>Linked game accounts</li>
-                    </ul>
-                  </div>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={handleDeleteAccount}
-                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                    >
-                      Yes, delete my account
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+        <Card className="border-red-200">
+          <CardContent className="p-4">
+            <div className="flex justify-between items-center">
+              <span className="text-red-600">Delete Account</span>
+              <Button variant="destructive" size="sm" className="w-24" onClick={handleDeleteAccount}>
+                Delete
+              </Button>
             </div>
           </CardContent>
         </Card>

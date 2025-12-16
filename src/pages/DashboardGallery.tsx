@@ -11,7 +11,8 @@ import {
   Calendar,
   Clock,
   Gamepad2,
-  FileVideo
+  FileVideo,
+  Upload
 } from "lucide-react";
 
 interface Recording {
@@ -27,76 +28,78 @@ interface Recording {
   status: 'completed' | 'processing' | 'failed';
 }
 
-// Mock data for recordings
+// Note: In a web browser, we cannot access local files from Downloads folder
+// This would require a desktop application (Electron) with File System API
+// For now, showing mock data with the new filename format
 const mockRecordings: Recording[] = [
   {
-    id: 'rec_001',
+    id: 'nextmetal_video_1734361800000',
     name: 'League of Legends - Ranked Match',
     date: new Date('2024-12-16T14:30:00'),
-    duration: 1847, // ~30 minutes
+    duration: 1847,
     game: 'League of Legends',
     size: 245,
     status: 'completed'
   },
   {
-    id: 'rec_002',
+    id: 'nextmetal_video_1734364500000',
     name: 'Valorant - Competitive',
     date: new Date('2024-12-16T16:15:00'),
-    duration: 2341, // ~39 minutes
+    duration: 2341,
     game: 'Valorant',
     size: 312,
     status: 'completed'
   },
   {
-    id: 'rec_003',
-    name: 'CS2 - Casual Match',
+    id: 'nextmetal_video_1734309900000',
+    name: 'Counter-Strike 2 - Casual Match',
     date: new Date('2024-12-15T20:45:00'),
-    duration: 1567, // ~26 minutes
+    duration: 1567,
     game: 'Counter-Strike 2',
     size: 198,
     status: 'completed'
   },
   {
-    id: 'rec_004',
+    id: 'nextmetal_video_1734306000000',
     name: 'Apex Legends - Ranked',
     date: new Date('2024-12-15T19:20:00'),
-    duration: 1234, // ~20 minutes
+    duration: 1234,
     game: 'Apex Legends',
     size: 167,
     status: 'completed'
   },
   {
-    id: 'rec_005',
+    id: 'nextmetal_video_1734217800000',
     name: 'Overwatch 2 - Quick Play',
     date: new Date('2024-12-14T21:30:00'),
-    duration: 987, // ~16 minutes
+    duration: 987,
     game: 'Overwatch 2',
     size: 134,
     status: 'completed'
   },
   {
-    id: 'rec_006',
+    id: 'nextmetal_video_1734208800000',
     name: 'Rocket League - Tournament',
     date: new Date('2024-12-14T18:00:00'),
-    duration: 2156, // ~36 minutes
+    duration: 2156,
     game: 'Rocket League',
     size: 289,
     status: 'completed'
   },
   {
-    id: 'rec_007',
+    id: 'nextmetal_video_1734110700000',
     name: 'Dota 2 - Ranked Match',
     date: new Date('2024-12-13T15:45:00'),
-    duration: 2876, // ~48 minutes
+    duration: 2876,
     game: 'Dota 2',
     size: 387,
     status: 'processing'
   },
   {
-    id: 'rec_008',
+    id: 'nextmetal_video_1734097800000',
     name: 'Fortnite - Creative Mode',
     date: new Date('2024-12-13T12:30:00'),
-    duration: 756, // ~12 minutes
+    duration: 756,
     game: 'Fortnite',
     size: 98,
     status: 'completed'
@@ -165,79 +168,57 @@ export default function DashboardGallery() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Images className="h-6 w-6" />
-            Gallery
-          </h1>
-          <p className="text-muted-foreground">View and manage your game recordings</p>
+          <h1 className="text-2xl font-bold">Gallery</h1>
+          <p className="text-sm text-muted-foreground">
+            Files saved as: nextmetal_video_*.webm
+          </p>
         </div>
-
-        <div className="flex items-center gap-4">
-          <div className="relative">
+        <div className="flex gap-3">
+          <Button variant="outline" size="sm">
+            <Upload className="h-4 w-4 mr-2" />
+            Upload All
+          </Button>
+          <div className="relative w-64">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search recordings..."
+              placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 w-64"
+              className="pl-10"
             />
           </div>
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="pt-4">
-            <div className="flex items-center gap-2">
-              <FileVideo className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm font-medium">Total Recordings</span>
-            </div>
-            <div className="text-2xl font-bold mt-2">{recordings.length}</div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="pt-4">
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm font-medium">Total Hours</span>
-            </div>
-            <div className="text-2xl font-bold mt-2">
-              {Math.round(recordings.reduce((acc, rec) => acc + rec.duration, 0) / 3600)}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="pt-4">
-            <div className="flex items-center gap-2">
-              <Download className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm font-medium">Storage Used</span>
-            </div>
-            <div className="text-2xl font-bold mt-2">
-              {recordings.reduce((acc, rec) => acc + rec.size, 0)} MB
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="pt-4">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm font-medium">This Week</span>
-            </div>
-            <div className="text-2xl font-bold mt-2">
-              {recordings.filter(rec => {
-                const weekAgo = new Date();
-                weekAgo.setDate(weekAgo.getDate() - 7);
-                return rec.date >= weekAgo;
-              }).length}
-            </div>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-4 gap-4 text-center">
+        <div>
+          <div className="text-2xl font-bold">{recordings.length}</div>
+          <div className="text-sm text-muted-foreground">Recordings</div>
+        </div>
+        <div>
+          <div className="text-2xl font-bold">
+            {Math.round(recordings.reduce((acc, rec) => acc + rec.duration, 0) / 3600)}
+          </div>
+          <div className="text-sm text-muted-foreground">Hours</div>
+        </div>
+        <div>
+          <div className="text-2xl font-bold">
+            {recordings.reduce((acc, rec) => acc + rec.size, 0)}
+          </div>
+          <div className="text-sm text-muted-foreground">MB</div>
+        </div>
+        <div>
+          <div className="text-2xl font-bold">
+            {recordings.filter(rec => {
+              const weekAgo = new Date();
+              weekAgo.setDate(weekAgo.getDate() - 7);
+              return rec.date >= weekAgo;
+            }).length}
+          </div>
+          <div className="text-sm text-muted-foreground">This Week</div>
+        </div>
       </div>
 
       {/* Recordings by Date */}
@@ -246,90 +227,40 @@ export default function DashboardGallery() {
           .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
           .map(([dateString, dayRecordings]) => (
             <div key={dateString} className="space-y-4">
-              <div className="flex items-center gap-2">
-                <Calendar className="h-5 w-5 text-muted-foreground" />
-                <h2 className="text-lg font-semibold">
-                  {new Date(dateString).toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </h2>
-                <Badge variant="outline" className="ml-2">
-                  {dayRecordings.length} recording{dayRecordings.length !== 1 ? 's' : ''}
-                </Badge>
-              </div>
+              <h2 className="text-lg font-semibold mb-4">
+                {new Date(dateString).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric'
+                })}
+                <span className="text-muted-foreground ml-2">
+                  ({dayRecordings.length})
+                </span>
+              </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {dayRecordings.map((recording) => (
-                  <Card key={recording.id} className="group hover:shadow-lg transition-shadow">
-                    <CardHeader className="pb-3">
-                      <div className="aspect-video bg-muted rounded-lg flex items-center justify-center mb-3 relative overflow-hidden">
-                        {recording.thumbnail ? (
-                          <img
-                            src={recording.thumbnail}
-                            alt={recording.name}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="text-center">
-                            <FileVideo className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                            <p className="text-xs text-muted-foreground">No preview</p>
-                          </div>
-                        )}
-
-                        {/* Play overlay */}
-                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                          <Button size="sm" variant="secondary" className="rounded-full">
-                            <Play className="h-4 w-4" />
-                          </Button>
-                        </div>
+                  <Card key={recording.id} className="hover:shadow-md transition-shadow">
+                    <CardContent className="p-4">
+                      <div className="aspect-video bg-black rounded mb-3 flex items-center justify-center relative">
+                        <FileVideo className="h-8 w-8 text-white/50" />
+                        {getStatusBadge(recording.status)}
                       </div>
 
-                      <CardTitle className="text-sm leading-tight line-clamp-2">
-                        {recording.name}
-                      </CardTitle>
-                    </CardHeader>
+                      <h3 className="font-medium text-sm mb-2 line-clamp-2">{recording.name}</h3>
 
-                    <CardContent className="pt-0">
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          {recording.game && (
-                            <div className="flex items-center gap-1">
-                              {getGameIcon(recording.game)}
-                              <span className="text-xs text-muted-foreground">{recording.game}</span>
-                            </div>
-                          )}
-                          {getStatusBadge(recording.status)}
-                        </div>
+                      <div className="flex justify-between text-xs text-muted-foreground mb-3">
+                        <span>{formatDuration(recording.duration)}</span>
+                        <span>{recording.size} MB</span>
+                      </div>
 
-                        <div className="flex items-center justify-between text-xs text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            {formatDuration(recording.duration)}
-                          </div>
-                          <span>{recording.size} MB</span>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="flex-1 mr-2"
-                            disabled={recording.status !== 'completed'}
-                          >
-                            <Play className="h-3 w-3 mr-1" />
-                            Play
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            disabled={recording.status !== 'completed'}
-                          >
-                            <Download className="h-3 w-3" />
-                          </Button>
-                        </div>
+                      <div className="flex gap-2">
+                        <Button size="sm" variant="outline" className="flex-1" disabled={recording.status !== 'completed'}>
+                          <Play className="h-3 w-3 mr-1" />
+                          Play
+                        </Button>
+                        <Button size="sm" variant="outline" disabled={recording.status !== 'completed'}>
+                          <Download className="h-3 w-3" />
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -350,16 +281,14 @@ export default function DashboardGallery() {
       )}
 
       {recordings.length === 0 && (
-        <div className="text-center py-12">
-          <Images className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-          <h3 className="text-lg font-medium mb-2">No recordings yet</h3>
-          <p className="text-muted-foreground mb-4">
-            Start recording your gameplay sessions to build your gallery.
-          </p>
-          <Button>
-            <Play className="h-4 w-4 mr-2" />
-            Start Recording
-          </Button>
+        <div className="text-center py-12 space-y-4">
+          <div className="text-sm text-muted-foreground space-y-2">
+            <p>No recordings yet</p>
+            <p className="text-xs">
+              <strong>Browser Limitation:</strong> Cannot read local files.<br/>
+              Desktop app needed for auto-detection.
+            </p>
+          </div>
         </div>
       )}
     </div>
