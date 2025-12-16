@@ -7,7 +7,7 @@ import {
   Settings,
   LogOut,
   User,
-  Gallery
+  Images
 } from "lucide-react";
 
 interface DashboardSidebarProps {
@@ -24,7 +24,7 @@ const menuItems = [
   {
     id: "gallery",
     label: "Gallery",
-    icon: Gallery,
+    icon: Images,
     path: "/dashboard/gallery"
   },
   {

@@ -6,8 +6,7 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    host: "::",
-    port: 8080,
+    port: 5173,
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
@@ -15,6 +14,15 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // Disable env file loading for MVP
-  envDir: false,
+  // Disable env loading to avoid .env file issues
+  envDir: './nonexistent',
+  // Define environment variables manually
+  define: {
+    'import.meta.env.VITE_SUPABASE_URL': JSON.stringify(''),
+    'import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY': JSON.stringify(''),
+    'import.meta.env.VITE_CHAIN_ID_MONAD': JSON.stringify('10143'),
+    'import.meta.env.VITE_MONAD_RPC_URL': JSON.stringify('https://rpc-testnet.monadinfra.com'),
+    'import.meta.env.VITE_NETWORK_NAME': JSON.stringify('Monad Testnet'),
+    'import.meta.env.VITE_WALLETCONNECT_PROJECT_ID': JSON.stringify(''),
+  },
 }));

@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Gallery,
+  Images,
   Play,
   Download,
   Search,
@@ -168,7 +168,7 @@ export default function DashboardGallery() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Gallery className="h-6 w-6" />
+            <Images className="h-6 w-6" />
             Gallery
           </h1>
           <p className="text-muted-foreground">View and manage your game recordings</p>
@@ -351,7 +351,7 @@ export default function DashboardGallery() {
 
       {recordings.length === 0 && (
         <div className="text-center py-12">
-          <Gallery className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+          <Images className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
           <h3 className="text-lg font-medium mb-2">No recordings yet</h3>
           <p className="text-muted-foreground mb-4">
             Start recording your gameplay sessions to build your gallery.
