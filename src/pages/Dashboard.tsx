@@ -18,6 +18,19 @@ export default function Dashboard() {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Only set up Supabase auth if it's available
+    if (!supabase) {
+      // For demo purposes, create a mock user
+      setUser({
+        id: 'demo-user',
+        email: 'demo@nextmetal.com',
+        user_metadata: { name: 'Demo User' }
+      } as User);
+      setSession({ user: null } as Session);
+      setLoading(false);
+      return;
+    }
+
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {

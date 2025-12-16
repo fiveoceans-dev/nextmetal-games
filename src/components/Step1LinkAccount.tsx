@@ -45,6 +45,19 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
   const [currentAccountId, setCurrentAccountId] = useState("");
   const { toast } = useToast();
 
+  // Check if Supabase is available
+  if (!supabase) {
+    return (
+      <div className="text-center py-8">
+        <Gamepad2 className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+        <h3 className="text-lg font-medium mb-2">League Account Linking</h3>
+        <p className="text-muted-foreground">
+          This feature requires backend configuration. Please contact support to enable League account linking.
+        </p>
+      </div>
+    );
+  }
+
   useEffect(() => {
     fetchLinkedAccounts();
   }, [userId]);

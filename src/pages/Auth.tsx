@@ -20,12 +20,17 @@ export default function Auth() {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if user is already logged in
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        navigate("/dashboard");
-      }
-    });
+    // Check if user is already logged in (only if Supabase is available)
+    if (supabase) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+          navigate("/dashboard");
+        }
+      });
+    } else {
+      // For demo purposes, auto-redirect to dashboard
+      setTimeout(() => navigate("/dashboard"), 1000);
+    }
   }, [navigate]);
 
   const handleDemoLogin = async () => {

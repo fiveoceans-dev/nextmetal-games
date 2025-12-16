@@ -28,6 +28,17 @@ export default function Account() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Redirect to dashboard settings if Supabase is not available
+  useEffect(() => {
+    if (!supabase) {
+      navigate("/dashboard/settings");
+    }
+  }, [navigate]);
+
+  if (!supabase) {
+    return null;
+  }
+
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {

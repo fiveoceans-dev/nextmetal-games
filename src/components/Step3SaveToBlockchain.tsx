@@ -26,6 +26,19 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
   const [attempted, setAttempted] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const { toast } = useToast();
+
+  // Check if Supabase is available
+  if (!supabase) {
+    return (
+      <div className="text-center py-8">
+        <Shield className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+        <h3 className="text-lg font-medium mb-2">Save to Blockchain</h3>
+        <p className="text-muted-foreground">
+          This feature requires backend configuration. Please contact support to enable blockchain integration.
+        </p>
+      </div>
+    );
+  }
   const { address } = useAccount();
   const chainId = useChainId();
   const { switchChainAsync, isPending: isSwitching } = useSwitchChain();
