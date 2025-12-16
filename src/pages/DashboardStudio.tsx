@@ -32,24 +32,7 @@ export default function DashboardStudio() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const durationIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Get available screens/windows
-  useEffect(() => {
-    const getScreens = async () => {
-      try {
-        // Request permission to access screen capture
-        const stream = await navigator.mediaDevices.getDisplayMedia({
-          video: true,
-          audio: true
-        });
-        // Stop the permission stream immediately
-        stream.getTracks().forEach(track => track.stop());
-      } catch (error) {
-        console.error('Error accessing screen capture:', error);
-      }
-    };
-
-    getScreens();
-  }, []);
+  // No longer pre-requesting permissions - they will be requested when Start Recording is clicked
 
   const startRecording = async () => {
     try {

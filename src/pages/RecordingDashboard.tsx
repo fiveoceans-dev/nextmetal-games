@@ -30,30 +30,7 @@ export default function RecordingDashboard() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Get available screens/windows
-  useEffect(() => {
-    const getScreens = async () => {
-      try {
-        // Request permission to access screen capture
-        const stream = await navigator.mediaDevices.getDisplayMedia({
-          video: true,
-          audio: true
-        });
-
-        // Get screen sources (this is simplified - in a real app you'd use electron or browser extensions)
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const videoDevices = devices.filter(device => device.kind === 'videoinput');
-        setScreens(videoDevices);
-
-        // Stop the permission stream
-        stream.getTracks().forEach(track => track.stop());
-      } catch (error) {
-        console.error('Error accessing screen capture:', error);
-      }
-    };
-
-    getScreens();
-  }, []);
+  // No longer pre-requesting permissions - they will be requested when Start Recording is clicked
 
   const startRecording = async () => {
     try {
