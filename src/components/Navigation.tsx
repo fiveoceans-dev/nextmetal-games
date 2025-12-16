@@ -70,23 +70,13 @@ export const Navigation = () => {
           })}
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button
-            onClick={() => navigate("/mvp-demo")}
-            variant="outline"
-            size="default"
-            className="rounded-full h-10 px-5 text-xs font-semibold uppercase tracking-[0.25em]"
-          >
-            MVP Demo
-          </Button>
-          <Button
-            onClick={() => navigate("/auth")}
-            size="default"
-            className="rounded-full h-10 px-5 text-xs font-semibold uppercase tracking-[0.25em]"
-          >
-            Get Started
-          </Button>
-        </div>
+        <Button
+          onClick={() => navigate("/auth")}
+          size="default"
+          className="rounded-full h-10 px-5 text-xs font-semibold uppercase tracking-[0.25em]"
+        >
+          Get Started
+        </Button>
       </div>
     </nav>
   );

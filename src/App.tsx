@@ -8,7 +8,6 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
 import RecordingDashboard from "./pages/RecordingDashboard";
-import MVPDemo from "./pages/MVPDemo";
 import NotFound from "./pages/NotFound";
 
 const App = () => (
@@ -23,7 +22,6 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/account" element={<Account />} />
           <Route path="/record" element={<RecordingDashboard />} />
-          <Route path="/mvp-demo" element={<MVPDemo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
