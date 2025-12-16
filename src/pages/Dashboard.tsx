@@ -143,7 +143,7 @@ export default function Dashboard() {
                 <SidebarTrigger />
                 <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
                   <Shield className="h-6 w-6 text-primary" />
-                  <span className="text-lg font-bold glow-text">Airdrop</span>
+                  <span className="text-lg font-bold glow-text">Next Metal</span>
                 </div>
               </div>
               <div className="flex items-center gap-4">

@@ -8,7 +8,7 @@ export const Footer = () => {
           </div>
           
           <div className="text-base text-muted-foreground">
-            © 2025 Next Metal. All rights reserved.
+            © 2025 All rights reserved.
           </div>
         </div>
       </div>

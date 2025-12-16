@@ -5,25 +5,42 @@ export const Navigation = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
-          <span className="text-2xl font-bold tracking-tighter">Next Metal Skills</span>
-        </div>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl">
+      <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="inline-flex items-center h-10 px-4 rounded-full hover:bg-foreground/5 transition-colors"
+        >
+          <span className="text-sm md:text-base font-semibold tracking-tight">Next Metal Skills</span>
+        </button>
 
-        <div className="hidden md:flex items-center gap-3">
-          <a href="#rewards" className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-full hover:bg-muted/60 transition-colors">
-            Rewards
+        <div className="hidden md:flex items-center rounded-full bg-foreground/5 ring-1 ring-foreground/10 p-1">
+          <a
+            href="#rewards"
+            className="inline-flex items-center justify-center h-10 px-5 rounded-full text-xs font-semibold uppercase tracking-[0.25em] text-foreground/70 hover:text-foreground hover:bg-background/70 transition-colors"
+          >
+            Players
           </a>
-          <a href="#data" className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-full hover:bg-muted/60 transition-colors">
+          <a
+            href="#data"
+            className="inline-flex items-center justify-center h-10 px-5 rounded-full text-xs font-semibold uppercase tracking-[0.25em] text-foreground/70 hover:text-foreground hover:bg-background/70 transition-colors"
+          >
             Data
           </a>
-          <a href="#datasets" className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-full hover:bg-muted/60 transition-colors">
-            Datasets
+          <a
+            href="#datasets"
+            className="inline-flex items-center justify-center h-10 px-5 rounded-full text-xs font-semibold uppercase tracking-[0.25em] text-foreground/70 hover:text-foreground hover:bg-background/70 transition-colors"
+          >
+            Labs
           </a>
         </div>
 
-        <Button onClick={() => navigate("/auth")} size="default" className="rounded-full">
+        <Button
+          onClick={() => navigate("/auth")}
+          size="default"
+          className="rounded-full h-10 px-5 text-xs font-semibold uppercase tracking-[0.25em]"
+        >
           Get Started
         </Button>
       </div>

@@ -50,9 +50,9 @@ export const RewardsSection = () => {
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-center gap-3">
+          <div className="grid md:grid-cols-2 gap-4 justify-items-center max-w-4xl mx-auto">
             <Card
-              className="minimal-card p-6 text-left animate-fade-in-up border-2 border-primary/20 rounded-3xl w-full md:w-[280px] flex flex-col justify-between"
+              className="minimal-card p-6 text-left animate-fade-in-up border-2 border-primary/20 rounded-3xl w-full max-w-xs flex flex-col justify-between"
               style={{ aspectRatio: "2.5 / 3.5" }}
             >
               <div className="flex items-center justify-between mb-4">
@@ -66,7 +66,7 @@ export const RewardsSection = () => {
             </Card>
 
             <Card
-              className="minimal-card p-6 text-left animate-fade-in-up border-2 border-primary/20 rounded-3xl w-full md:w-[280px] flex flex-col justify-between"
+              className="minimal-card p-6 text-left animate-fade-in-up border-2 border-primary/20 rounded-3xl w-full max-w-xs flex flex-col justify-between"
               style={{ animationDelay: '0.1s', aspectRatio: "2.5 / 3.5" }}
             >
               <div className="flex items-center justify-between mb-4">

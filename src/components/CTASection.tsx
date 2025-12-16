@@ -35,28 +35,11 @@ export const CTASection = () => {
       <div className="container mx-auto max-w-3xl text-center relative z-10">
         {/* Headline */}
         <h2 className="font-orbitron text-4xl md:text-6xl font-bold mb-4 animate-fade-in-up">
-          Play. Earn <span className="text-accent neon-text-gold">$METAL</span>. Build real AI.
+          Play. Earn. Build AGI.
         </h2>
         <p className="text-xl text-muted-foreground mb-12 font-mono animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-          Play. Earn $METAL. Build real AI.
+          Help us reach Artificial General Intelligence.
         </p>
-
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-          <Button size="lg" className="cyber-btn text-lg px-8 h-14 pulse-glow rounded-full">
-            <Download className="mr-2 h-5 w-5" />
-            Install & Play
-            <ChevronRight className="ml-2 h-5 w-5" />
-          </Button>
-          <Button 
-            size="lg" 
-            variant="outline" 
-            className="text-lg px-8 h-14 border-border hover:border-secondary hover:text-secondary rounded-full"
-          >
-            <Handshake className="mr-2 h-5 w-5" />
-            Partner With Us
-          </Button>
-        </div>
       </div>
     </section>
   );
