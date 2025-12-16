@@ -14,7 +14,7 @@ export const SupportedGamesSection = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <p className="text-sm uppercase tracking-[0.35em] font-mono text-muted-foreground">Supported Games</p>
-          <h2 className="text-4xl md:text-5xl font-bold mt-3">More Games Coming Soon</h2>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-[-0.03em] mt-3">More Games Coming Soon</h2>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {games.map((game) => (

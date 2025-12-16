@@ -35,26 +35,26 @@ export const HeroSection = () => {
           </div>
 
           <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-            <h1 className="font-orbitron text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-[-0.04em]">
               AI that learns by
               <br />
-              <span className="text-primary neon-text">playing games.</span>
+              <span className="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">playing games.</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-mono">
-              Play. Earn <span className="text-primary font-semibold">$METAL</span>. Train AGI.
+              Play games. Earn <span className="text-primary font-semibold">$METAL</span>. Train AI.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
-            <Button size="lg" className="cyber-btn text-lg px-8 h-14 pulse-glow rounded-full">
-              For Gamers
+            <Button size="lg" className="text-lg px-8 h-14 rounded-full shadow-sm hover:shadow-md">
+              Install & Play
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-lg px-8 h-14 border-border hover:border-secondary hover:text-secondary rounded-full"
+              className="text-lg px-8 h-14 border-border rounded-full hover:border-foreground/30 hover:bg-foreground/5 hover:text-foreground"
             >
-              For Developers
+              For Teams & AI Labs
             </Button>
           </div>
         </div>
