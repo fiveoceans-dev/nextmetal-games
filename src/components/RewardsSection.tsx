@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState, useEffect } from "react";
 
@@ -12,7 +13,7 @@ export const RewardsSection = () => {
 
   if (isLoading) {
     return (
-      <section id="rewards" className="py-32 relative overflow-hidden border-b border-border">
+      <section id="rewards" className="py-32 relative overflow-hidden">
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-24">
@@ -38,7 +39,7 @@ export const RewardsSection = () => {
   }
 
   return (
-    <section id="rewards" className="py-32 relative overflow-hidden border-b border-border">
+    <section id="rewards" className="py-32 relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 animate-fade-in-up">
@@ -49,8 +50,11 @@ export const RewardsSection = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="minimal-card p-10 text-left animate-fade-in-up border-2 border-foreground/10">
+          <div className="flex flex-col md:flex-row justify-center gap-3">
+            <Card
+              className="minimal-card p-6 text-left animate-fade-in-up border-2 border-primary/20 rounded-3xl w-full md:w-[280px] flex flex-col justify-between"
+              style={{ aspectRatio: "2.5 / 3.5" }}
+            >
               <div className="flex items-center justify-between mb-4">
                 <span className="text-sm font-mono uppercase tracking-[0.2em] text-muted-foreground">Tier</span>
                 <div className="px-3 py-1 rounded-full bg-amber-200/40 text-amber-900 text-xs font-semibold">Gold</div>
@@ -61,7 +65,10 @@ export const RewardsSection = () => {
               </p>
             </Card>
 
-            <Card className="minimal-card p-10 text-left animate-fade-in-up border-2 border-primary/30" style={{ animationDelay: '0.1s' }}>
+            <Card
+              className="minimal-card p-6 text-left animate-fade-in-up border-2 border-primary/20 rounded-3xl w-full md:w-[280px] flex flex-col justify-between"
+              style={{ animationDelay: '0.1s', aspectRatio: "2.5 / 3.5" }}
+            >
               <div className="flex items-center justify-between mb-4">
                 <span className="text-sm font-mono uppercase tracking-[0.2em] text-muted-foreground">Tier</span>
                 <div className="px-3 py-1 rounded-full bg-primary/15 text-primary text-xs font-semibold">Platinum</div>
@@ -74,9 +81,13 @@ export const RewardsSection = () => {
           </div>
 
           <div className="text-center mt-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <button className="px-8 py-4 text-lg font-semibold rounded-full border border-foreground/20 hover:border-primary hover:text-primary transition-all duration-200 shadow-[0_0_0_1px_hsl(var(--border))]">
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-lg px-8 h-14 border-border hover:border-secondary hover:text-secondary rounded-full"
+            >
               Join as a Player
-            </button>
+            </Button>
           </div>
         </div>
       </div>

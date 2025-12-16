@@ -1,0 +1,16 @@
+<svg width="220" height="200" viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title>StarCraft Logo</title>
+  <desc>Minimalist StarCraft I emblem</desc>
+  <defs>
+    <linearGradient id="scg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6fc3ff"/>
+      <stop offset="100%" stop-color="#1a4b86"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#6fc3ff" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <rect x="18" y="22" width="184" height="156" rx="26" fill="#0a101a" stroke="url(#scg)" stroke-width="5" filter="url(#glow)"/>
+  <path d="M60 120 L110 60 L140 60 L100 120 L150 120 L120 150 L70 150 Z" fill="url(#scg)"/>
+  <text x="50%" y="180" text-anchor="middle" fill="#9ed7ff" font-family="'Orbitron', 'Segoe UI', sans-serif" font-size="26" font-weight="700" letter-spacing="2">StarCraft</text>
+</svg>

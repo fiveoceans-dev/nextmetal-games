@@ -103,4 +103,17 @@ All colors MUST be HSL.
   .animate-fade-in-up {
     animation: fade-in-up 0.8s ease-out forwards;
   }
+
+  @keyframes marquee-slide {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-track {
+    animation: marquee-slide 16s linear infinite;
+  }
 }

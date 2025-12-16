@@ -43,7 +43,7 @@ export const CTASection = () => {
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-          <Button size="lg" className="cyber-btn text-lg px-8 h-14 pulse-glow">
+          <Button size="lg" className="cyber-btn text-lg px-8 h-14 pulse-glow rounded-full">
             <Download className="mr-2 h-5 w-5" />
             Install & Play
             <ChevronRight className="ml-2 h-5 w-5" />
@@ -51,7 +51,7 @@ export const CTASection = () => {
           <Button 
             size="lg" 
             variant="outline" 
-            className="text-lg px-8 h-14 border-border hover:border-secondary hover:text-secondary"
+            className="text-lg px-8 h-14 border-border hover:border-secondary hover:text-secondary rounded-full"
           >
             <Handshake className="mr-2 h-5 w-5" />
             Partner With Us

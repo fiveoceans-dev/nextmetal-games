@@ -1,0 +1,16 @@
+<svg width="220" height="200" viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title>StarCraft II Logo</title>
+  <desc>Minimalist StarCraft II emblem</desc>
+  <defs>
+    <linearGradient id="sc2g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9ee0ff"/>
+      <stop offset="100%" stop-color="#2a6cb8"/>
+    </linearGradient>
+    <filter id="sc2glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#9ee0ff" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect x="18" y="22" width="184" height="156" rx="26" fill="#0a101a" stroke="url(#sc2g)" stroke-width="5" filter="url(#sc2glow)"/>
+  <path d="M72 142 L120 62 L148 62 L118 110 L150 110 L134 142 Z" fill="url(#sc2g)"/>
+  <text x="50%" y="180" text-anchor="middle" fill="#c6eaff" font-family="'Orbitron', 'Segoe UI', sans-serif" font-size="22" font-weight="700" letter-spacing="2">StarCraft II</text>
+</svg>

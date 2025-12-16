@@ -58,10 +58,10 @@ export const DatasetsSection = () => {
         {/* Header */}
         <div className="text-center mb-16 space-y-4 animate-fade-in-up">
           <p className="text-sm uppercase tracking-[0.35em] font-mono text-muted-foreground">Datasets · For AI Labs</p>
-          <h2 className="font-orbitron text-4xl md:text-5xl font-bold">
-            <span className="text-secondary neon-text-purple">Signals for real AI.</span>
+          <h2 className="font-orbitron text-4xl md:text-5xl font-bold text-foreground">
+            Signals for <span className="text-primary">real AI.</span>
           </h2>
-          <p className="text-xl text-muted-foreground font-mono">
+          <p className="text-lg text-foreground/80 font-mono">
             Raw or annotated. Your call.
           </p>
         </div>
@@ -103,7 +103,7 @@ export const DatasetsSection = () => {
           <Button 
             size="lg" 
             variant="outline" 
-            className="border-secondary hover:border-secondary hover:bg-secondary/10 hover:text-secondary"
+            className="border-secondary hover:border-secondary hover:bg-secondary/10 hover:text-secondary rounded-full"
           >
             <MessageSquare className="mr-2 h-5 w-5" />
             Talk to Us
