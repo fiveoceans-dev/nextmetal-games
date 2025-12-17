@@ -33,11 +33,11 @@ export const CTASection = () => {
 
       <div className="container mx-auto max-w-3xl text-center relative z-10">
         <h2 className="text-4xl md:text-6xl font-bold tracking-[-0.03em] mb-4 animate-fade-in-up">
-          Play. Earn. Build AGI.
+          Help us reach Artificial General Intelligence.
         </h2>
         <div className="text-lg text-muted-foreground font-mono max-w-3xl mx-auto space-y-2">
           <p>
-            Help us reach Artificial General Intelligence.
+            Play. Earn. Build AGI.
           </p>
         </div>
       </div>

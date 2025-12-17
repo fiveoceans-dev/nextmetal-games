@@ -48,7 +48,7 @@ export const HeroSection = () => {
               <span className="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">Play, Earn, Build AI</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-mono">
-              AI that learns by playing games.
+              AI that learns by playing computer games.
             </p>
           </div>
 
