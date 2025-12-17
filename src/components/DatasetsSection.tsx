@@ -1,6 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useState, useEffect } from "react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { FormEvent, useState, useEffect } from "react";
 
 const DatasetsSkeleton = () => (
   <section className="py-24 px-4">
@@ -20,6 +26,15 @@ const DatasetsSkeleton = () => (
 
 export const DatasetsSection = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    organization: "",
+    message: ""
+  });
+  const { toast } = useToast();
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1200);
@@ -48,6 +63,65 @@ export const DatasetsSection = () => {
       ],
     },
   ];
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        title: "Missing details",
+        description: "Name, email, and a short message are required.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!supabase) {
+      toast({
+        title: "Service unavailable",
+        description: "Unable to connect to Lovable Cloud right now.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase.from("contact_requests").insert({
+        full_name: formData.name,
+        email: formData.email,
+        organization: formData.organization || null,
+        message: formData.message,
+        source: "datasets-section"
+      });
+
+      if (error) {
+        console.error("Error submitting contact form:", error);
+        toast({
+          title: "Something went wrong",
+          description: "We couldn't save your message. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      toast({
+        title: "Thanks for reaching out!",
+        description: "We'll be in touch shortly."
+      });
+      setFormData({
+        name: "",
+        email: "",
+        organization: "",
+        message: ""
+      });
+      setIsDialogOpen(false);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const isSubmitDisabled = isSubmitting || !formData.name || !formData.email || !formData.message;
 
   return (
     <section id="datasets" className="py-24 px-4 relative">
@@ -92,13 +166,83 @@ export const DatasetsSection = () => {
 
         {/* CTA */}
         <div className="text-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-          <Button 
-            size="lg" 
-            variant="outline" 
-            className="text-lg px-8 h-14 border-border rounded-full hover:border-foreground/30 hover:bg-foreground/5 hover:text-foreground"
-          >
-            Talk to Us
-          </Button>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="text-lg px-8 h-14 border-border rounded-full hover:border-foreground/30 hover:bg-foreground/5 hover:text-foreground"
+              >
+                Talk to Us
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Tell us about your lab</DialogTitle>
+                <DialogDescription>
+                  Share how you're thinking about AI training data and we'll reach out with next steps.
+                </DialogDescription>
+              </DialogHeader>
+              <form className="space-y-5" onSubmit={handleSubmit}>
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="contact-name">Full name</Label>
+                  <Input
+                    id="contact-name"
+                    placeholder="Ada Lovelace"
+                    value={formData.name}
+                    onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="contact-email">Work email</Label>
+                  <Input
+                    id="contact-email"
+                    type="email"
+                    placeholder="you@lab.ai"
+                    value={formData.email}
+                    onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="contact-organization">Organization</Label>
+                  <Input
+                    id="contact-organization"
+                    placeholder="NextMetal Labs"
+                    value={formData.organization}
+                    onChange={(event) => setFormData((prev) => ({ ...prev, organization: event.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="contact-message">What are you building?</Label>
+                  <Textarea
+                    id="contact-message"
+                    placeholder="Share goals, timelines, and how datasets can help."
+                    value={formData.message}
+                    rows={4}
+                    onChange={(event) => setFormData((prev) => ({ ...prev, message: event.target.value }))}
+                  />
+                </div>
+                <DialogFooter className="flex flex-col sm:flex-row sm:justify-between gap-3">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="w-full sm:w-auto"
+                    onClick={() => setIsDialogOpen(false)}
+                    disabled={isSubmitting}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="w-full sm:w-auto"
+                    disabled={isSubmitDisabled}
+                  >
+                    {isSubmitting ? "Sending..." : "Send message"}
+                  </Button>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </section>

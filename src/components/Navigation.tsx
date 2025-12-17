@@ -9,7 +9,7 @@ export const Navigation = () => {
       { id: "home", label: "Home", href: "#home" },
       { id: "rewards", label: "Rewards", href: "#rewards" },
       { id: "data", label: "Data", href: "#data" },
-      { id: "datasets", label: "Labs", href: "#datasets" },
+      { id: "datasets", label: "Datasets", href: "#datasets" },
     ],
     [],
   );

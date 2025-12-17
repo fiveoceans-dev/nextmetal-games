@@ -4,6 +4,12 @@ import { HeroSkeleton } from "@/components/HeroSkeleton";
 
 export const HeroSection = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const scrollToSection = (sectionId: string) => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 600);
@@ -36,26 +42,29 @@ export const HeroSection = () => {
               </div>
             </div>
           </div>
-
           <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-[-0.04em]">
-              AI that learns by
-              <br />
-              <span className="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">playing games.</span>
+
+              <span className="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">Play, Earn, Build AI</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-mono">
-              Play. Earn <span className="text-primary font-semibold">$METAL</span>. Train AGI.
+              AI that learns by playing games.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
-            <Button size="lg" className="text-lg px-8 h-14 rounded-full shadow-sm hover:shadow-md">
+            <Button
+              size="lg"
+              className="text-lg px-8 h-14 rounded-full shadow-sm hover:shadow-md"
+              onClick={() => scrollToSection("rewards")}
+            >
               For Gamers
             </Button>
             <Button
               size="lg"
               variant="outline"
               className="text-lg px-8 h-14 border-border rounded-full hover:border-foreground/30 hover:bg-foreground/5 hover:text-foreground"
+              onClick={() => scrollToSection("datasets")}
             >
               For Developers
             </Button>

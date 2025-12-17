@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const RewardsSection = () => {
   const [isLoading, setIsLoading] = useState(true);
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1200);
     return () => clearTimeout(timer);
@@ -44,7 +46,7 @@ export const RewardsSection = () => {
             Earn Rewards
           </h2>
           <p className="text-xl text-muted-foreground font-mono">
-            Get paid to play. Climb tiers for better splits and merch.
+            Receive <span className="text-primary font-semibold">$METAL</span> rewards for every hour you play.
           </p>
         </div>
 
@@ -79,9 +81,9 @@ export const RewardsSection = () => {
 
           <div className="text-center mt-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <Button
+              onClick={() => navigate("/auth")}
               size="lg"
-              variant="outline"
-              className="text-lg px-8 h-14 border-border rounded-full hover:border-foreground/30 hover:bg-foreground/5 hover:text-foreground"
+              className="text-lg px-8 h-14 rounded-full shadow-sm hover:shadow-md"
             >
               Play & Earn
             </Button>
