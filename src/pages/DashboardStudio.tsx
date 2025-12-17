@@ -116,7 +116,7 @@ export default function DashboardStudio({
                 <Keyboard className="h-5 w-5 mx-auto mb-1" />
                 <div className="text-sm">Input</div>
                 <Badge variant={isRecording ? "default" : "secondary"} className="text-xs">
-                  {isRecording ? `${inputEventCount}` : "Offline"}
+                  {isRecording ? "ON" : "Offline"}
                 </Badge>
               </div>
             </div>
