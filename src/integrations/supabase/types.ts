@@ -53,36 +53,6 @@ export type Database = {
         }
         Relationships: []
       }
-      contact_requests: {
-        Row: {
-          created_at: string
-          email: string
-          full_name: string
-          id: string
-          message: string
-          organization: string | null
-          source: string | null
-        }
-        Insert: {
-          created_at?: string
-          email: string
-          full_name: string
-          id?: string
-          message: string
-          organization?: string | null
-          source?: string | null
-        }
-        Update: {
-          created_at?: string
-          email?: string
-          full_name?: string
-          id?: string
-          message?: string
-          organization?: string | null
-          source?: string | null
-        }
-        Relationships: []
-      }
       linked_accounts: {
         Row: {
           created_at: string

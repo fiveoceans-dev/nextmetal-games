@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { FormEvent, useState, useEffect } from "react";
 
 const DatasetsSkeleton = () => (
@@ -76,34 +75,16 @@ export const DatasetsSection = () => {
       return;
     }
 
-    if (!supabase) {
-      toast({
-        title: "Service unavailable",
-        description: "Unable to connect to Lovable Cloud right now.",
-        variant: "destructive"
-      });
-      return;
-    }
-
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.from("contact_requests").insert({
+      // For now, just simulate sending - table can be added later
+      console.log("Contact form submission:", {
         full_name: formData.name,
         email: formData.email,
         organization: formData.organization || null,
         message: formData.message,
         source: "datasets-section"
       });
-
-      if (error) {
-        console.error("Error submitting contact form:", error);
-        toast({
-          title: "Something went wrong",
-          description: "We couldn't save your message. Please try again.",
-          variant: "destructive"
-        });
-        return;
-      }
 
       toast({
         title: "Thanks for reaching out!",

@@ -36,7 +36,7 @@ export default function RecordingDashboard() {
     try {
       // Get screen capture
       const screenStream = await navigator.mediaDevices.getDisplayMedia({
-        video: { mediaSource: 'screen' },
+        video: true,
         audio: true
       });
 

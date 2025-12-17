@@ -46,9 +46,12 @@ export default function Dashboard() {
       setUser({
         id: 'demo-user',
         email: 'demo@nextmetal.com',
-        user_metadata: { name: 'Demo User' }
+        user_metadata: { name: 'Demo User' },
+        app_metadata: {},
+        aud: 'authenticated',
+        created_at: new Date().toISOString()
       } as User);
-      setSession({ user: null } as Session);
+      setSession({ user: null } as unknown as Session);
       setLoading(false);
       return;
     }
