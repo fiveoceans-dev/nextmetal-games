@@ -8,6 +8,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Badge } from "@/components/ui/badge";
 import { User, Mail, Shield, Trash2, Save, AlertTriangle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 
 export default function DashboardSettings() {
   const [user, setUser] = useState<any>(null);
@@ -17,6 +18,7 @@ export default function DashboardSettings() {
     email: ""
   });
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   // Mock user data - in real app this would come from auth context
   useEffect(() => {
@@ -58,14 +60,14 @@ export default function DashboardSettings() {
       }));
 
       toast({
-        title: "Profile updated",
-        description: "Your profile has been updated successfully.",
+        title: t("settings.toast.profileUpdated.title"),
+        description: t("settings.toast.profileUpdated.description"),
       });
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Failed to update profile. Please try again.",
+        title: t("settings.toast.error.title"),
+        description: t("settings.toast.error.description"),
       });
     } finally {
       setIsLoading(false);
@@ -78,8 +80,8 @@ export default function DashboardSettings() {
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       toast({
-        title: "Account deleted",
-        description: "Your account has been permanently deleted.",
+        title: t("settings.toast.deleted.title"),
+        description: t("settings.toast.deleted.description"),
       });
 
       // Redirect to home or logout
@@ -87,8 +89,8 @@ export default function DashboardSettings() {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Failed to delete account. Please try again.",
+        title: t("settings.toast.deleteError.title"),
+        description: t("settings.toast.deleteError.description"),
       });
     }
   };
@@ -103,20 +105,20 @@ export default function DashboardSettings() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Settings</h1>
+      <h1 className="text-2xl font-bold">{t("settings.title")}</h1>
 
       <div className="space-y-6">
         <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 space-y-4">
           <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label>Username</Label>
+                <Label>{t("settings.fields.username")}</Label>
                 <Input
                   value={formData.username}
                   onChange={(e) => handleInputChange("username", e.target.value)}
                 />
               </div>
               <div>
-                <Label>Email</Label>
+                <Label>{t("settings.fields.email")}</Label>
                 <Input
                   type="email"
                   value={formData.email}
@@ -126,27 +128,27 @@ export default function DashboardSettings() {
             </div>
 
             <Button onClick={handleSaveProfile} disabled={isLoading} className="w-32">
-              {isLoading ? "Saving..." : "Save"}
+              {isLoading ? t("settings.saving") : t("settings.save")}
             </Button>
         </div>
 
         <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 space-y-4">
           <div className="flex justify-between items-center">
-            <span className="text-green-900 dark:text-green-100">Two-Factor Auth</span>
-            <Button variant="outline" size="sm" className="w-24 border-green-300 text-green-700 dark:border-green-600 dark:text-green-300">Enable</Button>
+            <span className="text-green-900 dark:text-green-100">{t("settings.twoFactor")}</span>
+            <Button variant="outline" size="sm" className="w-24 border-green-300 text-green-700 dark:border-green-600 dark:text-green-300">{t("settings.enable")}</Button>
           </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-green-900 dark:text-green-100">Change Password</span>
-              <Button variant="outline" size="sm" className="w-24 border-green-300 text-green-700 dark:border-green-600 dark:text-green-300">Change</Button>
+              <span className="text-green-900 dark:text-green-100">{t("settings.changePassword")}</span>
+              <Button variant="outline" size="sm" className="w-24 border-green-300 text-green-700 dark:border-green-600 dark:text-green-300">{t("settings.change")}</Button>
             </div>
         </div>
 
         <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4">
           <div className="flex justify-between items-center">
-            <span className="text-red-900 dark:text-red-100">Delete Account</span>
+            <span className="text-red-900 dark:text-red-100">{t("settings.deleteAccount")}</span>
             <Button variant="destructive" size="sm" className="w-24" onClick={handleDeleteAccount}>
-              Delete
+              {t("settings.delete")}
             </Button>
           </div>
         </div>

@@ -3,21 +3,25 @@ import { Button } from '@/components/ui/button';
 import { Wallet, LogOut, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect } from 'react';
+import { useTranslation } from "react-i18next";
 
 export function WalletConnect() {
   const { address, isConnected } = useAccount();
   const { connect, connectors, isPending } = useConnect();
   const { disconnect } = useDisconnect();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isConnected && address) {
       toast({
-        title: 'Wallet Connected',
-        description: `Connected to ${address.slice(0, 6)}...${address.slice(-4)}`,
+        title: t("wallet.connected"),
+        description: t("wallet.connectedDescription", {
+          address: `${address.slice(0, 6)}...${address.slice(-4)}`,
+        }),
       });
     }
-  }, [isConnected, address]);
+  }, [isConnected, address, t, toast]);
 
   const handleConnect = async () => {
     // Try injected wallets first (MetaMask, etc.)
@@ -33,8 +37,8 @@ export function WalletConnect() {
   const handleDisconnect = () => {
     disconnect();
     toast({
-      title: 'Wallet Disconnected',
-      description: 'Your wallet has been disconnected.',
+      title: t("wallet.disconnected"),
+      description: t("wallet.disconnectedDescription"),
     });
   };
 
@@ -66,12 +70,12 @@ export function WalletConnect() {
       {isPending ? (
         <>
           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-          Connecting...
+          {t("wallet.connecting")}
         </>
       ) : (
         <>
           <Wallet className="h-4 w-4 mr-2" />
-          Connect Wallet
+          {t("wallet.connect")}
         </>
       )}
     </Button>

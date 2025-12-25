@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 export const Footer = () => {
+  const { t } = useTranslation();
   return (
     <footer className="border-t border-border py-16">
       <div className="container mx-auto px-6">
@@ -7,9 +10,7 @@ export const Footer = () => {
             Next Metal
           </div>
           
-          <div className="text-base text-muted-foreground">
-            © 2025 All rights reserved.
-          </div>
+          <div className="text-base text-muted-foreground">{t("footer.rights")}</div>
         </div>
       </div>
     </footer>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,8 @@ import {
   FileVideo,
   Upload
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { getLocaleForLanguage } from "@/i18n/locale";
 
 interface Recording {
   id: string;
@@ -31,92 +33,96 @@ interface Recording {
 // Note: In a web browser, we cannot access local files from Downloads folder
 // This would require a desktop application (Electron) with File System API
 // For now, showing mock data with the new filename format
-const mockRecordings: Recording[] = [
-  {
-    id: 'nextmetal_video_1734361800000',
-    name: 'League of Legends - Ranked Match',
-    date: new Date('2024-12-16T14:30:00'),
-    duration: 1847,
-    game: 'League of Legends',
-    size: 245,
-    status: 'completed'
-  },
-  {
-    id: 'nextmetal_video_1734364500000',
-    name: 'Valorant - Competitive',
-    date: new Date('2024-12-16T16:15:00'),
-    duration: 2341,
-    game: 'Valorant',
-    size: 312,
-    status: 'completed'
-  },
-  {
-    id: 'nextmetal_video_1734309900000',
-    name: 'Counter-Strike 2 - Casual Match',
-    date: new Date('2024-12-15T20:45:00'),
-    duration: 1567,
-    game: 'Counter-Strike 2',
-    size: 198,
-    status: 'completed'
-  },
-  {
-    id: 'nextmetal_video_1734306000000',
-    name: 'Apex Legends - Ranked',
-    date: new Date('2024-12-15T19:20:00'),
-    duration: 1234,
-    game: 'Apex Legends',
-    size: 167,
-    status: 'completed'
-  },
-  {
-    id: 'nextmetal_video_1734217800000',
-    name: 'Overwatch 2 - Quick Play',
-    date: new Date('2024-12-14T21:30:00'),
-    duration: 987,
-    game: 'Overwatch 2',
-    size: 134,
-    status: 'completed'
-  },
-  {
-    id: 'nextmetal_video_1734208800000',
-    name: 'Rocket League - Tournament',
-    date: new Date('2024-12-14T18:00:00'),
-    duration: 2156,
-    game: 'Rocket League',
-    size: 289,
-    status: 'completed'
-  },
-  {
-    id: 'nextmetal_video_1734110700000',
-    name: 'Dota 2 - Ranked Match',
-    date: new Date('2024-12-13T15:45:00'),
-    duration: 2876,
-    game: 'Dota 2',
-    size: 387,
-    status: 'processing'
-  },
-  {
-    id: 'nextmetal_video_1734097800000',
-    name: 'Fortnite - Creative Mode',
-    date: new Date('2024-12-13T12:30:00'),
-    duration: 756,
-    game: 'Fortnite',
-    size: 98,
-    status: 'completed'
-  }
-];
-
 export default function DashboardGallery() {
+  const { t, i18n } = useTranslation();
   const [recordings, setRecordings] = useState<Recording[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredRecordings, setFilteredRecordings] = useState<Recording[]>([]);
+  const mockRecordings: Recording[] = useMemo(
+    () => [
+      {
+        id: 'nextmetal_video_1734361800000',
+        name: t('gallery.mockNames.lolRanked'),
+        date: new Date('2024-12-16T14:30:00'),
+        duration: 1847,
+        game: t('gallery.mockGames.lol'),
+        size: 245,
+        status: 'completed'
+      },
+      {
+        id: 'nextmetal_video_1734364500000',
+        name: t('gallery.mockNames.valorantCompetitive'),
+        date: new Date('2024-12-16T16:15:00'),
+        duration: 2341,
+        game: t('gallery.mockGames.valorant'),
+        size: 312,
+        status: 'completed'
+      },
+      {
+        id: 'nextmetal_video_1734309900000',
+        name: t('gallery.mockNames.cs2Casual'),
+        date: new Date('2024-12-15T20:45:00'),
+        duration: 1567,
+        game: t('gallery.mockGames.cs2'),
+        size: 198,
+        status: 'completed'
+      },
+      {
+        id: 'nextmetal_video_1734306000000',
+        name: t('gallery.mockNames.apexRanked'),
+        date: new Date('2024-12-15T19:20:00'),
+        duration: 1234,
+        game: t('gallery.mockGames.apex'),
+        size: 167,
+        status: 'completed'
+      },
+      {
+        id: 'nextmetal_video_1734217800000',
+        name: t('gallery.mockNames.overwatchQuick'),
+        date: new Date('2024-12-14T21:30:00'),
+        duration: 987,
+        game: t('gallery.mockGames.overwatch'),
+        size: 134,
+        status: 'completed'
+      },
+      {
+        id: 'nextmetal_video_1734208800000',
+        name: t('gallery.mockNames.rocketTournament'),
+        date: new Date('2024-12-14T18:00:00'),
+        duration: 2156,
+        game: t('gallery.mockGames.rocket'),
+        size: 289,
+        status: 'completed'
+      },
+      {
+        id: 'nextmetal_video_1734110700000',
+        name: t('gallery.mockNames.dotaRanked'),
+        date: new Date('2024-12-13T15:45:00'),
+        duration: 2876,
+        game: t('gallery.mockGames.dota'),
+        size: 387,
+        status: 'processing'
+      },
+      {
+        id: 'nextmetal_video_1734097800000',
+        name: t('gallery.mockNames.fortniteCreative'),
+        date: new Date('2024-12-13T12:30:00'),
+        duration: 756,
+        game: t('gallery.mockGames.fortnite'),
+        size: 98,
+        status: 'completed'
+      }
+    ],
+    [t, i18n.language],
+  );
 
   useEffect(() => {
     // Simulate API call
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setRecordings(mockRecordings);
     }, 500);
-  }, []);
+    return () => clearTimeout(timer);
+  }, [mockRecordings]);
 
   useEffect(() => {
     // Filter recordings based on search
@@ -156,13 +162,13 @@ export default function DashboardGallery() {
   const getStatusBadge = (status: Recording['status']) => {
     switch (status) {
       case 'completed':
-        return <Badge variant="default" className="bg-green-600">Completed</Badge>;
+        return <Badge variant="default" className="bg-green-600">{t("status.completed")}</Badge>;
       case 'processing':
-        return <Badge variant="secondary" className="bg-yellow-600">Processing</Badge>;
+        return <Badge variant="secondary" className="bg-yellow-600">{t("status.processing")}</Badge>;
       case 'failed':
-        return <Badge variant="destructive">Failed</Badge>;
+        return <Badge variant="destructive">{t("status.failed")}</Badge>;
       default:
-        return <Badge variant="outline">Unknown</Badge>;
+        return <Badge variant="outline">{t("status.unknown")}</Badge>;
     }
   };
 
@@ -170,20 +176,20 @@ export default function DashboardGallery() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold">Gallery</h1>
+          <h1 className="text-2xl font-bold">{t("gallery.title")}</h1>
           <p className="text-sm text-muted-foreground">
-            Files saved as: nextmetal_video_*.webm
+            {t("gallery.filenameHint")}
           </p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline" size="sm">
             <Upload className="h-4 w-4 mr-2" />
-            Upload All
+            {t("gallery.uploadAll")}
           </Button>
           <div className="relative w-64">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search..."
+              placeholder={t("common.searchPlaceholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
@@ -195,13 +201,13 @@ export default function DashboardGallery() {
       <div className="grid grid-cols-4 gap-4 text-center">
         <div>
           <div className="text-2xl font-bold">{recordings.length}</div>
-          <div className="text-sm text-muted-foreground">Recordings</div>
+          <div className="text-sm text-muted-foreground">{t("gallery.stats.recordings")}</div>
         </div>
         <div>
           <div className="text-2xl font-bold">
             {Math.round(recordings.reduce((acc, rec) => acc + rec.duration, 0) / 3600)}
           </div>
-          <div className="text-sm text-muted-foreground">Hours</div>
+          <div className="text-sm text-muted-foreground">{t("gallery.stats.hours")}</div>
         </div>
         <div>
           <div className="text-2xl font-bold">
@@ -217,7 +223,7 @@ export default function DashboardGallery() {
               return rec.date >= weekAgo;
             }).length}
           </div>
-          <div className="text-sm text-muted-foreground">This Week</div>
+          <div className="text-sm text-muted-foreground">{t("gallery.stats.thisWeek")}</div>
         </div>
       </div>
 
@@ -228,7 +234,7 @@ export default function DashboardGallery() {
           .map(([dateString, dayRecordings]) => (
             <div key={dateString} className="space-y-4">
               <h2 className="text-lg font-semibold mb-4">
-                {new Date(dateString).toLocaleDateString('en-US', {
+                {new Date(dateString).toLocaleDateString(getLocaleForLanguage(i18n.language), {
                   month: 'short',
                   day: 'numeric'
                 })}
@@ -258,7 +264,7 @@ export default function DashboardGallery() {
                       <div className="flex gap-2">
                         <Button size="sm" variant="outline" className="flex-1" disabled={recording.status !== 'completed'}>
                           <Play className="h-3 w-3 mr-1" />
-                          Play
+                          {t("gallery.play")}
                         </Button>
                         <Button size="sm" variant="outline" disabled={recording.status !== 'completed'}>
                           <Download className="h-3 w-3" />
@@ -274,9 +280,9 @@ export default function DashboardGallery() {
       {filteredRecordings.length === 0 && recordings.length > 0 && (
         <div className="text-center py-12">
           <Search className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-          <h3 className="text-lg font-medium mb-2">No recordings found</h3>
+          <h3 className="text-lg font-medium mb-2">{t("gallery.emptySearch.title")}</h3>
           <p className="text-muted-foreground">
-            Try adjusting your search terms or create your first recording.
+            {t("gallery.emptySearch.description")}
           </p>
         </div>
       )}
@@ -284,10 +290,10 @@ export default function DashboardGallery() {
       {recordings.length === 0 && (
         <div className="text-center py-12 space-y-4">
           <div className="text-sm text-muted-foreground space-y-2">
-            <p>No recordings yet</p>
+            <p>{t("gallery.emptyAll.title")}</p>
             <p className="text-xs">
-              <strong>Browser Limitation:</strong> Cannot read local files.<br/>
-              Desktop app needed for auto-detection.
+              <strong>{t("gallery.emptyAll.browserLimitLabel")}</strong> {t("gallery.emptyAll.browserLimitDescription")}<br/>
+              {t("gallery.emptyAll.desktopAppRequired")}
             </p>
           </div>
         </div>

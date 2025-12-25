@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,6 +19,7 @@ export default function Auth() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Check if user is already logged in (only if Supabase is available)
@@ -46,8 +48,8 @@ export default function Auth() {
     }
     
     toast({
-      title: "Demo Credentials Loaded",
-      description: "Click 'Login' to sign in with demo account",
+      title: t("auth.demoToast.title"),
+      description: t("auth.demoToast.description"),
     });
   };
 
@@ -66,8 +68,8 @@ export default function Auth() {
         if (error) throw error;
 
         toast({
-          title: "Welcome back!",
-          description: "You've successfully logged in.",
+          title: t("auth.loginToast.title"),
+          description: t("auth.loginToast.description"),
         });
         
         navigate("/dashboard");
@@ -86,8 +88,8 @@ export default function Auth() {
         if (error) throw error;
 
         toast({
-          title: "Account created!",
-          description: "You can now log in with your credentials.",
+          title: t("auth.signupToast.title"),
+          description: t("auth.signupToast.description"),
         });
         
         setIsLogin(true);
@@ -96,7 +98,7 @@ export default function Auth() {
       setError(error.message);
       toast({
         variant: "destructive",
-        title: "Error",
+        title: t("auth.errorToast.title"),
         description: error.message,
       });
     } finally {
@@ -117,11 +119,11 @@ export default function Auth() {
 
         <Card className="glass-card border-primary/30">
           <CardHeader>
-            <CardTitle>{isLogin ? "Login" : "Sign Up"}</CardTitle>
+            <CardTitle>{isLogin ? t("auth.title.login") : t("auth.title.signup")}</CardTitle>
             <CardDescription>
               {isLogin
-                ? "Enter your credentials to access your dashboard"
-                : "Create an account to start linking your League account"}
+                ? t("auth.description.login")
+                : t("auth.description.signup")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -135,11 +137,11 @@ export default function Auth() {
 
               {!isLogin && (
                 <div className="space-y-2">
-                  <Label htmlFor="username">Username</Label>
+                  <Label htmlFor="username">{t("auth.fields.username")}</Label>
                   <Input
                     id="username"
                     type="text"
-                    placeholder="Choose a username"
+                    placeholder={t("auth.placeholders.username")}
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required={!isLogin}
@@ -149,11 +151,11 @@ export default function Auth() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("auth.fields.email")}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder={t("auth.placeholders.email")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -162,7 +164,7 @@ export default function Auth() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("auth.fields.password")}</Label>
                 <Input
                   id="password"
                   type="password"
@@ -180,7 +182,7 @@ export default function Auth() {
                 className="w-full"
                 disabled={loading}
               >
-                {loading ? "Loading..." : isLogin ? "Login" : "Sign Up"}
+                {loading ? t("auth.loading") : isLogin ? t("auth.actions.login") : t("auth.actions.signup")}
               </Button>
 
               <div className="text-center text-sm">
@@ -193,8 +195,8 @@ export default function Auth() {
                   className="text-primary hover:underline"
                 >
                   {isLogin
-                    ? "Don't have an account? Sign up"
-                    : "Already have an account? Login"}
+                    ? t("auth.switchToSignup")
+                    : t("auth.switchToLogin")}
                 </button>
               </div>
 
@@ -203,14 +205,14 @@ export default function Auth() {
                   <span className="w-full border-t border-border" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-card px-2 text-muted-foreground">Or</span>
+                  <span className="bg-card px-2 text-muted-foreground">{t("auth.or")}</span>
                 </div>
               </div>
             {isLogin && (
               <Alert className="mt-4 bg-primary/10 border-primary/30">
                 <AlertCircle className="h-4 w-4 text-primary" />
                 <AlertDescription className="text-sm">
-                  Click "Try Demo Account" below to test with demo credentials
+                  {t("auth.demoHint")}
                 </AlertDescription>
               </Alert>
             )}
@@ -221,7 +223,7 @@ export default function Auth() {
                 onClick={handleDemoLogin}
                 disabled={loading}
               >
-                Try Demo Account
+                {t("auth.demoButton")}
               </Button>
               
             </form>
@@ -234,7 +236,7 @@ export default function Auth() {
             onClick={() => navigate("/")}
             className="text-muted-foreground"
           >
-            ← Back to home
+            {t("auth.back")}
           </Button>
         </div>
       </div>

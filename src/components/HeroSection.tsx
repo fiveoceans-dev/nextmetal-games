@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { HeroSkeleton } from "@/components/HeroSkeleton";
+import { useTranslation } from "react-i18next";
 
 export const HeroSection = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(sectionId);
     if (el) {
@@ -32,23 +34,25 @@ export const HeroSection = () => {
             <div className="relative overflow-hidden py-2">
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,_rgba(250,250,250,0),_rgba(250,250,250,0.15),_rgba(250,250,250,0))]" />
               <div className="flex whitespace-nowrap text-sm font-mono uppercase tracking-[0.35em] text-foreground/70 marquee-track">
-                <span className="px-6">Play Games. Earn Rewards.</span>
-                <span className="px-6">Play Games. Earn Rewards.</span>
-                <span className="px-6">Play Games. Earn Rewards.</span>
-                <span className="px-6">Play Games. Earn Rewards.</span>
-                <span className="px-6">Play Games. Earn Rewards.</span>
-                <span className="px-6">Play Games. Earn Rewards.</span>
-                <span className="px-6">Play Games. Earn Rewards.</span>
+                <span className="px-6">{t("hero.marquee")}</span>
+                <span className="px-6">{t("hero.marquee")}</span>
+                <span className="px-6">{t("hero.marquee")}</span>
+                <span className="px-6">{t("hero.marquee")}</span>
+                <span className="px-6">{t("hero.marquee")}</span>
+                <span className="px-6">{t("hero.marquee")}</span>
+                <span className="px-6">{t("hero.marquee")}</span>
               </div>
             </div>
           </div>
           <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-[-0.04em]">
 
-              <span className="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">Play, Earn, Build AI</span>
+              <span className="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
+                {t("hero.title")}
+              </span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-mono">
-              AI that learns by playing computer games.
+              {t("hero.subtitle")}
             </p>
           </div>
 
@@ -58,7 +62,7 @@ export const HeroSection = () => {
               className="text-lg px-8 h-14 rounded-full shadow-sm hover:shadow-md"
               onClick={() => scrollToSection("rewards")}
             >
-              For Gamers
+              {t("hero.cta.gamers")}
             </Button>
             <Button
               size="lg"
@@ -66,7 +70,7 @@ export const HeroSection = () => {
               className="text-lg px-8 h-14 border-border rounded-full hover:border-foreground/30 hover:bg-foreground/5 hover:text-foreground"
               onClick={() => scrollToSection("datasets")}
             >
-              For Developers
+              {t("hero.cta.developers")}
             </Button>
           </div>
         </div>

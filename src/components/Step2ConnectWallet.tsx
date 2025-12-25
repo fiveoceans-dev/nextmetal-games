@@ -4,6 +4,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Wallet, Info } from "lucide-react";
 import { WalletConnect } from "./WalletConnect";
 import { useAccount } from "wagmi";
+import { useTranslation } from "react-i18next";
 
 interface Step2Props {
   onComplete: () => void;
@@ -11,6 +12,7 @@ interface Step2Props {
 
 export function Step2ConnectWallet({ onComplete }: Step2Props) {
   const { isConnected } = useAccount();
+  const { t } = useTranslation();
 
   const handleContinue = () => {
     if (isConnected) {
@@ -24,17 +26,17 @@ export function Step2ConnectWallet({ onComplete }: Step2Props) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Wallet className="h-5 w-5 text-primary" />
-            Connect Your Wallet
+            {t("steps.connectWallet.title")}
           </CardTitle>
           <CardDescription>
-            Link your Web3 wallet on Monad Testnet to store verified player credentials
+            {t("steps.connectWallet.description")}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <Alert className="bg-primary/10 border-primary/30">
             <Info className="h-4 w-4 text-primary" />
             <AlertDescription>
-              Connect with MetaMask, Coinbase Wallet, or WalletConnect to continue
+              {t("steps.connectWallet.hint")}
             </AlertDescription>
           </Alert>
 
@@ -44,12 +46,12 @@ export function Step2ConnectWallet({ onComplete }: Step2Props) {
                 <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto">
                   <Wallet className="h-8 w-8 text-primary" />
                 </div>
-                <p className="text-lg font-semibold text-primary">Wallet Connected!</p>
+                <p className="text-lg font-semibold text-primary">{t("steps.connectWallet.connectedTitle")}</p>
                 <p className="text-sm text-muted-foreground">
-                  Click continue to proceed to the next step
+                  {t("steps.connectWallet.connectedDescription")}
                 </p>
                 <Button onClick={handleContinue} className="mt-4">
-                  Continue to Step 3
+                  {t("steps.connectWallet.continue")}
                 </Button>
               </div>
             ) : (
@@ -58,7 +60,7 @@ export function Step2ConnectWallet({ onComplete }: Step2Props) {
                   <Wallet className="h-8 w-8 text-muted-foreground" />
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Choose your preferred wallet to connect
+                  {t("steps.connectWallet.selectWallet")}
                 </p>
                 <WalletConnect />
               </div>

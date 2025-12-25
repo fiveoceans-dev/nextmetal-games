@@ -12,21 +12,22 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-
-const menuItems = [
-  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Account", url: "/account", icon: User },
-];
+import { useTranslation } from "react-i18next";
 
 export function AppSidebar() {
   const { state } = useSidebar();
+  const { t } = useTranslation();
+  const menuItems = [
+    { title: t("appSidebar.dashboard"), url: "/dashboard", icon: LayoutDashboard },
+    { title: t("appSidebar.account"), url: "/account", icon: User },
+  ];
   const collapsed = state === "collapsed";
 
   return (
     <Sidebar className={collapsed ? "w-14" : "w-60"}>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Menu</SidebarGroupLabel>
+          <SidebarGroupLabel>{t("appSidebar.menu")}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (

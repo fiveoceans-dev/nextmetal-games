@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { LinkedAccountCard } from "./LinkedAccountCard";
 import { VerificationModal } from "./VerificationModal";
+import { useTranslation } from "react-i18next";
 import {
   Select,
   SelectContent,
@@ -44,15 +45,16 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
   const [currentVerificationCode, setCurrentVerificationCode] = useState("");
   const [currentAccountId, setCurrentAccountId] = useState("");
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   // Check if Supabase is available
   if (!supabase) {
     return (
       <div className="text-center py-8">
         <Gamepad2 className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-        <h3 className="text-lg font-medium mb-2">League Account Linking</h3>
+        <h3 className="text-lg font-medium mb-2">{t("steps.linkAccount.unavailableTitle")}</h3>
         <p className="text-muted-foreground">
-          This feature requires backend configuration. Please contact support to enable League account linking.
+          {t("steps.linkAccount.unavailableDescription")}
         </p>
       </div>
     );
@@ -80,8 +82,8 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
     if (!gameName.trim() || !tagLine.trim()) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Please enter both game name and tagline",
+        title: t("steps.linkAccount.toast.missing.title"),
+        description: t("steps.linkAccount.toast.missing.description"),
       });
       return;
     }
@@ -105,8 +107,8 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
         setCurrentAccountId(data.accountId);
         setShowVerificationModal(true);
         toast({
-          title: "Account found!",
-          description: "Please verify your ownership by updating your profile icon.",
+          title: t("steps.linkAccount.toast.found.title"),
+          description: t("steps.linkAccount.toast.found.description"),
         });
         await fetchLinkedAccounts();
         setGameName("");
@@ -115,8 +117,8 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: error.message || "Failed to link account",
+        title: t("steps.linkAccount.toast.error.title"),
+        description: error.message || t("steps.linkAccount.toast.error.description"),
       });
     } finally {
       setLoading(false);
@@ -139,8 +141,8 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
 
       if (data.success) {
         toast({
-          title: "Verified!",
-          description: "Your League account has been successfully verified.",
+          title: t("steps.linkAccount.toast.verified.title"),
+          description: t("steps.linkAccount.toast.verified.description"),
         });
         setShowVerificationModal(false);
         await fetchLinkedAccounts();
@@ -148,15 +150,15 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
       } else {
         toast({
           variant: "destructive",
-          title: "Verification failed",
-          description: data.message || "Could not verify account ownership",
+          title: t("steps.linkAccount.toast.verifyFailed.title"),
+          description: data.message || t("steps.linkAccount.toast.verifyFailed.description"),
         });
       }
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: error.message || "Failed to verify account",
+        title: t("steps.linkAccount.toast.error.title"),
+        description: error.message || t("steps.linkAccount.toast.error.description"),
       });
     } finally {
       setLoading(false);
@@ -174,15 +176,15 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
       if (error) throw error;
 
       toast({
-        title: "Account unlinked",
-        description: "The account has been removed.",
+        title: t("steps.linkAccount.toast.unlink.title"),
+        description: t("steps.linkAccount.toast.unlink.description"),
       });
       await fetchLinkedAccounts();
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: error.message || "Failed to unlink account",
+        title: t("steps.linkAccount.toast.unlinkError.title"),
+        description: error.message || t("steps.linkAccount.toast.unlinkError.description"),
       });
     } finally {
       setLoading(false);
@@ -190,17 +192,17 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
   };
 
   const regions = [
-    { value: "na1", label: "North America" },
-    { value: "euw1", label: "Europe West" },
-    { value: "eune1", label: "Europe Nordic & East" },
-    { value: "kr", label: "Korea" },
-    { value: "br1", label: "Brazil" },
-    { value: "la1", label: "Latin America North" },
-    { value: "la2", label: "Latin America South" },
-    { value: "oc1", label: "Oceania" },
-    { value: "ru", label: "Russia" },
-    { value: "tr1", label: "Turkey" },
-    { value: "jp1", label: "Japan" },
+    { value: "na1", label: t("regions.na1") },
+    { value: "euw1", label: t("regions.euw1") },
+    { value: "eune1", label: t("regions.eune1") },
+    { value: "kr", label: t("regions.kr") },
+    { value: "br1", label: t("regions.br1") },
+    { value: "la1", label: t("regions.la1") },
+    { value: "la2", label: t("regions.la2") },
+    { value: "oc1", label: t("regions.oc1") },
+    { value: "ru", label: t("regions.ru") },
+    { value: "tr1", label: t("regions.tr1") },
+    { value: "jp1", label: t("regions.jp1") },
   ];
 
   return (
@@ -209,23 +211,23 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Gamepad2 className="h-5 w-5 text-primary" />
-            Link Your League Account
+            {t("steps.linkAccount.title")}
           </CardTitle>
           <CardDescription>
-            Connect your League of Legends account to get started
+            {t("steps.linkAccount.description")}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <Alert className="bg-primary/10 border-primary/30">
             <Info className="h-4 w-4 text-primary" />
             <AlertDescription>
-              <strong>Privacy First:</strong> Only derived analytics stored on-chain, never raw match data.
+              <strong>{t("steps.linkAccount.privacyTitle")}</strong> {t("steps.linkAccount.privacyDescription")}
             </AlertDescription>
           </Alert>
 
           {linkedAccounts.length > 0 && (
             <div className="space-y-3">
-              <Label>Your Linked Accounts</Label>
+              <Label>{t("steps.linkAccount.linkedAccounts")}</Label>
               {linkedAccounts.map((account) => (
                 <LinkedAccountCard
                   key={account.id}
@@ -241,12 +243,12 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
           <div className="space-y-4 pt-4 border-t">
             <div className="flex items-center gap-2 mb-2">
               <Plus className="h-4 w-4 text-primary" />
-              <Label>Add New Account</Label>
+              <Label>{t("steps.linkAccount.addAccount")}</Label>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="gameName">Game Name</Label>
+                <Label htmlFor="gameName">{t("steps.linkAccount.gameName")}</Label>
                 <Input
                   id="gameName"
                   placeholder="GameName"
@@ -257,7 +259,7 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="tagLine">Tagline</Label>
+                <Label htmlFor="tagLine">{t("steps.linkAccount.tagLine")}</Label>
                 <Input
                   id="tagLine"
                   placeholder="#NA1"
@@ -269,7 +271,7 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="region">Region</Label>
+              <Label htmlFor="region">{t("steps.linkAccount.region")}</Label>
               <Select value={region} onValueChange={setRegion} disabled={loading}>
                 <SelectTrigger>
                   <SelectValue />
@@ -292,10 +294,10 @@ export function Step1LinkAccount({ userId, onComplete }: Step1Props) {
               {loading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Starting...
+                  {t("steps.linkAccount.starting")}
                 </>
               ) : (
-                "Start Verification"
+                t("steps.linkAccount.startVerification")
               )}
             </Button>
           </div>

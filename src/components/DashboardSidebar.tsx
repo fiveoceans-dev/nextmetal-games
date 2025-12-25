@@ -8,6 +8,7 @@ import {
   Images
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface DashboardSidebarProps {
   className?: string;
@@ -15,30 +16,30 @@ interface DashboardSidebarProps {
   onSectionChange: (section: string) => void;
 }
 
-const menuItems = [
-  {
-    id: "studio",
-    label: "Studio",
-    icon: Gamepad2
-  },
-  {
-    id: "gallery",
-    label: "Gallery",
-    icon: Images
-  },
-  {
-    id: "rewards",
-    label: "Rewards",
-    icon: Trophy
-  },
-  {
-    id: "settings",
-    label: "Settings",
-    icon: Settings
-  }
-];
-
 export function DashboardSidebar({ className, activeSection, onSectionChange }: DashboardSidebarProps) {
+  const { t } = useTranslation();
+  const menuItems = [
+    {
+      id: "studio",
+      label: t("dashboard.menuItems.studio"),
+      icon: Gamepad2
+    },
+    {
+      id: "gallery",
+      label: t("dashboard.menuItems.gallery"),
+      icon: Images
+    },
+    {
+      id: "rewards",
+      label: t("dashboard.menuItems.rewards"),
+      icon: Trophy
+    },
+    {
+      id: "settings",
+      label: t("dashboard.menuItems.settings"),
+      icon: Settings
+    }
+  ];
 
   const handleLogout = async () => {
     // TODO: Implement logout logic
@@ -51,12 +52,12 @@ export function DashboardSidebar({ className, activeSection, onSectionChange }: 
         <div className="flex flex-col">
           <div className="flex items-center justify-between mb-2">
             <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <img src="/logo.svg" alt="NextMetal logo" className="h-8 w-8" />
+              <img src="/logo.svg" alt={t("dashboard.logoAlt")} className="h-8 w-8" />
               <span className="font-semibold text-sm">Next Metal</span>
             </Link>
           </div>
           <span className="text-xs text-muted-foreground self-end pr-0.5">
-            Dashboard
+            {t("dashboard.title")}
           </span>
         </div>
       </div>
@@ -92,7 +93,7 @@ export function DashboardSidebar({ className, activeSection, onSectionChange }: 
           onClick={handleLogout}
         >
           <LogOut className="h-5 w-5" />
-          Logout
+          {t("dashboard.logout")}
         </Button>
       </div>
     </div>

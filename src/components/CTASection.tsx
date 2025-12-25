@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const CTASkeleton = () => (
   <section className="py-32 px-4">
@@ -16,6 +17,7 @@ const CTASkeleton = () => (
 
 export const CTASection = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 900);
@@ -33,11 +35,12 @@ export const CTASection = () => {
 
       <div className="container mx-auto max-w-3xl text-center relative z-10">
         <h2 className="text-4xl md:text-6xl font-bold tracking-[-0.03em] mb-4 animate-fade-in-up">
-          Help us reach Artificial General Intelligence.
+          <span className="block">{t("cta.line1")}</span>
+          <span className="block">{t("cta.line2")}</span>
         </h2>
         <div className="text-lg text-muted-foreground font-mono max-w-3xl mx-auto space-y-2">
           <p>
-            Play. Earn. Build AGI.
+            {t("cta.subtitle")}
           </p>
         </div>
       </div>

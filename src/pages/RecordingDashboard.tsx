@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Play, Square, Monitor, Camera, Keyboard, Mouse } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface InputEvent {
   timestamp: number;
@@ -23,6 +24,7 @@ interface RecordingSession {
 }
 
 export default function RecordingDashboard() {
+  const { t } = useTranslation();
   const [isRecording, setIsRecording] = useState(false);
   const [selectedScreen, setSelectedScreen] = useState<string>("");
   const [screens, setScreens] = useState<MediaDeviceInfo[]>([]);
@@ -133,7 +135,7 @@ export default function RecordingDashboard() {
 
     } catch (error) {
       console.error('Error starting recording:', error);
-      alert('Failed to start recording. Please check permissions.');
+      alert(t("recording.alert.recordingFailed"));
     }
   };
 
@@ -237,28 +239,28 @@ export default function RecordingDashboard() {
     <div className="min-h-screen bg-background p-8">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-2">Game Recording Studio</h1>
-          <p className="text-muted-foreground">AI Training Data Capture Platform</p>
+          <h1 className="text-4xl font-bold mb-2">{t("recording.title")}</h1>
+          <p className="text-muted-foreground">{t("recording.subtitle")}</p>
         </div>
 
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Monitor className="h-5 w-5" />
-              Recording Controls
+              {t("recording.controlsTitle")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="text-sm font-medium mb-2 block">Select Screen/Window</label>
+                <label className="text-sm font-medium mb-2 block">{t("recording.selectLabel")}</label>
                 <Select value={selectedScreen} onValueChange={setSelectedScreen}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Choose screen to record" />
+                    <SelectValue placeholder={t("recording.selectPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="screen">Entire Screen</SelectItem>
-                    <SelectItem value="window">Application Window</SelectItem>
+                    <SelectItem value="screen">{t("recording.select.screen")}</SelectItem>
+                    <SelectItem value="window">{t("recording.select.window")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -272,12 +274,12 @@ export default function RecordingDashboard() {
                   {isRecording ? (
                     <>
                       <Square className="h-4 w-4 mr-2" />
-                      Stop Recording
+                      {t("recording.stop")}
                     </>
                   ) : (
                     <>
                       <Play className="h-4 w-4 mr-2" />
-                      Start Recording
+                      {t("recording.start")}
                     </>
                   )}
                 </Button>
@@ -287,10 +289,10 @@ export default function RecordingDashboard() {
             {isRecording && (
               <div className="flex items-center gap-2">
                 <Badge variant="destructive" className="animate-pulse">
-                  🔴 RECORDING
+                  🔴 {t("recording.recordingBadge")}
                 </Badge>
                 <span className="text-sm text-muted-foreground">
-                  Session: {recordingSession?.id}
+                  {t("recording.sessionLabel", { id: recordingSession?.id })}
                 </span>
               </div>
             )}
@@ -301,7 +303,7 @@ export default function RecordingDashboard() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Camera className="h-5 w-5" />
-              Live Preview
+              {t("recording.previewTitle")}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -321,7 +323,7 @@ export default function RecordingDashboard() {
                 <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
                   <div className="text-center">
                     <Monitor className="h-16 w-16 mx-auto mb-4 opacity-50" />
-                    <p>Click "Start Recording" to begin</p>
+                    <p>{t("recording.previewHint")}</p>
                   </div>
                 </div>
               )}
@@ -334,15 +336,15 @@ export default function RecordingDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-sm">
                 <Monitor className="h-4 w-4" />
-                Screen Capture
+                {t("recording.cards.screenCapture.title")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <Badge variant={isRecording ? "default" : "secondary"}>
-                {isRecording ? "Active" : "Inactive"}
+                {isRecording ? t("recording.cards.screenCapture.active") : t("recording.cards.screenCapture.inactive")}
               </Badge>
               <p className="text-xs text-muted-foreground mt-1">
-                Capturing display with system audio
+                {t("recording.cards.screenCapture.description")}
               </p>
             </CardContent>
           </Card>
@@ -351,15 +353,15 @@ export default function RecordingDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-sm">
                 <Camera className="h-4 w-4" />
-                Webcam
+                {t("recording.cards.webcam.title")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <Badge variant={isRecording ? "default" : "secondary"}>
-                {isRecording ? "Active" : "Inactive"}
+                {isRecording ? t("recording.cards.webcam.active") : t("recording.cards.webcam.inactive")}
               </Badge>
               <p className="text-xs text-muted-foreground mt-1">
-                720p overlay recording
+                {t("recording.cards.webcam.description")}
               </p>
             </CardContent>
           </Card>
@@ -369,15 +371,15 @@ export default function RecordingDashboard() {
               <CardTitle className="flex items-center gap-2 text-sm">
                 <Keyboard className="h-4 w-4" />
                 <Mouse className="h-4 w-4" />
-                Input Events
+                {t("recording.cards.inputEvents.title")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <Badge variant={isRecording ? "default" : "secondary"}>
-                {isRecording ? "Logging" : "Inactive"}
+                {isRecording ? t("recording.cards.inputEvents.recording") : t("recording.cards.inputEvents.inactive")}
               </Badge>
               <p className="text-xs text-muted-foreground mt-1">
-                Keyboard & mouse data
+                {t("recording.cards.inputEvents.description")}
               </p>
             </CardContent>
           </Card>
@@ -386,21 +388,21 @@ export default function RecordingDashboard() {
         {isRecording && recordingSession && (
           <Card>
             <CardHeader>
-              <CardTitle>Session Info</CardTitle>
+              <CardTitle>{t("recording.sessionInfo.title")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="font-medium">Session ID:</span> {recordingSession.id}
+                  <span className="font-medium">{t("recording.sessionInfo.id")}</span> {recordingSession.id}
                 </div>
                 <div>
-                  <span className="font-medium">Input Events:</span> {recordingSession.inputEvents.length}
+                  <span className="font-medium">{t("recording.sessionInfo.inputEvents")}</span> {recordingSession.inputEvents.length}
                 </div>
                 <div>
-                  <span className="font-medium">Start Time:</span> {new Date(recordingSession.startTime).toLocaleTimeString()}
+                  <span className="font-medium">{t("recording.sessionInfo.startTime")}</span> {new Date(recordingSession.startTime).toLocaleTimeString()}
                 </div>
                 <div>
-                  <span className="font-medium">Duration:</span> {Math.round((Date.now() - recordingSession.startTime) / 1000)}s
+                  <span className="font-medium">{t("recording.sessionInfo.duration")}</span> {t("recording.sessionInfo.seconds", { count: Math.round((Date.now() - recordingSession.startTime) / 1000) })}
                 </div>
               </div>
             </CardContent>

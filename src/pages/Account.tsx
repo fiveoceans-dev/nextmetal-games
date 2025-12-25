@@ -9,6 +9,8 @@ import { useToast } from "@/hooks/use-toast";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { monadTestnet } from "@/lib/wagmi-config";
+import { useTranslation } from "react-i18next";
+import { getLocaleForLanguage } from "@/i18n/locale";
 
 interface Transaction {
   id: string;
@@ -27,6 +29,7 @@ export default function Account() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t, i18n } = useTranslation();
 
   // Redirect to dashboard settings if Supabase is not available
   useEffect(() => {
@@ -73,8 +76,8 @@ export default function Account() {
       if (error) {
         toast({
           variant: "destructive",
-          title: "Error",
-          description: "Failed to load transactions",
+          title: t("account.errorTransactions.title"),
+          description: t("account.errorTransactions.description"),
         });
       } else {
         setTransactions(data || []);
@@ -82,20 +85,20 @@ export default function Account() {
     };
 
     fetchTransactions();
-  }, [user, toast]);
+  }, [user, toast, t]);
 
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
       toast({
-        title: "Logged out",
-        description: "You've been successfully logged out.",
+        title: t("account.logout.title"),
+        description: t("account.logout.description"),
       });
       navigate("/");
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Error",
+        title: t("account.error.title"),
         description: error.message,
       });
     }
@@ -118,11 +121,11 @@ export default function Account() {
             <div className="container h-full flex items-center justify-between px-4">
               <div className="flex items-center gap-4">
                 <SidebarTrigger />
-                <h1 className="text-xl font-semibold">Account</h1>
+                <h1 className="text-xl font-semibold">{t("account.title")}</h1>
               </div>
               <Button variant="outline" onClick={handleLogout}>
                 <LogOut className="h-4 w-4 mr-2" />
-                Logout
+                {t("account.logoutButton")}
               </Button>
             </div>
           </header>
@@ -131,16 +134,16 @@ export default function Account() {
             <div className="max-w-4xl mx-auto space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Profile Information</CardTitle>
-                  <CardDescription>Your account details</CardDescription>
+                  <CardTitle>{t("account.profile.title")}</CardTitle>
+                  <CardDescription>{t("account.profile.description")}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
                     <p className="text-sm">
-                      <span className="font-medium">Email:</span> {user?.email}
+                      <span className="font-medium">{t("account.profile.email")}</span> {user?.email}
                     </p>
                     <p className="text-sm">
-                      <span className="font-medium">User ID:</span> {user?.id}
+                      <span className="font-medium">{t("account.profile.userId")}</span> {user?.id}
                     </p>
                   </div>
                 </CardContent>
@@ -148,15 +151,15 @@ export default function Account() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Transaction History</CardTitle>
+                  <CardTitle>{t("account.transactions.title")}</CardTitle>
                   <CardDescription>
-                    Your submitted blockchain transactions on Monad Testnet
+                    {t("account.transactions.description")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {transactions.length === 0 ? (
                     <p className="text-sm text-muted-foreground text-center py-8">
-                      No transactions yet. Complete the dashboard steps to create your first transaction.
+                      {t("account.transactions.empty")}
                     </p>
                   ) : (
                     <div className="space-y-4">
@@ -174,11 +177,14 @@ export default function Account() {
                               )}
                               {tx.rank_tier && tx.rank_division && (
                                 <p className="text-sm text-muted-foreground">
-                                  Rank: {tx.rank_tier} {tx.rank_division}
+                                  {t("account.transactions.rank", {
+                                    tier: tx.rank_tier,
+                                    division: tx.rank_division,
+                                  })}
                                 </p>
                               )}
                               <p className="text-xs text-muted-foreground">
-                                {new Date(tx.created_at).toLocaleString()}
+                                {new Date(tx.created_at).toLocaleString(getLocaleForLanguage(i18n.language))}
                               </p>
                             </div>
                             <Button
@@ -192,12 +198,12 @@ export default function Account() {
                               }
                             >
                               <ExternalLink className="h-3 w-3 mr-1" />
-                              View
+                              {t("account.transactions.view")}
                             </Button>
                           </div>
                           <div className="bg-background rounded p-2">
                             <p className="text-xs text-muted-foreground mb-1">
-                              Transaction Hash
+                              {t("account.transactions.hash")}
                             </p>
                             <p className="text-xs font-mono break-all">
                               {tx.transaction_hash}

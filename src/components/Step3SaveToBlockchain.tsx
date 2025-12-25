@@ -10,6 +10,7 @@ import { useAccount, useSendTransaction, useWaitForTransactionReceipt, useChainI
 import { supabase } from "@/integrations/supabase/client";
 import { parseEther, encodeFunctionData, keccak256, toHex } from "viem";
 import { monadTestnet } from "@/lib/wagmi-config";
+import { useTranslation } from "react-i18next";
 
 interface Step3Props {
   canProceed: boolean;
@@ -26,15 +27,16 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
   const [attempted, setAttempted] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   // Check if Supabase is available
   if (!supabase) {
     return (
       <div className="text-center py-8">
         <Shield className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-        <h3 className="text-lg font-medium mb-2">Save to Blockchain</h3>
+        <h3 className="text-lg font-medium mb-2">{t("steps.saveBlockchain.unavailableTitle")}</h3>
         <p className="text-muted-foreground">
-          This feature requires backend configuration. Please contact support to enable blockchain integration.
+          {t("steps.saveBlockchain.unavailableDescription")}
         </p>
       </div>
     );
@@ -83,11 +85,11 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
       setTransactionHash(hash);
       setSuccess(true);
       toast({
-        title: "Success!",
-        description: "Your credentials are now stored on Monad Testnet.",
+        title: t("steps.saveBlockchain.toast.success.title"),
+        description: t("steps.saveBlockchain.toast.success.description"),
       });
     }
-  }, [isConfirmed, hash, toast, userId, accountInfo]);
+  }, [isConfirmed, hash, toast, userId, accountInfo, t]);
 
   // Log transaction status changes
   useEffect(() => {
@@ -140,8 +142,8 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
     if (!address) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Please connect your wallet first",
+        title: t("steps.saveBlockchain.toast.missingWallet.title"),
+        description: t("steps.saveBlockchain.toast.missingWallet.description"),
       });
       return;
     }
@@ -160,11 +162,11 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
       console.log('✅ Chain ready. Wallet chainId after switch:', after);
     } catch (e: any) {
       console.error('❌ Could not switch to Monad Testnet:', e);
-      setErrorMsg(`Please switch your wallet to ${monadTestnet.name} (chain ${monadTestnet.id}) and try again.`);
+      setErrorMsg(t("steps.saveBlockchain.errors.switchNetwork", { network: monadTestnet.name, id: monadTestnet.id }));
       toast({
         variant: 'destructive',
-        title: 'Network Switch Required',
-        description: e?.message || `Switch to ${monadTestnet.name} in your wallet and retry.`,
+        title: t("steps.saveBlockchain.toast.switchRequired.title"),
+        description: e?.message || t("steps.saveBlockchain.toast.switchRequired.description", { network: monadTestnet.name }),
       });
       setAttempted(false);
       return;
@@ -180,7 +182,7 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
 
       if (error) throw error;
       if (!linkedAccounts || linkedAccounts.length === 0) {
-        throw new Error("No verified accounts found");
+        throw new Error(t("steps.saveBlockchain.errors.noVerifiedAccount"));
       }
 
       const firstAccount = linkedAccounts[0];
@@ -236,8 +238,8 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
             setErrorMsg(error.message || 'Transaction failed');
             toast({
               variant: 'destructive',
-              title: 'Transaction Failed',
-              description: error.message || 'Failed to send transaction',
+              title: t("steps.saveBlockchain.toast.transactionFailed.title"),
+              description: error.message || t("steps.saveBlockchain.toast.transactionFailed.description"),
             });
           },
         }
@@ -246,17 +248,17 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
       console.log('📝 sendTransaction result:', result);
 
       toast({
-        title: "Check Your Wallet",
-        description: "Please confirm the transaction in your wallet popup",
+        title: t("steps.saveBlockchain.toast.checkWallet.title"),
+        description: t("steps.saveBlockchain.toast.checkWallet.description"),
       });
 
     } catch (error: any) {
       console.error('❌ Error preparing transaction:', error);
-      setErrorMsg(error?.message || 'Failed to save credentials');
+      setErrorMsg(error?.message || t("steps.saveBlockchain.errors.saveFailed"));
       toast({
         variant: "destructive",
-        title: "Error",
-        description: error.message || "Failed to save credentials",
+        title: t("steps.saveBlockchain.toast.missingWallet.title"),
+        description: error.message || t("steps.saveBlockchain.errors.saveFailed"),
       });
     }
   };
@@ -268,10 +270,10 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
           <CardContent className="p-12 text-center">
             <Shield className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <p className="text-lg font-semibold text-muted-foreground mb-2">
-              Complete Previous Steps
+              {t("steps.saveBlockchain.blocked.title")}
             </p>
             <p className="text-sm text-muted-foreground">
-              Link your game account and connect your wallet to continue
+              {t("steps.saveBlockchain.blocked.description")}
             </p>
           </CardContent>
         </Card>
@@ -290,12 +292,12 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
               <CheckCircle2 className="h-12 w-12 text-primary" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-primary mb-2">Credentials Saved!</p>
+              <p className="text-2xl font-bold text-primary mb-2">{t("steps.saveBlockchain.success.title")}</p>
               <p className="text-muted-foreground mb-4">
-                Your verified League credentials are now stored on Monad Testnet
+                {t("steps.saveBlockchain.success.description")}
               </p>
               <div className="bg-muted/50 rounded-lg p-4 mt-4">
-                <p className="text-xs text-muted-foreground mb-1">Transaction Hash</p>
+                <p className="text-xs text-muted-foreground mb-1">{t("steps.saveBlockchain.success.hashLabel")}</p>
                 <p className="text-sm font-mono break-all">{transactionHash}</p>
               </div>
             </div>
@@ -305,22 +307,22 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
                 onClick={() => {
                   navigator.clipboard.writeText(transactionHash);
                   toast({
-                    title: "Copied!",
-                    description: "Transaction hash copied to clipboard",
+                    title: t("steps.saveBlockchain.toast.copied.title"),
+                    description: t("steps.saveBlockchain.toast.copied.description"),
                   });
                 }}
               >
-                Copy Hash
+                {t("steps.saveBlockchain.success.copy")}
               </Button>
               <Button 
                 variant="outline"
                 onClick={() => window.open(explorerUrl, '_blank')}
               >
                 <ExternalLink className="h-4 w-4 mr-2" />
-                View on Explorer
+                {t("steps.saveBlockchain.success.viewExplorer")}
               </Button>
               <Button variant="outline" onClick={() => setSuccess(false)}>
-                Save Another
+                {t("steps.saveBlockchain.success.saveAnother")}
               </Button>
             </div>
           </CardContent>
@@ -335,28 +337,28 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-primary" />
-            Save to Monad
+            {t("steps.saveBlockchain.card.title")}
           </CardTitle>
           <CardDescription>
-            Store privacy-preserving analytics on the Monad blockchain
+            {t("steps.saveBlockchain.card.description")}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <Alert className="bg-primary/10 border-primary/30">
             <Info className="h-4 w-4 text-primary" />
             <AlertDescription>
-              We only store achievement proofs and analytics, never raw match data or personal information.
+              {t("steps.saveBlockchain.privacyNotice")}
             </AlertDescription>
           </Alert>
 
           {accountInfo && (
             <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
-              <p className="text-sm font-medium mb-1">Saving credentials for:</p>
+              <p className="text-sm font-medium mb-1">{t("steps.saveBlockchain.account.label")}</p>
               <p className="text-lg font-bold text-primary">
                 {accountInfo.gameName}#{accountInfo.tagLine}
               </p>
               <p className="text-sm text-muted-foreground mt-1">
-                You are rank: <span className="font-semibold text-foreground">{accountInfo.rank}</span>
+                {t("steps.saveBlockchain.account.rank", { rank: accountInfo.rank })}
               </p>
             </div>
           )}
@@ -364,7 +366,7 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
           <Alert className="bg-muted/50 border-muted">
             <Info className="h-4 w-4" />
             <AlertDescription className="text-sm">
-              This will send a real transaction to Monad testnet. You'll need to confirm it in your wallet and pay a small gas fee.
+              {t("steps.saveBlockchain.feeNotice")}
             </AlertDescription>
           </Alert>
 
@@ -373,7 +375,11 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
               <Info className="h-4 w-4 text-destructive" />
               <AlertDescription className="text-sm flex items-center justify-between gap-3">
                 <span>
-                  You're on the wrong network (chain {chainId}). Switch to {monadTestnet.name} (ID {monadTestnet.id}) to continue.
+                  {t("steps.saveBlockchain.wrongNetwork", {
+                    chainId,
+                    network: monadTestnet.name,
+                    id: monadTestnet.id,
+                  })}
                 </span>
                 <Button
                   size="sm"
@@ -381,19 +387,26 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
                   onClick={async () => {
                     try {
                       await switchChainAsync({ chainId: monadTestnet.id });
-                      toast({ title: "Network Switched", description: `Switched to ${monadTestnet.name}` });
+                      toast({
+                        title: t("steps.saveBlockchain.toast.switchSuccess.title"),
+                        description: t("steps.saveBlockchain.toast.switchSuccess.description", { network: monadTestnet.name }),
+                      });
                     } catch (e: any) {
-                      toast({ variant: "destructive", title: "Switch Failed", description: e?.message || 'Please switch network in your wallet' });
+                      toast({
+                        variant: "destructive",
+                        title: t("steps.saveBlockchain.toast.switchFailed.title"),
+                        description: e?.message || t("steps.saveBlockchain.toast.switchFailed.description"),
+                      });
                     }
                   }}
                 >
                   {isSwitching ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Switching...
+                      {t("steps.saveBlockchain.switching")}
                     </>
                   ) : (
-                    'Switch to Monad'
+                    t("steps.saveBlockchain.switchButton")
                   )}
                 </Button>
               </AlertDescription>
@@ -404,7 +417,7 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
             <div className="relative">
               <img
                 src={badgeIcon}
-                alt="Skill Badge NFT"
+                alt={t("steps.saveBlockchain.badgeAlt")}
                 className="w-48 h-48 rounded-lg shadow-lg"
               />
               <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
@@ -414,7 +427,7 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
           </div>
 
           <div className="space-y-4">
-            <p className="font-semibold text-sm">What would you like to save?</p>
+            <p className="font-semibold text-sm">{t("steps.saveBlockchain.options.title")}</p>
 
             <div className="space-y-3">
               <div className="flex items-center space-x-3 p-3 rounded-lg bg-muted/50">
@@ -427,7 +440,7 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
                   htmlFor="achievements"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                 >
-                  Store achievement proofs
+                  {t("steps.saveBlockchain.options.achievements")}
                 </label>
               </div>
 
@@ -441,7 +454,7 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
                   htmlFor="nft"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                 >
-                  Mint skill badge NFT
+                  {t("steps.saveBlockchain.options.nft")}
                 </label>
               </div>
 
@@ -455,7 +468,7 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
                   htmlFor="zk"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                 >
-                  Generate ZK proof (optional)
+                  {t("steps.saveBlockchain.options.zk")}
                 </label>
               </div>
             </div>
@@ -463,7 +476,7 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
 
           {/* Transaction Steps */}
           <section className="space-y-3">
-            <p className="font-semibold text-sm">Transaction status</p>
+            <p className="font-semibold text-sm">{t("steps.saveBlockchain.transaction.title")}</p>
             <ul className="space-y-2">
               <li className="flex items-center gap-2 text-sm">
                 {(attempted || isPending || hash || isConfirming || success) ? (
@@ -471,7 +484,7 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
                 ) : (
                   <Loader2 className="h-4 w-4 text-muted-foreground" />
                 )}
-                Prepare data
+                {t("steps.saveBlockchain.transaction.prepare")}
               </li>
               <li className="flex items-center gap-2 text-sm">
                 {isPending ? (
@@ -481,7 +494,7 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
                 ) : (
                   <Loader2 className="h-4 w-4 text-muted-foreground" />
                 )}
-                Confirm in wallet
+                {t("steps.saveBlockchain.transaction.confirmWallet")}
               </li>
               <li className="flex items-center gap-2 text-sm">
                 {hash ? (
@@ -489,9 +502,9 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
                 ) : (
                   <Loader2 className="h-4 w-4 text-muted-foreground" />
                 )}
-                Submitted {hash && (
+                {t("steps.saveBlockchain.transaction.submitted")} {hash && (
                   <button onClick={() => window.open(`${monadTestnet.blockExplorers.default.url}/tx/${hash}`, '_blank')} className="text-primary underline underline-offset-2 ml-2 flex items-center">
-                    View on explorer <ExternalLink className="h-3 w-3 ml-1" />
+                    {t("steps.saveBlockchain.transaction.viewExplorer")} <ExternalLink className="h-3 w-3 ml-1" />
                   </button>
                 )}
               </li>
@@ -503,7 +516,7 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
                 ) : (
                   <Loader2 className="h-4 w-4 text-muted-foreground" />
                 )}
-                Waiting for confirmations
+                {t("steps.saveBlockchain.transaction.confirming")}
               </li>
               <li className="flex items-center gap-2 text-sm">
                 {success ? (
@@ -511,7 +524,7 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
                 ) : (
                   <Loader2 className="h-4 w-4 text-muted-foreground" />
                 )}
-                Confirmed
+                {t("steps.saveBlockchain.transaction.finalized")}
               </li>
             </ul>
             {errorMsg && (
@@ -530,10 +543,10 @@ export function Step3SaveToBlockchain({ canProceed, userId }: Step3Props) {
             {(isPending || isConfirming) ? (
               <>
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                {isPending ? "Confirm in Wallet..." : "Saving to Monad..."}
+                {isPending ? t("steps.saveBlockchain.submit.pendingWallet") : t("steps.saveBlockchain.submit.pendingMonad")}
               </>
             ) : (
-              "Save to Monad"
+              t("steps.saveBlockchain.submit.default")
             )}
           </Button>
         </CardContent>

@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { FormEvent, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const DatasetsSkeleton = () => (
   <section className="py-24 px-4">
@@ -34,6 +35,7 @@ export const DatasetsSection = () => {
     message: ""
   });
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1200);
@@ -44,21 +46,21 @@ export const DatasetsSection = () => {
 
   const datasets = [
     {
-      name: "Raw",
-      subtitle: "Screen + input, aligned, human-limited.",
+      name: t("datasets.cards.raw.name"),
+      subtitle: t("datasets.cards.raw.subtitle"),
       features: [
-        "Screen + input, aligned",
-        "Human-limited gameplay",
-        "Time-synced streams",
+        t("datasets.cards.raw.items.0"),
+        t("datasets.cards.raw.items.1"),
+        t("datasets.cards.raw.items.2"),
       ],
     },
     {
-      name: "Annotated",
-      subtitle: "Raw + labels, phases, metadata.",
+      name: t("datasets.cards.annotated.name"),
+      subtitle: t("datasets.cards.annotated.subtitle"),
       features: [
-        "Raw + labels",
-        "Phases & events",
-        "Metadata for training",
+        t("datasets.cards.annotated.items.0"),
+        t("datasets.cards.annotated.items.1"),
+        t("datasets.cards.annotated.items.2"),
       ],
     },
   ];
@@ -68,8 +70,8 @@ export const DatasetsSection = () => {
 
     if (!formData.name || !formData.email || !formData.message) {
       toast({
-        title: "Missing details",
-        description: "Name, email, and a short message are required.",
+        title: t("datasets.toast.missing.title"),
+        description: t("datasets.toast.missing.description"),
         variant: "destructive"
       });
       return;
@@ -87,8 +89,8 @@ export const DatasetsSection = () => {
       });
 
       toast({
-        title: "Thanks for reaching out!",
-        description: "We'll be in touch shortly."
+        title: t("datasets.toast.thanks.title"),
+        description: t("datasets.toast.thanks.description")
       });
       setFormData({
         name: "",
@@ -109,13 +111,16 @@ export const DatasetsSection = () => {
       <div className="container mx-auto max-w-5xl">
         {/* Header */}
         <div className="text-center mb-16 space-y-4 animate-fade-in-up">
-          <p className="text-sm uppercase tracking-[0.35em] font-mono text-muted-foreground">Datasets · For AI Labs</p>
+          <p className="text-sm uppercase tracking-[0.35em] font-mono text-muted-foreground">{t("datasets.eyebrow")}</p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-[-0.03em] text-foreground">
-            Datasets: <span className="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">For AI Labs</span>
+            {t("datasets.titlePrefix")}{" "}
+            <span className="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
+              {t("datasets.titleHighlight")}
+            </span>
           </h2>
           <div className="text-lg text-muted-foreground font-mono max-w-3xl mx-auto space-y-2">
             <p>
-              High quality datasets designed to train and benchmark advanced AGI agents in complex environments requiring multimodal understanding, strategic planning, and adaptive learning.
+              {t("datasets.description")}
             </p>
           </div>
         </div>
@@ -125,7 +130,7 @@ export const DatasetsSection = () => {
           {datasets.map((dataset, index) => (
             <div
               key={dataset.name}
-              className="flex flex-col justify-between text-left animate-fade-in-up w-full md:w-[280px] rounded-3xl border border-border/70 bg-background/60 backdrop-blur-sm p-6 shadow-sm"
+              className="flex flex-col justify-between text-left animate-fade-in-up w-full md:w-[280px] rounded-3xl border border-border/70 bg-background/60 backdrop-blur-sm p-6 shadow-sm transition-transform duration-300 ease-out hover:-translate-y-2 hover:shadow-xl"
               style={{ animationDelay: `${index * 0.1}s`, aspectRatio: "2.5 / 3.5" }}
             >
               <div className="mb-2">
@@ -154,50 +159,50 @@ export const DatasetsSection = () => {
                 variant="outline" 
                 className="text-lg px-8 h-14 border-border rounded-full hover:border-foreground/30 hover:bg-foreground/5 hover:text-foreground"
               >
-                Talk to Us
+                {t("datasets.cta")}
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Tell us about your lab</DialogTitle>
+                <DialogTitle>{t("datasets.dialog.title")}</DialogTitle>
                 <DialogDescription>
-                  Share how you're thinking about AI training data and we'll reach out with next steps.
+                  {t("datasets.dialog.description")}
                 </DialogDescription>
               </DialogHeader>
               <form className="space-y-5" onSubmit={handleSubmit}>
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="contact-name">Full name</Label>
+                  <Label htmlFor="contact-name">{t("datasets.dialog.fields.name")}</Label>
                   <Input
                     id="contact-name"
-                    placeholder="Ada Lovelace"
+                    placeholder={t("datasets.dialog.placeholders.name")}
                     value={formData.name}
                     onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
                   />
                 </div>
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="contact-email">Work email</Label>
+                  <Label htmlFor="contact-email">{t("datasets.dialog.fields.email")}</Label>
                   <Input
                     id="contact-email"
                     type="email"
-                    placeholder="you@lab.ai"
+                    placeholder={t("datasets.dialog.placeholders.email")}
                     value={formData.email}
                     onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
                   />
                 </div>
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="contact-organization">Organization</Label>
+                  <Label htmlFor="contact-organization">{t("datasets.dialog.fields.organization")}</Label>
                   <Input
                     id="contact-organization"
-                    placeholder="NextMetal Labs"
+                    placeholder={t("datasets.dialog.placeholders.organization")}
                     value={formData.organization}
                     onChange={(event) => setFormData((prev) => ({ ...prev, organization: event.target.value }))}
                   />
                 </div>
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="contact-message">What are you building?</Label>
+                  <Label htmlFor="contact-message">{t("datasets.dialog.fields.message")}</Label>
                   <Textarea
                     id="contact-message"
-                    placeholder="Share goals, timelines, and how datasets can help."
+                    placeholder={t("datasets.dialog.placeholders.message")}
                     value={formData.message}
                     rows={4}
                     onChange={(event) => setFormData((prev) => ({ ...prev, message: event.target.value }))}
@@ -211,14 +216,14 @@ export const DatasetsSection = () => {
                     onClick={() => setIsDialogOpen(false)}
                     disabled={isSubmitting}
                   >
-                    Cancel
+                    {t("datasets.dialog.buttons.cancel")}
                   </Button>
                   <Button
                     type="submit"
                     className="w-full sm:w-auto"
                     disabled={isSubmitDisabled}
                   >
-                    {isSubmitting ? "Sending..." : "Send message"}
+                    {isSubmitting ? t("datasets.dialog.buttons.submitting") : t("datasets.dialog.buttons.submit")}
                   </Button>
                 </DialogFooter>
               </form>

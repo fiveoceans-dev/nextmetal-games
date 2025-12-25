@@ -5,10 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Trophy, Coins, Star, Gamepad2 } from "lucide-react";
 import { Step1LinkAccount } from "@/components/Step1LinkAccount";
 import { useAccount } from 'wagmi';
+import { useTranslation } from "react-i18next";
 
 export default function DashboardRewards() {
   const [user, setUser] = useState<any>(null);
   const { isConnected } = useAccount();
+  const { t } = useTranslation();
 
   // Mock user data - in real app this would come from auth context
   useEffect(() => {
@@ -18,13 +20,13 @@ export default function DashboardRewards() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Rewards</h1>
+      <h1 className="text-2xl font-bold">{t("rewardsPage.title")}</h1>
 
       <Tabs defaultValue="league">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="league">League</TabsTrigger>
-          <TabsTrigger value="earnings">Earnings</TabsTrigger>
-          <TabsTrigger value="achievements">Achievements</TabsTrigger>
+          <TabsTrigger value="league">{t("rewardsPage.tabs.league")}</TabsTrigger>
+          <TabsTrigger value="earnings">{t("rewardsPage.tabs.earnings")}</TabsTrigger>
+          <TabsTrigger value="achievements">{t("rewardsPage.tabs.achievements")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="league">
@@ -48,11 +50,11 @@ export default function DashboardRewards() {
             </div>
             <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 text-center">
               <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">0</div>
-              <div className="text-sm text-blue-700 dark:text-blue-300">This Month</div>
+              <div className="text-sm text-blue-700 dark:text-blue-300">{t("rewardsPage.earnings.thisMonth")}</div>
             </div>
             <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 text-center">
               <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">0</div>
-              <div className="text-sm text-purple-700 dark:text-purple-300">Sessions</div>
+              <div className="text-sm text-purple-700 dark:text-purple-300">{t("rewardsPage.earnings.sessions")}</div>
             </div>
           </div>
         </TabsContent>
@@ -63,10 +65,10 @@ export default function DashboardRewards() {
               <div className="flex items-center gap-3">
                 <Gamepad2 className="h-6 w-6 text-orange-600 dark:text-orange-400" />
                 <div>
-                  <div className="font-medium text-orange-900 dark:text-orange-100">First Recording</div>
-                  <div className="text-sm text-orange-700 dark:text-orange-300">Record your first game</div>
+                  <div className="font-medium text-orange-900 dark:text-orange-100">{t("rewardsPage.achievements.firstRecording.title")}</div>
+                  <div className="text-sm text-orange-700 dark:text-orange-300">{t("rewardsPage.achievements.firstRecording.description")}</div>
                 </div>
-                <Badge variant="outline" className="ml-auto border-orange-300 text-orange-700 dark:border-orange-600 dark:text-orange-300">Locked</Badge>
+                <Badge variant="outline" className="ml-auto border-orange-300 text-orange-700 dark:border-orange-600 dark:text-orange-300">{t("common.locked")}</Badge>
               </div>
             </div>
 
@@ -74,10 +76,10 @@ export default function DashboardRewards() {
               <div className="flex items-center gap-3">
                 <Trophy className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
                 <div>
-                  <div className="font-medium text-yellow-900 dark:text-yellow-100">Champion</div>
-                  <div className="text-sm text-yellow-700 dark:text-yellow-300">Earn 100 $METAL</div>
+                  <div className="font-medium text-yellow-900 dark:text-yellow-100">{t("rewardsPage.achievements.champion.title")}</div>
+                  <div className="text-sm text-yellow-700 dark:text-yellow-300">{t("rewardsPage.achievements.champion.description")}</div>
                 </div>
-                <Badge variant="outline" className="ml-auto border-yellow-300 text-yellow-700 dark:border-yellow-600 dark:text-yellow-300">Locked</Badge>
+                <Badge variant="outline" className="ml-auto border-yellow-300 text-yellow-700 dark:border-yellow-600 dark:text-yellow-300">{t("common.locked")}</Badge>
               </div>
             </div>
           </div>

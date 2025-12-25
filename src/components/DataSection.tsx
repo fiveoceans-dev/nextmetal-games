@@ -1,6 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Monitor, Mouse, Clock, Camera, Shield, Keyboard } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const DataSkeleton = () => (
   <section className="py-24 px-4">
@@ -28,6 +29,7 @@ const DataSkeleton = () => (
 
 export const DataSection = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1000);
@@ -39,31 +41,31 @@ export const DataSection = () => {
   const inputData = [
     {
       icon: Mouse,
-      title: "Mouse inputs",
-      description: "Every click, frame-aligned",
+      title: t("data.cards.mouse.title"),
+      description: t("data.cards.mouse.description"),
     },
     {
       icon: Keyboard,
-      title: "Keyboard inputs",
-      description: "Key-down / key-up streams",
+      title: t("data.cards.keyboard.title"),
+      description: t("data.cards.keyboard.description"),
     },
   ];
 
   const captureData = [
     {
       icon: Monitor,
-      title: "Screen video",
-      description: "Crisp captures of your gameplay",
+      title: t("data.cards.screen.title"),
+      description: t("data.cards.screen.description"),
     },
     {
       icon: Clock,
-      title: "Timing",
-      description: "Timestamps to sync everything",
+      title: t("data.cards.timing.title"),
+      description: t("data.cards.timing.description"),
     },
     {
       icon: Camera,
-      title: "WebCamera (optional)",
-      description: "Only if you toggle it on",
+      title: t("data.cards.webcam.title"),
+      description: t("data.cards.webcam.description"),
     },
   ];
 
@@ -74,10 +76,11 @@ export const DataSection = () => {
         {/* Header */}
         <div className="text-center mb-16 space-y-4 animate-fade-in-up">
           <h2 className="text-4xl md:text-5xl font-bold tracking-[-0.03em]">
-            Data <span className="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">Collection</span>
+            {t("data.titlePrefix")}{" "}
+            <span className="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">{t("data.titleHighlight")}</span>
           </h2>
           <p className="text-xl text-muted-foreground font-mono">
-            Minimal capture. Maximum signal.
+            {t("data.subtitle")}
           </p>
         </div>
 
@@ -88,9 +91,9 @@ export const DataSection = () => {
         >
           <Shield className="w-8 h-8 text-primary" />
           <div>
-            <h4 className="text-lg font-semibold tracking-tight">You're in Control</h4>
+            <h4 className="text-lg font-semibold tracking-tight">{t("data.control.title")}</h4>
             <p className="text-muted-foreground">
-              You decide what to share.
+              {t("data.control.description")}
             </p>
           </div>
         </div>

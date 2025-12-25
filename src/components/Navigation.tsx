@@ -1,17 +1,20 @@
 import { Button } from "@/components/ui/button";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const Navigation = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const navItems = useMemo(
     () => [
-      { id: "home", label: "Home", href: "#home" },
-      { id: "rewards", label: "Rewards", href: "#rewards" },
-      { id: "data", label: "Data", href: "#data" },
-      { id: "datasets", label: "Datasets", href: "#datasets" },
+      { id: "home", label: t("nav.home"), href: "#home" },
+      { id: "rewards", label: t("nav.rewards"), href: "#rewards" },
+      { id: "data", label: t("nav.data"), href: "#data" },
+      { id: "datasets", label: t("nav.datasets"), href: "#datasets" },
     ],
-    [],
+    [t, i18n.language],
   );
   const [activeSection, setActiveSection] = useState("home");
 
@@ -46,7 +49,7 @@ export const Navigation = () => {
           onClick={() => navigate("/")}
           className="inline-flex items-center h-10 px-4 gap-3 rounded-full hover:bg-foreground/5 transition-colors"
         >
-          <img src="/logo.svg" alt="NextMetal logo" className="h-16 w-16" />
+          <img src="/logo.svg" alt={t("nav.logoAlt")} className="h-16 w-16" />
           <span className="text-sm md:text-base font-semibold tracking-tight">Next Metal</span>
         </button>
 
@@ -70,13 +73,16 @@ export const Navigation = () => {
           })}
         </div>
 
-        <Button
-          onClick={() => navigate("/auth")}
-          size="default"
-          className="rounded-full h-10 px-5 text-xs font-semibold uppercase tracking-[0.25em]"
-        >
-          Get Started
-        </Button>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <Button
+            onClick={() => navigate("/auth")}
+            size="default"
+            className="rounded-full h-10 px-5 text-xs font-semibold uppercase tracking-[0.25em]"
+          >
+            {t("nav.getStarted")}
+          </Button>
+        </div>
       </div>
     </nav>
   );

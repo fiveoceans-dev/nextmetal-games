@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, XCircle, Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface LinkedAccount {
   id: string;
@@ -23,13 +24,14 @@ interface LinkedAccountCardProps {
 }
 
 export function LinkedAccountCard({ account, onVerify, onUnlink, isLoading }: LinkedAccountCardProps) {
+  const { t } = useTranslation();
   const displayName = account.game_name 
     ? `${account.game_name}#${account.tag_line}` 
-    : account.summoner_name || "Unknown";
+    : account.summoner_name || t("steps.linkedAccount.unknown");
   
   const rank = account.rank_tier && account.rank_division
     ? `${account.rank_tier} ${account.rank_division}`
-    : "Unranked";
+    : t("steps.linkedAccount.unranked");
 
   return (
     <Card className="glass-card border-primary/20">
@@ -41,12 +43,12 @@ export function LinkedAccountCard({ account, onVerify, onUnlink, isLoading }: Li
               {account.verified ? (
                 <Badge className="bg-primary/20 text-primary border-primary/30">
                   <CheckCircle2 className="h-3 w-3 mr-1" />
-                  Verified
+                  {t("steps.linkedAccount.verified")}
                 </Badge>
               ) : (
                 <Badge variant="outline" className="border-muted-foreground/30">
                   <XCircle className="h-3 w-3 mr-1" />
-                  Not Verified
+                  {t("steps.linkedAccount.unverified")}
                 </Badge>
               )}
             </div>
@@ -64,7 +66,7 @@ export function LinkedAccountCard({ account, onVerify, onUnlink, isLoading }: Li
                 disabled={isLoading}
                 size="sm"
               >
-                Verify
+                {t("steps.linkedAccount.verify")}
               </Button>
             )}
             <Button

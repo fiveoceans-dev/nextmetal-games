@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info, Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface VerificationModalProps {
   isOpen: boolean;
@@ -24,13 +25,14 @@ export function VerificationModal({
   onVerify,
   isVerifying,
 }: VerificationModalProps) {
+  const { t } = useTranslation();
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Verify Account Ownership</DialogTitle>
+          <DialogTitle>{t("steps.verification.title")}</DialogTitle>
           <DialogDescription>
-            Follow these steps to prove you own this account
+            {t("steps.verification.description")}
           </DialogDescription>
         </DialogHeader>
 
@@ -39,7 +41,7 @@ export function VerificationModal({
             <Info className="h-4 w-4 text-primary" />
             <AlertDescription>
               <div className="space-y-3">
-                <p className="font-semibold text-foreground">Change your profile icon to:</p>
+                <p className="font-semibold text-foreground">{t("steps.verification.changeIcon")}</p>
                 <div className="flex items-center gap-4 p-4 bg-background rounded-lg border border-primary/20">
                   <img
                     src={`http://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/${verificationCode}.png`}
@@ -47,7 +49,7 @@ export function VerificationModal({
                     className="w-20 h-20 rounded-lg border-2 border-primary shadow-lg"
                   />
                   <div>
-                    <p className="text-sm text-muted-foreground">Icon Number:</p>
+                    <p className="text-sm text-muted-foreground">{t("steps.verification.iconNumber")}</p>
                     <p className="text-3xl font-bold text-primary">#{verificationCode}</p>
                   </div>
                 </div>
@@ -56,27 +58,26 @@ export function VerificationModal({
           </Alert>
 
           <div className="space-y-3 text-sm">
-            <p className="font-semibold">Steps to verify:</p>
+            <p className="font-semibold">{t("steps.verification.stepsTitle")}</p>
             <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-              <li>Open your League of Legends client</li>
-              <li>Go to your profile settings</li>
-              <li>Change your profile icon to the one shown above</li>
-              <li>Click "Verify Ownership" below</li>
+              {t("steps.verification.steps", { returnObjects: true }).map((step: string, index: number) => (
+                <li key={`${step}-${index}`}>{step}</li>
+              ))}
             </ol>
           </div>
 
           <div className="flex gap-2">
             <Button variant="outline" onClick={onClose} className="flex-1" disabled={isVerifying}>
-              Cancel
+              {t("steps.verification.cancel")}
             </Button>
             <Button onClick={onVerify} className="flex-1" disabled={isVerifying}>
               {isVerifying ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Verifying...
+                  {t("steps.verification.verifying")}
                 </>
               ) : (
-                "Verify Ownership"
+                t("steps.verification.verify")
               )}
             </Button>
           </div>

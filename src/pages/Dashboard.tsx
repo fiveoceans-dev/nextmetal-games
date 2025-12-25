@@ -10,6 +10,7 @@ import DashboardStudio from "./DashboardStudio";
 import DashboardGallery from "./DashboardGallery";
 import DashboardRewards from "./DashboardRewards";
 import DashboardSettings from "./DashboardSettings";
+import { useTranslation } from "react-i18next";
 
 interface RecordingSession {
   id: string;
@@ -28,6 +29,7 @@ export default function Dashboard() {
   const [activeSection, setActiveSection] = useState("studio");
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   // Recording state - moved from DashboardStudio
   const [isRecording, setIsRecording] = useState(false);
@@ -356,7 +358,7 @@ export default function Dashboard() {
 
     } catch (error) {
       console.error('Error starting recording:', error);
-      alert('Failed to start recording. Please check permissions.');
+      alert(t("alerts.recordingFailed"));
     }
   };
 
@@ -381,7 +383,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">Loading...</div>
+        <div className="animate-pulse text-muted-foreground">{t("common.loading")}</div>
       </div>
     );
   }

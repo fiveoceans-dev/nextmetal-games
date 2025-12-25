@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Play, Square, Monitor, Camera, Keyboard, Mouse, Download, Volume2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface InputEvent {
   timestamp: number;
@@ -49,12 +50,12 @@ export default function DashboardStudio({
   onStartRecording,
   onStopRecording
 }: DashboardStudioProps) {
-
+  const { t } = useTranslation();
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Studio</h1>
+        <h1 className="text-2xl font-bold">{t("studio.title")}</h1>
       </div>
 
       <div className="rounded-lg border border-border bg-card p-4">
@@ -64,8 +65,8 @@ export default function DashboardStudio({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="screen">Screen</SelectItem>
-                <SelectItem value="window">Window</SelectItem>
+                <SelectItem value="screen">{t("studio.select.screen")}</SelectItem>
+                <SelectItem value="window">{t("studio.select.window")}</SelectItem>
               </SelectContent>
             </Select>
 
@@ -77,12 +78,12 @@ export default function DashboardStudio({
               {isRecording ? (
                 <>
                   <Square className="h-4 w-4 mr-2" />
-                  Stop
+                  {t("studio.action.stop")}
                 </>
               ) : (
                 <>
                   <Play className="h-4 w-4 mr-2" />
-                  Record
+                  {t("studio.action.record")}
                 </>
               )}
             </Button>
@@ -90,33 +91,33 @@ export default function DashboardStudio({
             <div className="flex gap-6 ml-auto">
               <div className="text-center">
                 <Monitor className="h-5 w-5 mx-auto mb-1" />
-                <div className="text-sm">Screen</div>
+                <div className="text-sm">{t("studio.labels.screen")}</div>
                 <Badge variant={isRecording ? "default" : "secondary"} className="text-xs">
-                  {isRecording ? "ON" : "Offline"}
+                  {isRecording ? t("studio.state.on") : t("studio.state.off")}
                 </Badge>
               </div>
 
               <div className="text-center">
                 <Camera className="h-5 w-5 mx-auto mb-1" />
-                <div className="text-sm">Camera</div>
+                <div className="text-sm">{t("studio.labels.camera")}</div>
                 <Badge variant={isRecording ? "default" : "secondary"} className="text-xs">
-                  {isRecording ? "ON" : "Offline"}
+                  {isRecording ? t("studio.state.on") : t("studio.state.off")}
                 </Badge>
               </div>
 
               <div className="text-center">
                 <Volume2 className="h-5 w-5 mx-auto mb-1" />
-                <div className="text-sm">Audio</div>
+                <div className="text-sm">{t("studio.labels.audio")}</div>
                 <Badge variant={isRecording ? "default" : "secondary"} className="text-xs">
-                  {isRecording ? "ON" : "Offline"}
+                  {isRecording ? t("studio.state.on") : t("studio.state.off")}
                 </Badge>
               </div>
 
               <div className="text-center">
                 <Keyboard className="h-5 w-5 mx-auto mb-1" />
-                <div className="text-sm">Input</div>
+                <div className="text-sm">{t("studio.labels.input")}</div>
                 <Badge variant={isRecording ? "default" : "secondary"} className="text-xs">
-                  {isRecording ? "ON" : "Offline"}
+                  {isRecording ? t("studio.state.on") : t("studio.state.off")}
                 </Badge>
               </div>
             </div>
@@ -126,7 +127,7 @@ export default function DashboardStudio({
             <div className="mt-4 flex items-center gap-4 text-sm">
               <Badge variant="destructive">REC</Badge>
               <span>{Math.floor(duration / 60)}:{(duration % 60).toString().padStart(2, '0')}</span>
-              <span>{inputEventCount} events</span>
+              <span>{t("studio.events", { count: inputEventCount })}</span>
             </div>
           )}
         </div>
@@ -169,30 +170,30 @@ export default function DashboardStudio({
               isRecording && recordingSession ? 'text-primary' : 'text-foreground'
             }`}
           >
-            Session Info & Downloads
+            {t("studio.session.title")}
           </h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <div className="text-sm">
-              <span className="font-medium">Session ID:</span> {recordingSession ? recordingSession.id : 'Not recording'}
+              <span className="font-medium">{t("studio.session.id")}</span> {recordingSession ? recordingSession.id : t("studio.session.notRecording")}
             </div>
             <div className="text-sm">
-              <span className="font-medium">Start Time:</span> {recordingSession ? new Date(recordingSession.startTime).toLocaleTimeString() : '--:--:--'}
+              <span className="font-medium">{t("studio.session.start")}</span> {recordingSession ? new Date(recordingSession.startTime).toLocaleTimeString() : '--:--:--'}
             </div>
             <div className="text-sm">
-              <span className="font-medium">Duration:</span> {isRecording ? `${Math.floor(duration / 60)}:${(duration % 60).toString().padStart(2, '0')}` : '0:00'}
+              <span className="font-medium">{t("studio.session.duration")}</span> {isRecording ? `${Math.floor(duration / 60)}:${(duration % 60).toString().padStart(2, '0')}` : '0:00'}
             </div>
           </div>
           <div className="space-y-2">
             <div className="text-sm">
-              <span className="font-medium">Input Events:</span> {isRecording ? inputEventCount : 0}
+              <span className="font-medium">{t("studio.session.inputEvents")}</span> {isRecording ? inputEventCount : 0}
             </div>
             <div className="text-sm">
-              <span className="font-medium">Video Format:</span> WebM (VP9)
+              <span className="font-medium">{t("studio.session.videoFormat")}</span> WebM (VP9)
             </div>
                 <div className="text-sm">
-                  <span className="font-medium">Data Export:</span> ZIP (Video + JSON + Metadata)
+                  <span className="font-medium">{t("studio.session.dataExport")}</span> {t("studio.session.dataExportFormat")}
                 </div>
           </div>
         </div>
@@ -208,12 +209,11 @@ export default function DashboardStudio({
           >
             {isRecording && recordingSession ? (
               <>
-                <strong>AI Training Ready:</strong> ZIP archive will auto-download when recording stops.
-                Contains synchronized video (.webm), input data (.json), and metadata for AI training.
+                <strong>{t("studio.session.readyTitle")}</strong> {t("studio.session.readyDescription")}
               </>
             ) : (
               <>
-                <strong>Ready to Record:</strong> Start recording to capture synchronized video and input data for AI training.
+                <strong>{t("studio.session.prepTitle")}</strong> {t("studio.session.prepDescription")}
               </>
             )}
           </p>
