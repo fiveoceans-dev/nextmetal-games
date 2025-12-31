@@ -22,6 +22,7 @@ interface Recording {
   name: string;
   date: Date;
   duration: number; // in seconds
+  category?: "clip" | "best";
   game?: string;
   thumbnail?: string;
   videoUrl?: string;
@@ -37,6 +38,7 @@ export default function DashboardGallery() {
   const { t, i18n } = useTranslation();
   const [recordings, setRecordings] = useState<Recording[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState<"all" | "clips" | "best">("all");
   const [filteredRecordings, setFilteredRecordings] = useState<Recording[]>([]);
   const mockRecordings: Recording[] = useMemo(
     () => [
@@ -56,7 +58,8 @@ export default function DashboardGallery() {
         duration: 2341,
         game: t('gallery.mockGames.valorant'),
         size: 312,
-        status: 'completed'
+        status: 'completed',
+        category: "clip"
       },
       {
         id: 'nextmetal_video_1734309900000',
@@ -74,7 +77,8 @@ export default function DashboardGallery() {
         duration: 1234,
         game: t('gallery.mockGames.apex'),
         size: 167,
-        status: 'completed'
+        status: 'completed',
+        category: "clip"
       },
       {
         id: 'nextmetal_video_1734217800000',
@@ -92,7 +96,8 @@ export default function DashboardGallery() {
         duration: 2156,
         game: t('gallery.mockGames.rocket'),
         size: 289,
-        status: 'completed'
+        status: 'completed',
+        category: "best"
       },
       {
         id: 'nextmetal_video_1734110700000',
@@ -101,7 +106,8 @@ export default function DashboardGallery() {
         duration: 2876,
         game: t('gallery.mockGames.dota'),
         size: 387,
-        status: 'processing'
+        status: 'processing',
+        category: "best"
       },
       {
         id: 'nextmetal_video_1734097800000',
@@ -125,13 +131,19 @@ export default function DashboardGallery() {
   }, [mockRecordings]);
 
   useEffect(() => {
-    // Filter recordings based on search
-    const filtered = recordings.filter(recording =>
-      recording.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (recording.game && recording.game.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
+    // Filter recordings based on search and active tab
+    const filtered = recordings.filter((recording) => {
+      const matchesSearch =
+        recording.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (recording.game && recording.game.toLowerCase().includes(searchQuery.toLowerCase()));
+      const matchesTab =
+        activeTab === "all" ||
+        (activeTab === "clips" && recording.category === "clip") ||
+        (activeTab === "best" && recording.category === "best");
+      return matchesSearch && matchesTab;
+    });
     setFilteredRecordings(filtered);
-  }, [recordings, searchQuery]);
+  }, [recordings, searchQuery, activeTab]);
 
   // Group recordings by date
   const groupedRecordings = filteredRecordings.reduce((groups, recording) => {
@@ -174,56 +186,41 @@ export default function DashboardGallery() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center gap-3">
         <div>
           <h1 className="text-2xl font-bold">{t("gallery.title")}</h1>
           <p className="text-sm text-muted-foreground">
             {t("gallery.filenameHint")}
           </p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outline" size="sm">
-            <Upload className="h-4 w-4 mr-2" />
-            {t("gallery.uploadAll")}
-          </Button>
-          <div className="relative w-64">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder={t("common.searchPlaceholder")}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-        </div>
+        <Button variant="outline" size="sm">
+          <Upload className="h-4 w-4 mr-2" />
+          {t("gallery.uploadAll")}
+        </Button>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 text-center">
-        <div>
-          <div className="text-2xl font-bold">{recordings.length}</div>
-          <div className="text-sm text-muted-foreground">{t("gallery.stats.recordings")}</div>
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div className="flex rounded-full border border-border/70 bg-background/60 p-1">
+          {(["all", "clips", "best"] as const).map((tab) => (
+            <Button
+              key={tab}
+              size="sm"
+              variant={activeTab === tab ? "default" : "ghost"}
+              className="rounded-full px-3"
+              onClick={() => setActiveTab(tab)}
+            >
+              {t(`gallery.tabs.${tab}`)}
+            </Button>
+          ))}
         </div>
-        <div>
-          <div className="text-2xl font-bold">
-            {Math.round(recordings.reduce((acc, rec) => acc + rec.duration, 0) / 3600)}
-          </div>
-          <div className="text-sm text-muted-foreground">{t("gallery.stats.hours")}</div>
-        </div>
-        <div>
-          <div className="text-2xl font-bold">
-            {recordings.reduce((acc, rec) => acc + rec.size, 0)}
-          </div>
-          <div className="text-sm text-muted-foreground">MB</div>
-        </div>
-        <div>
-          <div className="text-2xl font-bold">
-            {recordings.filter(rec => {
-              const weekAgo = new Date();
-              weekAgo.setDate(weekAgo.getDate() - 7);
-              return rec.date >= weekAgo;
-            }).length}
-          </div>
-          <div className="text-sm text-muted-foreground">{t("gallery.stats.thisWeek")}</div>
+        <div className="relative w-full md:w-64">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder={t("common.searchPlaceholder")}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
         </div>
       </div>
 

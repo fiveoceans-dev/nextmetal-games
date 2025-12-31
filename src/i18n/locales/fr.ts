@@ -284,6 +284,7 @@ const fr = {
     title: "Galerie",
     filenameHint: "Nom de fichier enregistré : nextmetal_video_*.webm",
     uploadAll: "Tout téléverser",
+    tabs: { all: "Tous", clips: "Clips", best: "Meilleurs" },
     stats: {
       recordings: "Enregistrements",
       hours: "Heures",
@@ -336,6 +337,7 @@ const fr = {
     action: {
       stop: "Arrêter",
       record: "Enregistrer",
+      stream: "Diffuser",
     },
     labels: {
       screen: "Écran",

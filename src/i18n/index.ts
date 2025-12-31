@@ -16,9 +16,8 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: "en",
+    fallbackLng: DEFAULT_LANGUAGE,
     supportedLngs: supportedLanguages,
-    lng: DEFAULT_LANGUAGE,
     nonExplicitSupportedLngs: true,
     detection: {
       order: ["localStorage", "navigator", "htmlTag"],

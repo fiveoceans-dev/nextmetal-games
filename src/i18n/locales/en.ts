@@ -284,6 +284,11 @@ const en = {
     title: "Gallery",
     filenameHint: "Saved filename: nextmetal_video_*.webm",
     uploadAll: "Upload all",
+    tabs: {
+      all: "All",
+      clips: "Clips",
+      best: "Best",
+    },
     stats: {
       recordings: "Recordings",
       hours: "Hours",
@@ -336,6 +341,7 @@ const en = {
     action: {
       stop: "Stop",
       record: "Record",
+      stream: "Stream",
     },
     labels: {
       screen: "Screen",

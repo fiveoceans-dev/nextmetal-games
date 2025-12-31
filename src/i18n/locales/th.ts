@@ -158,6 +158,7 @@ const th = {
     title: "แกลเลอรี",
     filenameHint: "ชื่อไฟล์ที่บันทึก: nextmetal_video_*.webm",
     uploadAll: "อัปโหลดทั้งหมด",
+    tabs: { all: "ทั้งหมด", clips: "คลิป", best: "ที่ดีที่สุด" },
     stats: { recordings: "การบันทึก", hours: "ชั่วโมง", thisWeek: "สัปดาห์นี้" },
     play: "เล่น",
     emptySearch: { title: "ไม่พบการบันทึก", description: "ลองค้นหาใหม่หรือสร้างการบันทึกแรก" },
@@ -192,7 +193,7 @@ const th = {
   studio: {
     title: "สตูดิโอ",
     select: { screen: "เต็มหน้าจอ", window: "หน้าต่าง" },
-    action: { stop: "หยุด", record: "บันทึก" },
+    action: { stop: "หยุด", record: "บันทึก", stream: "สตรีม" },
     labels: { screen: "หน้าจอ", camera: "กล้อง", audio: "เสียง", input: "อินพุต" },
     state: { on: "เปิด", off: "ปิด" },
     events: "{{count}} เหตุการณ์",

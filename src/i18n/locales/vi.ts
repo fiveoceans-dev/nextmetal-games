@@ -158,6 +158,7 @@ const vi = {
     title: "Thư viện",
     filenameHint: "Tên file lưu: nextmetal_video_*.webm",
     uploadAll: "Tải lên tất cả",
+    tabs: { all: "Tất cả", clips: "Clip", best: "Tốt nhất" },
     stats: { recordings: "Bản ghi", hours: "Giờ", thisWeek: "Tuần này" },
     play: "Phát",
     emptySearch: { title: "Không tìm thấy bản ghi", description: "Thử tìm khác hoặc tạo bản ghi đầu tiên." },
@@ -192,7 +193,7 @@ const vi = {
   studio: {
     title: "Studio",
     select: { screen: "Toàn màn hình", window: "Cửa sổ" },
-    action: { stop: "Dừng", record: "Ghi" },
+    action: { stop: "Dừng", record: "Ghi", stream: "Phát trực tiếp" },
     labels: { screen: "Màn hình", camera: "Camera", audio: "Âm thanh", input: "Nhập liệu" },
     state: { on: "Bật", off: "Tắt" },
     events: "{{count}} sự kiện",

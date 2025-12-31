@@ -284,6 +284,7 @@ const ptBR = {
     title: "Galeria",
     filenameHint: "Nome do arquivo salvo: nextmetal_video_*.webm",
     uploadAll: "Enviar tudo",
+    tabs: { all: "Todos", clips: "Clipes", best: "Melhores" },
     stats: {
       recordings: "Gravações",
       hours: "Horas",
@@ -336,6 +337,7 @@ const ptBR = {
     action: {
       stop: "Parar",
       record: "Gravar",
+      stream: "Transmitir",
     },
     labels: {
       screen: "Tela",

@@ -284,6 +284,7 @@ const id = {
     title: "Galeri",
     filenameHint: "Nama file tersimpan: nextmetal_video_*.webm",
     uploadAll: "Unggah semua",
+    tabs: { all: "Semua", clips: "Klip", best: "Terbaik" },
     stats: {
       recordings: "Rekaman",
       hours: "Jam",
@@ -336,6 +337,7 @@ const id = {
     action: {
       stop: "Stop",
       record: "Rekam",
+      stream: "Streaming",
     },
     labels: {
       screen: "Layar",

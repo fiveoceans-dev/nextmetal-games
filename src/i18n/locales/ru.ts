@@ -158,6 +158,7 @@ const ru = {
     title: "Галерея",
     filenameHint: "Сохраняемое имя файла: nextmetal_video_*.webm",
     uploadAll: "Загрузить все",
+    tabs: { all: "Все", clips: "Клипы", best: "Лучшее" },
     stats: { recordings: "Записи", hours: "Часы", thisWeek: "На этой неделе" },
     play: "Воспроизвести",
     emptySearch: { title: "Записи не найдены", description: "Попробуйте другой запрос или создайте первую запись." },
@@ -192,7 +193,7 @@ const ru = {
   studio: {
     title: "Студия",
     select: { screen: "Весь экран", window: "Окно" },
-    action: { stop: "Стоп", record: "Запись" },
+    action: { stop: "Стоп", record: "Запись", stream: "Стрим" },
     labels: { screen: "Экран", camera: "Камера", audio: "Аудио", input: "Ввод" },
     state: { on: "Вкл", off: "Выкл" },
     events: "{{count}} событий",

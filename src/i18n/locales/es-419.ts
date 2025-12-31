@@ -284,6 +284,7 @@ const es419 = {
     title: "Galería",
     filenameHint: "Nombre guardado: nextmetal_video_*.webm",
     uploadAll: "Subir todo",
+    tabs: { all: "Todo", clips: "Clips", best: "Mejores" },
     stats: {
       recordings: "Grabaciones",
       hours: "Horas",
@@ -336,6 +337,7 @@ const es419 = {
     action: {
       stop: "Detener",
       record: "Grabar",
+      stream: "Transmitir",
     },
     labels: {
       screen: "Pantalla",

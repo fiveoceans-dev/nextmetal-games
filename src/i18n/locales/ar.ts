@@ -158,6 +158,7 @@ const ar = {
     title: "المعرض",
     filenameHint: "اسم الملف المحفوظ: nextmetal_video_*.webm",
     uploadAll: "رفع الكل",
+    tabs: { all: "الكل", clips: "مقاطع", best: "الأفضل" },
     stats: { recordings: "تسجيلات", hours: "ساعات", thisWeek: "هذا الأسبوع" },
     play: "تشغيل",
     emptySearch: { title: "لم يتم العثور على تسجيلات", description: "جرّب بحثًا آخر أو أنشئ أول تسجيل." },
@@ -192,7 +193,7 @@ const ar = {
   studio: {
     title: "الاستوديو",
     select: { screen: "ملء الشاشة", window: "نافذة" },
-    action: { stop: "إيقاف", record: "تسجيل" },
+    action: { stop: "إيقاف", record: "تسجيل", stream: "بث" },
     labels: { screen: "الشاشة", camera: "الكاميرا", audio: "الصوت", input: "الإدخال" },
     state: { on: "تشغيل", off: "إيقاف" },
     events: "{{count}} حدث",

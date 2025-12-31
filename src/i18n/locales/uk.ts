@@ -158,6 +158,7 @@ const uk = {
     title: "Галерея",
     filenameHint: "Ім’я збереженого файлу: nextmetal_video_*.webm",
     uploadAll: "Завантажити все",
+    tabs: { all: "Усе", clips: "Кліпи", best: "Найкраще" },
     stats: { recordings: "Записи", hours: "Години", thisWeek: "Цього тижня" },
     play: "Відтворити",
     emptySearch: { title: "Записи не знайдено", description: "Спробуйте інший пошук або створіть перший запис." },
@@ -192,7 +193,7 @@ const uk = {
   studio: {
     title: "Студія",
     select: { screen: "На весь екран", window: "Вікно" },
-    action: { stop: "Зупинити", record: "Записати" },
+    action: { stop: "Зупинити", record: "Записати", stream: "Трансляція" },
     labels: { screen: "Екран", camera: "Камера", audio: "Аудіо", input: "Ввід" },
     state: { on: "Увімк.", off: "Вимк." },
     events: "{{count}} подій",

@@ -284,6 +284,7 @@ const ko = {
     title: "갤러리",
     filenameHint: "저장 파일명: nextmetal_video_*.webm",
     uploadAll: "전체 업로드",
+    tabs: { all: "전체", clips: "클립", best: "베스트" },
     stats: {
       recordings: "녹화",
       hours: "시간",
@@ -336,6 +337,7 @@ const ko = {
     action: {
       stop: "중지",
       record: "녹화",
+      stream: "스트리밍",
     },
     labels: {
       screen: "화면",

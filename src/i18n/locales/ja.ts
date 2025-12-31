@@ -158,6 +158,7 @@ const ja = {
     title: "ギャラリー",
     filenameHint: "保存ファイル名: nextmetal_video_*.webm",
     uploadAll: "すべてアップロード",
+    tabs: { all: "すべて", clips: "クリップ", best: "ベスト" },
     stats: { recordings: "録画数", hours: "時間", thisWeek: "今週" },
     play: "再生",
     emptySearch: { title: "録画が見つかりません", description: "別の検索か、最初の録画を作成してください。" },
@@ -192,7 +193,7 @@ const ja = {
   studio: {
     title: "スタジオ",
     select: { screen: "全画面", window: "ウィンドウ" },
-    action: { stop: "停止", record: "録画" },
+    action: { stop: "停止", record: "録画", stream: "配信" },
     labels: { screen: "画面", camera: "カメラ", audio: "オーディオ", input: "入力" },
     state: { on: "オン", off: "オフ" },
     events: "{{count}} 件のイベント",

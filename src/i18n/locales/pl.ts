@@ -158,6 +158,7 @@ const pl = {
     title: "Galeria",
     filenameHint: "Zapisany plik: nextmetal_video_*.webm",
     uploadAll: "Wyślij wszystko",
+    tabs: { all: "Wszystko", clips: "Klipy", best: "Najlepsze" },
     stats: { recordings: "Nagrania", hours: "Godziny", thisWeek: "W tym tygodniu" },
     play: "Odtwórz",
     emptySearch: { title: "Brak nagrań", description: "Spróbuj innego wyszukiwania lub utwórz pierwsze nagranie." },
@@ -192,7 +193,7 @@ const pl = {
   studio: {
     title: "Studio",
     select: { screen: "Pełny ekran", window: "Okno" },
-    action: { stop: "Stop", record: "Nagraj" },
+    action: { stop: "Stop", record: "Nagraj", stream: "Transmituj" },
     labels: { screen: "Ekran", camera: "Kamera", audio: "Audio", input: "Wejście" },
     state: { on: "Wł.", off: "Wył." },
     events: "{{count}} zdarzeń",

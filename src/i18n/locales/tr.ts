@@ -158,6 +158,7 @@ const tr = {
     title: "Galeri",
     filenameHint: "Kayıt dosyası adı: nextmetal_video_*.webm",
     uploadAll: "Hepsini yükle",
+    tabs: { all: "Tümü", clips: "Klipler", best: "En iyi" },
     stats: { recordings: "Kayıt", hours: "Saat", thisWeek: "Bu hafta" },
     play: "Oynat",
     emptySearch: { title: "Kayıt bulunamadı", description: "Başka bir arama deneyin veya ilk kaydınızı oluşturun." },
@@ -192,7 +193,7 @@ const tr = {
   studio: {
     title: "Stüdyo",
     select: { screen: "Tam ekran", window: "Pencere" },
-    action: { stop: "Durdur", record: "Kaydet" },
+    action: { stop: "Durdur", record: "Kaydet", stream: "Yayınla" },
     labels: { screen: "Ekran", camera: "Kamera", audio: "Ses", input: "Giriş" },
     state: { on: "Açık", off: "Kapalı" },
     events: "{{count}} olay",

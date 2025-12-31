@@ -284,6 +284,7 @@ const de = {
     title: "Galerie",
     filenameHint: "Gespeicherter Dateiname: nextmetal_video_*.webm",
     uploadAll: "Alle hochladen",
+    tabs: { all: "Alle", clips: "Clips", best: "Beste" },
     stats: {
       recordings: "Aufnahmen",
       hours: "Stunden",
@@ -336,6 +337,7 @@ const de = {
     action: {
       stop: "Stoppen",
       record: "Aufnehmen",
+      stream: "Streamen",
     },
     labels: {
       screen: "Bildschirm",

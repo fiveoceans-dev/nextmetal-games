@@ -158,6 +158,7 @@ const zhHans = {
     title: "图库",
     filenameHint: "保存的文件名：nextmetal_video_*.webm",
     uploadAll: "全部上传",
+    tabs: { all: "全部", clips: "片段", best: "精选" },
     stats: { recordings: "录制", hours: "小时", thisWeek: "本周" },
     play: "播放",
     emptySearch: { title: "未找到录制", description: "尝试其他搜索或创建你的第一段录制。" },
@@ -192,7 +193,7 @@ const zhHans = {
   studio: {
     title: "工作室",
     select: { screen: "全屏", window: "窗口" },
-    action: { stop: "停止", record: "录制" },
+    action: { stop: "停止", record: "录制", stream: "直播" },
     labels: { screen: "屏幕", camera: "摄像头", audio: "音频", input: "输入" },
     state: { on: "开", off: "关" },
     events: "{{count}} 个事件",

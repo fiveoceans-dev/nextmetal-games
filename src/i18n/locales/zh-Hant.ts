@@ -158,6 +158,7 @@ const zhHant = {
     title: "相簿",
     filenameHint: "儲存檔名：nextmetal_video_*.webm",
     uploadAll: "全部上傳",
+    tabs: { all: "全部", clips: "剪輯", best: "精選" },
     stats: { recordings: "錄影", hours: "小時", thisWeek: "本週" },
     play: "播放",
     emptySearch: { title: "找不到錄影", description: "嘗試其他搜尋或建立第一個錄影。" },
@@ -192,7 +193,7 @@ const zhHant = {
   studio: {
     title: "工作室",
     select: { screen: "全螢幕", window: "視窗" },
-    action: { stop: "停止", record: "錄製" },
+    action: { stop: "停止", record: "錄製", stream: "直播" },
     labels: { screen: "螢幕", camera: "攝影機", audio: "音訊", input: "輸入" },
     state: { on: "開", off: "關" },
     events: "{{count}} 個事件",

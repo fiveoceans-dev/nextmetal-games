@@ -34,11 +34,14 @@ export default function Dashboard() {
 
   // Recording state - moved from DashboardStudio
   const [isRecording, setIsRecording] = useState(false);
-  const [selectedScreen, setSelectedScreen] = useState<string>("screen");
   const [recordingSession, setRecordingSession] = useState<RecordingSession | null>(null);
   const [inputEventCount, setInputEventCount] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isStreamReady, setIsStreamReady] = useState(false);
+  const [captureScreen, setCaptureScreen] = useState(true);
+  const [captureCamera, setCaptureCamera] = useState(false);
+  const [captureAudio, setCaptureAudio] = useState(true);
+  const [captureInput, setCaptureInput] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const durationIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -93,7 +96,7 @@ export default function Dashboard() {
 
   // Input event listeners - moved from DashboardStudio
   useEffect(() => {
-    if (!isRecording || !recordingSession) return;
+    if (!isRecording || !recordingSession || !captureInput) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!recordingSession) return;
@@ -185,7 +188,7 @@ export default function Dashboard() {
       document.removeEventListener('mousedown', handleMouseDown);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isRecording, recordingSession]);
+  }, [isRecording, recordingSession, captureInput]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -203,20 +206,22 @@ export default function Dashboard() {
       // Get screen capture
       const screenStream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
-        audio: true
+        audio: captureAudio
       });
 
-      // Get webcam
-      const webcamStream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 1280, height: 720 },
-        audio: false // No mic as requested
-      });
+      // Get webcam if enabled
+      const webcamStream = captureCamera
+        ? await navigator.mediaDevices.getUserMedia({
+            video: { width: 1280, height: 720 },
+            audio: false // No mic as requested
+          })
+        : undefined;
 
       // Create combined stream for recording
       const combinedStream = new MediaStream([
         ...screenStream.getVideoTracks(),
-        ...webcamStream.getVideoTracks(),
-        ...screenStream.getAudioTracks()
+        ...(webcamStream ? webcamStream.getVideoTracks() : []),
+        ...(captureAudio ? screenStream.getAudioTracks() : [])
       ]);
 
       // Setup video preview
@@ -225,14 +230,21 @@ export default function Dashboard() {
       const ctx = canvas?.getContext('2d');
 
       if (video && canvas && ctx) {
-        canvas.width = 1920;
-        canvas.height = 1080;
         video.srcObject = combinedStream;
 
         // Set up canvas drawing for live preview
         const drawFrame = () => {
           if (video && ctx) {
             try {
+              if (
+                video.videoWidth &&
+                video.videoHeight &&
+                (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight)
+              ) {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+              }
+
               // Clear canvas
               ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -254,6 +266,10 @@ export default function Dashboard() {
 
         // Wait for video to be ready
         video.onloadedmetadata = () => {
+          if (video.videoWidth && video.videoHeight) {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+          }
           video.play().then(() => {
             setIsStreamReady(true);
             drawFrame();
@@ -265,7 +281,7 @@ export default function Dashboard() {
         id: `nextmetal_video_${Date.now()}`,
         startTime: Date.now(),
         screenStream,
-        webcamStream,
+        webcamStream: webcamStream || undefined,
         inputEvents: [],
         recordedChunks: []
       };
@@ -414,14 +430,20 @@ export default function Dashboard() {
           {activeSection === "studio" && (
             <DashboardStudio
               isRecording={isRecording}
-              selectedScreen={selectedScreen}
               recordingSession={recordingSession}
               inputEventCount={inputEventCount}
               duration={duration}
               isStreamReady={isStreamReady}
               videoRef={videoRef}
               canvasRef={canvasRef}
-              onSelectedScreenChange={setSelectedScreen}
+              captureScreen={captureScreen}
+              captureCamera={captureCamera}
+              captureAudio={captureAudio}
+              captureInput={captureInput}
+              onToggleScreen={() => setCaptureScreen((prev) => !prev)}
+              onToggleCamera={() => setCaptureCamera((prev) => !prev)}
+              onToggleAudio={() => setCaptureAudio((prev) => !prev)}
+              onToggleInput={() => setCaptureInput((prev) => !prev)}
               onStartRecording={startRecording}
               onStopRecording={stopRecording}
             />
